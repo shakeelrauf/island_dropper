@@ -1,0 +1,26 @@
+<div class="off-canvas">
+  <div class="login-canvas">
+    <div class="container">
+      <div class="row">
+        <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+          <div class="border-box position-relative">
+            <h4 class="borderBox-heading m-0 font-weight-bold">Forgot your password?</h4>
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+              <%= devise_error_messages! %>
+              <div class="form-group">   
+                <%= f.label :email, class: "font-weight-bold form-label pl-md-3" %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-field" %>
+              </div>
+              <div class="pl-3">
+                 <%= f.submit "Send me reset password instructions", class: "btn btn-green" %>
+              </div>
+            <% end %> 
+          </div>
+          <div class="px-5 mt-5 loginLinks-block">
+            <%= render "users/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,8 @@
 class Users::DeliveriesController < ApplicationController
 
   def new
-    deliveries, errors = Getswift::Delivery.add_booking("/api/v2/deliveries", deliveriy_params)
-    deliveries.save!
+    delivery = Getswift::Delivery.add_booking("/api/v2/deliveries", deliveriy_params)
+  
   end
 
   def delivery_params

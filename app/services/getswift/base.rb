@@ -10,3 +10,20 @@ module Getswift
     end
   end
 end
+
+
+{
+    "apiKey": "97b7e68c-7114-4f41-972c-e685dd8d9ed8",
+    "booking":{
+        "pickupDetail": {
+            "name": "Rupert",
+            "phone": "99999",
+            "address": "57 luscombe st, brunswick, melbourne"
+        },
+        "dropoffDetail": {
+            "name": "Igor",
+            "phone": "9999",
+            "address": "Pakistan"
+        }
+    }
+}            

@@ -1,0 +1,38 @@
+<div class="off-canvas">
+  <div class="login-canvas">
+    <div class="container">
+      <div class="row">
+        <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+          <div class="border-box position-relative">
+            <h4 class="borderBox-heading m-0 font-weight-bold">Log in</h4>
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'login-form') do |f| %>  
+              <div class="form-group">
+                <%= f.label :email, class: "font-weight-bold form-label pl-md-3" %>
+                <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control form-field" %>
+
+              </div>
+              <div class="form-group">
+                <%= f.label :password, class: "font-weight-bold form-label pl-md-3" %>
+                <%= f.password_field :password, autocomplete: "current-password",class: "form-control form-field" %>
+              </div>
+              <div class="checkbox-set mt-4 d-inline-block w-100 px-2 mb-3">
+                  <% if devise_mapping.rememberable? -%>
+                    <%= f.check_box :remember_me %>
+                    <%= f.label :remember_me %>
+                    <span class="checkmark"></span>
+                  <% end -%>
+              </div>
+              <div class="pl-3">
+                <%= f.submit "Log in",class: "btn btn-white" %>
+              </div>
+            <% end %>
+          </div>
+          <div class="px-5 mt-5 loginLinks-block">
+            <%= render "users/shared/links" %>     
+            <p class="mb-0"><a href="#" class="login-links">Didn't receive confirmation instructions?</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
