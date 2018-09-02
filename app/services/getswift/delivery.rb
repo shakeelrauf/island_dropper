@@ -10,7 +10,7 @@ module Getswift
     end
   end
 end
-
+a={}
 
 a.each do |k,v|
   define_method "#{k}",-> {v.is_a?(Hash) ? v.each{|k1,v1| define_method "#{k1}",-> {return v1}} : v}
