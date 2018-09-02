@@ -1,5 +1,5 @@
 module Getswift
-  class delivery < Base
+  class Delivery < Base
     attr_accessor :pickup_address,
                   :dropout_address
 
