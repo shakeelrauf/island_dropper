@@ -1,0 +1,74 @@
+<div class="off-canvas">
+  <div class="delivery-address-canvas">
+    <div class="container">
+      <div class="d-flex mt-3 mt-md-4 mb-4 mb-sm-5">
+        <a href="#" class="delivery-heading mb-3">Pick Up</a>
+      </div>
+      <%= simple_form_for @delivery, url: wizard_path do |f| %>
+      <form class="delivery-form">
+        <div class="deliveryAdd-fieldBlock">
+          <%= f.fields_for :pickup do |ff| %>
+            <div class="row">
+              <div class="col col-12 col-md-6">
+                <div class="form-group">
+                  <%= ff.label :first_name, class: "form-label pl-md-3" %>
+                  <%= ff.text_field :first_name, autofocus: true, class: "form-control form-field-rounded" %>
+                </div>
+              </div>
+              <div class="col col-12 col-md-6">
+                <div class="form-group">
+                  <%= ff.label :last_name, class: "form-label pl-md-3" %>
+                  <%= ff.text_field :last_name,class: "form-control form-field-rounded" %>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col col-12 col-md-6">
+                <div class="form-group">
+                  <%= ff.label :address, class: "form-label pl-md-3" %>
+                  <%= ff.text_field :address,class: "form-control form-field-rounded", placeholder: "Enter drop off address" %>
+                </div>
+              </div>
+              <div class="col col-12 col-md-6">
+                <div class="form-group">
+                  <%= ff.label :phone_number, class: "form-label pl-md-3" %>
+                  <%= ff.number_field :phone_number,class: "form-control form-field-rounded", placeholder: "+355 69 2656 8 244" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <% end %>  
+    
+          <div class="radiobtn-set d-inline-block w-100 mb-4 pb-sm-2">
+            <div class="float-left w-100">
+               <%= f.label :make_priority_or_preorder, :value => "make-priority", class: "radiobtn-field float-left mr-5" do %>
+                make-priority?
+                  <%= f.radio_button :make_priority_or_preorder, "make-priority",:checked => true  %>
+                   <span class="checkmark"></span>
+              <% end %>
+            </div>
+            <div class="float-left w-100">
+              <%= f.label :make_priority_or_preorder, :value => "pre-order", class: "radiobtn-field float-left mr-5" do %>
+                Pre-order?
+                  <%= f.radio_button :make_priority_or_preorder, "pre-order" %>
+                   <span class="checkmark"></span>
+              <% end %>
+              <div class="calender-group float-left">
+                <input type="text" class="form-control form-field">
+                <button class="btn btn-calender"><img src="images/calender.png" width="13"></button>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col col-12 col-md-6 offset-md-6">
+            <div class="deliveryItem-btns mt-sm-2 text-right">
+              <button class="btn btn-white mr-1 mr-sm-3 text-uppercase w-100-m" type="button">Save Draft</button>
+              <%= f.submit 'Next', class: "btn btn-next btn-next-dark ml-1 ml-sm-0 text-uppercase w-100-m" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
