@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180901162649) do
+ActiveRecord::Schema.define(version: 20180902085440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,10 +18,41 @@ ActiveRecord::Schema.define(version: 20180901162649) do
   create_table "deliveries", force: :cascade do |t|
     t.string "b_id"
     t.string "status"
-    t.string "pickup_location"
-    t.string "dropout_location"
-    t.integer "fee"
     t.text "response"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "make_priority_order", default: false
+    t.boolean "pre_order", default: false
+    t.date "pre_order_date"
+  end
+
+  create_table "dropoffs", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "phone_number"
+    t.text "delivery_instructions"
+    t.bigint "delivery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.string "size", default: "small"
+    t.string "description"
+    t.bigint "delivery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_id"], name: "index_items_on_delivery_id"
+  end
+
+  create_table "pickups", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "phone_number"
+    t.integer "delivery_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -38,4 +69,6 @@ ActiveRecord::Schema.define(version: 20180901162649) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "dropoffs", "deliveries"
+  add_foreign_key "items", "deliveries"
 end
