@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180902085440) do
+ActiveRecord::Schema.define(version: 20180902142225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,9 +21,11 @@ ActiveRecord::Schema.define(version: 20180902085440) do
     t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "make_priority_order", default: false
-    t.boolean "pre_order", default: false
     t.date "pre_order_date"
+    t.bigint "user_id"
+    t.string "state", default: "new"
+    t.string "make_priority_or_preorder"
+    t.index ["user_id"], name: "index_deliveries_on_user_id"
   end
 
   create_table "dropoffs", force: :cascade do |t|
@@ -69,6 +71,7 @@ ActiveRecord::Schema.define(version: 20180902085440) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "deliveries", "users"
   add_foreign_key "dropoffs", "deliveries"
   add_foreign_key "items", "deliveries"
 end

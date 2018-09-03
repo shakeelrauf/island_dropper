@@ -7,7 +7,7 @@ class DeliveriesController < ApplicationController
   end
 
   def draft
-    if params[:search][:query].present?
+    if params[:search].present? and  params[:search][:query].present?
       @deliveries =  current_user.deliveries.draft.search_for(params[:search][:query])
     else
       @deliveries = current_user.deliveries.includes([:pickup,:dropoffs,:items]).where(state: 'draft')
