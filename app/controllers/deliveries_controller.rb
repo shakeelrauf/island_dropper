@@ -15,7 +15,7 @@ class DeliveriesController < ApplicationController
   end
 
   def create
-    @delivery =  current_user.deliveries.build({})
+    @delivery = current_user.deliveries.build
     if @delivery.save
       redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
     end
