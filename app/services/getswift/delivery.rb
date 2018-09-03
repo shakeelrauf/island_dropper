@@ -3,15 +3,14 @@ module Getswift
     attr_accessor :pickup_address,
                   :dropout_address
 
-    def self.add_booking(query = {})
-      response = Request.where('deliveries', query,"post")
-      added_booking = response.fetch('booking', []).map { |b| Booking.new(response: '') }
-      [ added_booking, response[:errors] ]
+    def self.add_booking(delivery,query = {})
+      response = Request.where('api/v2/deliveries', query,"post")
+      delivery.update(reference_no: response["delivery"]["id"], response: response, state: 'active')
+      response
+    end
+
+    def self.all_bookings(query)
+      @response = Request.where('api/v2/deliveries',query)
     end
   end
 end
-a={}
-
-a.each do |k,v|
-  define_method "#{k}",-> {v.is_a?(Hash) ? v.each{|k1,v1| define_method "#{k1}",-> {return v1}} : v}
-end 

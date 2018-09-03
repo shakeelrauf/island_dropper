@@ -1,11 +1,14 @@
 class Delivery < ApplicationRecord
   include Form
+  include CheckFields
   belongs_to :user
   has_one :pickup, dependent: :destroy
   has_many :items, dependent: :destroy
   has_many :dropoffs, dependent: :destroy
   scoped_search in: :pickup ,on: [:first_name,:last_name, :created_at]
   scope :draft, -> {where(state: "draft")}
+  scope :active, -> {where(state: "active")}
+  scope :past, -> {where(state: "past")}
   accepts_nested_attributes_for :pickup, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :items, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :dropoffs, reject_if: :all_blank, allow_destroy: true
@@ -30,6 +33,10 @@ class Delivery < ApplicationRecord
   end
   def self.pickup_last_name
     self.pickup.last_name
+  end
+
+  def self.exception_keys
+    ["response"]
   end
 
 end

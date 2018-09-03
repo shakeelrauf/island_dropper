@@ -1,4 +1,4 @@
-class Request
+class Getswift::Request
   class << self
     def where(resource_path, query = {}, type="get")
       response, status = if type == "post"
@@ -30,13 +30,13 @@ class Request
       response = api.post do |req|
         req.url root_path
         req.headers['Content-Type'] = 'application/json'
-        req.body = (query.to_json)
+        req.body = JSON.parse(query.to_json)
       end
       [JSON.parse(response.body), response.status]
     end
 
     def api
-      Connection.api
+      Getswift::Connection.api
     end
   end
 end

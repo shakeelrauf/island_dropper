@@ -1,7 +1,7 @@
 require 'faraday'
 require 'json'
 
-class Connection
+class Getswift::Connection
   BASE = 'https://app.getswift.co'
 
   def self.api

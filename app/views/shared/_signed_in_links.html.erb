@@ -1,6 +1,6 @@
 <ul class="navbar-nav navbar-menu ml-auto">
   <li class="nav-item <%#= current_page?(controller: "deliveries", action: "active") ? 'active' : ''%>">
-    <a class="nav-link" href="#">Active</a>
+    <a class="nav-link" href="<%= active_deliveries_url %>">Active</a>
   </li>
   <li class="nav-item <%#= current_page?(controller: "deliveries", action: "past") ? 'active' : ''%>">
     <a class="nav-link" href="#">Past</a>

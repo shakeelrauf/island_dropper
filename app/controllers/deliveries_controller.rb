@@ -1,10 +1,5 @@
 class DeliveriesController < ApplicationController
  
-  def new
-    @user = current_user
-    render_wizard
-    delivery = Getswift::Delivery.add_booking("/api/v2/deliveries", deliveriy_params)
-  end
 
   def draft
     if params[:search].present? and  params[:search][:query].present?
@@ -12,6 +7,13 @@ class DeliveriesController < ApplicationController
     else
       @deliveries = current_user.deliveries.includes([:pickup,:dropoffs,:items]).where(state: 'draft')
     end
+  end
+
+  def active
+    query = {"apiKey": ENV["GETSWIFT_API_KEY"]}
+    query[:Reference] = params[:search][:Reference] if params[:search].present? and params[:search][:Reference].present? 
+    query[:startDate] = params[:search][:startDate] if params[:search].present? and params[:search][:startDate].present? 
+    @response = Getswift::Delivery.all_bookings(query)
   end
 
   def create
