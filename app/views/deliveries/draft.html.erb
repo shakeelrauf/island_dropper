@@ -1,0 +1,51 @@
+<div class="off-canvas">
+  <div class="draft-canvas">
+    <div class="container">
+      <div class="d-flex justify-content-end content-search">
+        <%= simple_form_for :search , url: draft_deliveries_path ,html: {class: "form-inline"} , method: :get do |f| %>
+          <div class="form-group search-group m-0">
+            <%= f.input :query ,input_html: {class: "form-control search-field text-uppercase"},placeholder: "Search", label: false %>
+          </div>
+          <div class="dropdown dropdown-header p-0">
+            <button class="btn btn-menu ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag 'menu-icon.png', alt: "menu-IMG", width: "24" %>
+            </button>
+            <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
+            </div>
+          </div>
+          <% f.submit %>
+        <% end %>
+      </div>
+
+      <% @deliveries.each.with_index do |delivery,i| %>
+      <div class="draft-content">
+        <div class="draft-box">
+          <div class="row align-items-center">
+            <div class="col col-12 col-lg-2 col-xl-2">
+              <h3 class="draft-heading">Draft</h3>
+            </div>
+            <div class="col col-12 col-lg-7 col-xl-7">
+              <div class="draft-item-main d-flex align-items-center justify-content-between justify-content-lg-around flex-column flex-sm-row mt-4 mt-lg-0 mb-3 mb-lg-0">
+                <div class="draft-item d-flex w-100-t mb-1 mb-sm-0">
+                  <h4 class="draft-heading-m mr-3 mr-md-4">Name</h4>
+                  <p><%= (delivery.pickup.first_name + delivery.pickup.last_name).first(5) %>... </p>
+                </div>
+                <div class="draft-item d-flex w-100-t">
+                  <h4 class="draft-heading-m mr-3 mr-md-4">Date Created</h4>
+                  <p><%= delivery.created_at.strftime("%d/%m/%Y") %></p>
+                </div>
+              </div>
+            </div>
+            <div class="col col-12 col-lg-3 col-xl-3">
+              <div class="draft-btns d-flex align-items-center justify-content-between justify-content-sm-end">
+                <%= link_to "Edit", delivery_step_path(delivery, id: delivery.first_invalid_step), class: "btn btn-round btn-edit mr-1 mr-sm-2 mr-xl-3 w-100-m" %>
+                <%= link_to "Delete", delivery, method: :delete, class: "btn btn-round btn-delete ml-1 ml-sm-0 w-100-m" , data: {confirm: "Are you sure??"}%>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

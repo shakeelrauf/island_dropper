@@ -9,68 +9,13 @@
         <span class="toggler-icon"></span>
         <span class="toggler-icon"></span>
       </button>
-      <% if current_user %>
       <div class="collapse navbar-collapse mt-3 mt-lg-0" id="navbarSupportedContent">
-        <ul class="navbar-nav navbar-menu ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Active</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Past</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Draft</a>
-          </li>
-        </ul>
-        <div class="header-btns ml-auto d-flex justify-content-between mt-3 mt-lg-0 position-relative">
-          <%= link_to "New Delivery", deliveries_path,method: :post, class: "btn btn-white active text-uppercase" %>
-          <div class="dropdown dropdown-header p-0">
-            <button class="btn btn-white ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= current_user.email.split("@")[0].upcase %>
-            </button>
-            <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
-              <ul>
-                <li>
-                  <div class="dropdown-menu-block">
-                    <a class="dropdown-item" href="#">
-                      <%= current_user.email %>
-                    </a>
-                  </div>
-                </li>
-                <li>
-                  <div class="dropdown-menu-block">
-                    <a class="dropdown-item" href="#">New Delivery</a>
-                    <a class="dropdown-item" href="#">View Deliveries</a>
-                  </div>
-                </li>
-                <li>
-                  <div class="dropdown-menu-block">
-                    <%= link_to "Edit Account", edit_user_registration_path,class: "dropdown-item" %>
-                    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
-                  </div>
-                </li>
-                <li>
-                  <div class="dropdown-menu-block">
-                    <a class="dropdown-item" href="#">Help</a>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div class="header-btns ml-auto mt-3 mt-lg-0">
-          <button class="btn btn-white active text-uppercase" type="submit">Log In</button>
-          <button class="btn btn-white ml-4 text-uppercase" type="submit">Sign Up</button>
-        </div> -->
-      </div>
+      <% if current_user %>
+        <%= render partial: 'shared/signed_in_links' %>
       <% else %>
-        <div class="header-btns ml-auto mt-3 mt-lg-0 d-flex justify-content-between ">
-          <%= link_to "Log In",new_user_session_path, class: "btn btn-white #{current_page?(controller: "sessions", action: "new") ? 'active' : ' '} text-uppercase" %> 
-          <%= link_to "Sign Up",new_user_registration_path, class: "btn btn-white #{current_page?(controller: "registrations", action: "new") ? 'active' : ' '} ml-4 text-uppercase" %>
-        </div>
+        <%= render partial: 'shared/sign_in_links' %>
       <% end %>
-
+      </div>
     </div>
   </nav>
 </header>

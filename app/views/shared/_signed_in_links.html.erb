@@ -1,0 +1,47 @@
+<ul class="navbar-nav navbar-menu ml-auto">
+  <li class="nav-item <%#= current_page?(controller: "deliveries", action: "active") ? 'active' : ''%>">
+    <a class="nav-link" href="#">Active</a>
+  </li>
+  <li class="nav-item <%#= current_page?(controller: "deliveries", action: "past") ? 'active' : ''%>">
+    <a class="nav-link" href="#">Past</a>
+  </li>
+  <li class="nav-item <%#= current_page?(controller: "deliveries", action: "draft") ? 'active' : ''%>">
+    <a class="nav-link" href="<%= draft_deliveries_url %>">Draft</a>
+  </li>
+</ul>
+<div class="header-btns ml-auto d-flex justify-content-between mt-3 mt-lg-0 position-relative">
+  <%= link_to "New Delivery", deliveries_path,method: :post, class: "btn btn-white active text-uppercase" %>
+  <div class="dropdown dropdown-header p-0">
+    <button class="btn btn-white ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= current_user.email.split("@")[0].upcase %>
+    </button>
+    <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
+      <ul>
+        <li>
+          <div class="dropdown-menu-block">
+            <a class="dropdown-item" href="#">
+              <%= current_user.email %>
+            </a>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown-menu-block">
+            <%= link_to "New Delivery", deliveries_path,method: :post, class: "dropdown-item" %>
+            <%= link_to "View Deliveries", draft_deliveries_path, class: "dropdown-item" %>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown-menu-block">
+            <%= link_to "Edit Account", edit_user_registration_path,class: "dropdown-item" %>
+            <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+          </div>
+        </li>
+        <li>
+          <div class="dropdown-menu-block">
+            <a class="dropdown-item" href="#">Help</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="mt-4 mt-sm-5 singledropoff">
+  <div class="card card-dropOff">
+    <div class="card-header dropOff-heading d-flex align-items-center position-relative collapsed" id="headingOne" data-toggle="collapse" data-target="#collapseOne<%= f.object.id %>" aria-expanded="true" aria-controls="collapseOne">
+      <h4>
+        Drop Off
+        <!-- <span class="ml-3">1</span>  -->
+      </h4>
+    </div>
+
+      <div id="collapseOne<%= f.object.id %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body py-0">
+          <div class="row">
+            <div class="col col-12 col-md-6">
+              <div class="form-group">
+                <%= f.label :first_name, class: "form-label pl-md-3" %>
+                <%= f.text_field :first_name, autofocus: true, class: "form-control form-field-rounded" %>
+              </div>
+            </div>
+            <div class="col col-12 col-md-6">
+              <div class="form-group">
+                <%= f.label :last_name, class: "form-label pl-md-3" %>
+                <%= f.text_field :last_name,class: "form-control form-field-rounded" %>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-12 col-md-6">
+              <div class="form-group">
+                <%= f.label :address, class: "form-label pl-md-3" %>
+                <%= f.text_field :address,class: "form-control form-field-rounded", placeholder: "Enter drop of address" %>
+              </div>
+            </div>
+            <div class="col col-12 col-md-6">
+              <div class="form-group">
+                <%= f.label :phone_number, class: "form-label pl-md-3" %>
+                <%= f.number_field :phone_number,class: "form-control form-field-rounded", placeholder: "+355 69 2656 8 244" %>
+        
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col col-12">
+              <div class="form-group">
+                 <%= f.label :delivery_instructions,"Instructions", class: "form-label pl-md-3" %>
+                <%= f.number_field :delivery_instructions,class: "form-control form-field-rounded" %>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<%#= link_to_remove_association "remove task", f %>

@@ -13,3 +13,4 @@
 //= require rails-ujs
 //= require turbolinks
 //= require bootstrap.bundle.min.js
+//= require cocoon

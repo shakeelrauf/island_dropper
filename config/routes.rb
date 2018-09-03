@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  root 'home#index'
+  root 'deliveries#draft'
   resources :deliveries do
-    scope module: :deliveries do
-      resources :steps
+    collection do
+      get 'draft'
+      get 'active'
+      get 'past'
     end
+    resources :steps, controller: "deliveries/steps"
   end
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
