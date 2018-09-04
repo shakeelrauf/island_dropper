@@ -80,4 +80,21 @@
     var parent_div =  this.parent().parent();
     parent_div.addClass('active').siblings().removeClass('active');
   })
+  
+  $('.delivery-dropOff').on('cocoon:after-insert', function(e, inserted_item){
+      num = $('.dropoff-field').length;
+      inserted_item.find('.dropoff-field').html('Dropoff '+num);
+    }
+   ) 
+  $('.item-detail').on('cocoon:after-insert', function(e, inserted_item){
+      num = $('.item-h').length;
+      inserted_item.find('.item-h').html('Item '+num);
+    }
+   )
+  if($('.dropoff-field').length == 1){
+    $(".dropOff-heading").click();
+  };
+  if($('.item-h').length == 1){
+    $(".item-heading").click();
+  };
 </script>
