@@ -8,6 +8,7 @@ class Deliveries::StepsController < ApplicationController
 
 
   def show
+    return redirect_to root_path if @delivery.state == "active"
     @delivery.build_pickup if (@delivery.pickup == nil) and (step.to_s == "pickup")
     if step.to_s == "dropoff_items"
       @delivery.dropoffs.build  if @delivery.dropoffs.count == 0
@@ -17,6 +18,7 @@ class Deliveries::StepsController < ApplicationController
   end
 
   def update
+    return redirect_to root_path if @delivery.state == "active"
     @delivery.update(state: 'draft') and return redirect_to root_path if params[:commit] == "Save Draft"
     @delivery.update_attributes(delivery_params)
     if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
