@@ -28,7 +28,7 @@
               <div class="draft-item-main d-flex align-items-center justify-content-between justify-content-lg-around flex-column flex-sm-row mt-4 mt-lg-0 mb-3 mb-lg-0">
                 <div class="draft-item d-flex w-100-t mb-1 mb-sm-0">
                   <h4 class="draft-heading-m mr-3 mr-md-4">Name</h4>
-                  <p><%= (delivery.pickup.first_name + delivery.pickup.last_name).first(5) %>... </p>
+                  <p><%= delivery.pickup.present? ? (delivery.pickup.first_name + delivery.pickup.last_name).first(5) + '...' : '' %> </p>
                 </div>
                 <div class="draft-item d-flex w-100-t">
                   <h4 class="draft-heading-m mr-3 mr-md-4">Date Created</h4>
