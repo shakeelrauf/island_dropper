@@ -17,7 +17,7 @@ class Deliveries::StepsController < ApplicationController
   end
 
   def update
-    @delivery.update(state: 'draft') if params[:commit] == "Save Draft"
+    @delivery.update(state: 'draft') and return redirect_to root_path if params[:commit] == "Save Draft"
     @delivery.update_attributes(delivery_params)
     if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
       if check_for_calling_getswift(@delivery)
@@ -40,8 +40,11 @@ class Deliveries::StepsController < ApplicationController
 
   private
 
+  def parse_pre_order_date
+    delivery_params[:pre_order_date] = Date.strptime(delivery_params[:pre_order_date], "%m/%d/%y") if delivery_params[:pre_order_date].present?
+  end
   def delivery_params
-    params.require(:delivery).permit(:id, :delivery_id,:make_priority_or_preorder,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
+    params.require(:delivery).permit(:id, :delivery_id,:make_priority_or_preorder,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
   end
 
   def set_delivery
