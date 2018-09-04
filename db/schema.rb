@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180903222150) do
+ActiveRecord::Schema.define(version: 20180904152819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,15 @@ ActiveRecord::Schema.define(version: 20180903222150) do
     t.string "make_priority_or_preorder"
     t.string "reference_no"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
+  end
+
+  create_table "drivers", force: :cascade do |t|
+    t.string "driver_name"
+    t.string "driver_location"
+    t.integer "delivery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "reference_no"
   end
 
   create_table "dropoffs", force: :cascade do |t|

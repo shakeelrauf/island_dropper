@@ -19,5 +19,15 @@ module QueryBuilder
             }    
     query.to_json        
   end
+
+  def build_cancel_query(delivery_id,note)
+    query = {
+            "apiKey": ENV["GETSWIFT_API_KEY"],
+            "jobId": delivery_id,
+            "cancellationNotes": note
+            }  
+
+    query.to_json        
+  end
 end
 

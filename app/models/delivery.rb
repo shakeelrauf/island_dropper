@@ -5,6 +5,7 @@ class Delivery < ApplicationRecord
   has_one :pickup, dependent: :destroy
   has_many :items, dependent: :destroy
   has_many :dropoffs, dependent: :destroy
+  has_one :driver, dependent: :destroy
   scoped_search in: :pickup ,on: [:first_name,:last_name, :created_at]
   scope :draft, -> {where(state: "draft")}
   scope :active, -> {where(state: "active")}

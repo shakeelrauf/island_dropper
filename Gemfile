@@ -39,6 +39,7 @@ gem 'simple_form'
 gem "cocoon"
 gem "scoped_search"
 gem 'bootstrap-datepicker-rails'
+gem 'rack-cors', :require => 'rack/cors'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'dotenv-rails'

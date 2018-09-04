@@ -1,0 +1,45 @@
+<div class="dl-overflow">
+  <div class="card card-dl d-flex align-items-center justify-content-between">
+    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= @delivery['id'].first(5)%>" aria-expanded="true" aria-controls="collapseTwo">
+      <div class="dl-block-f dl-block-1 d-flex align-items-center">
+        <p class="dl-text"><%= @delivery["id"].first(6) %></p>
+      </div>
+      <div class="dl-block dl-block-2 d-flex align-items-center">
+        <p class="dl-text"><%= Date.parse(@delivery["created"]).strftime("%Y-%m-%d") %></p>
+      </div>
+      <div class="dl-block dl-block-3 d-flex align-items-center">
+        <p class="dl-text"><%= @delivery["pickupLocation"]["address"] %></p>
+      </div>
+      <div class="dl-block dl-block-4 d-flex align-items-center">
+        <p class="dl-text"><%= @delivery["dropoffLocation"]["address"] %></p>
+      </div>
+      <div class="dl-block dl-block-5 d-flex align-items-center">
+        <p class="dl-text">
+          <a target="_blank" rel="noopene" href="<%= @delivery["trackingUrls"]["www"] %>" class= "track-badge d-inline-block">Track</a>
+        </p>
+      </div>
+      <div class="dl-block dl-block-6 d-flex align-items-center">
+        <p class='dl-text dl-status dl-status-<%= ["Received","Accepted"].include?(@delivery["currentStatus"]) ? "enroute" : @delivery["currentStatus"] == "Completed" ? "complete" : @delivery["currentStatus"]== "cancelled" ? "cancel" : ""  %>'><%= ["Received","Accepted"].include?(@delivery["currentStatus"]) ? "enroute" : @delivery["currentStatus"] == "Completed" ? "completed" : ""  %>
+            
+        </p>
+      </div>
+    </div>
+    <div id="collapseTwo<%= @delivery['id'].first(5)%>" class="collapse w-100" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body driver-detail d-flex align-items-center justify-content-around">
+        <% if @delivery["driver"] != nil %>
+          <div class="driver-img">
+            <span class="d-inline-block d-flex align-items-center justify-content-center">
+              <img src="<%= @delivery['driver']['photoUrl']%>" alt="driver-IMG"></span>
+          </div>
+          <div class="driver-name">
+            <span class="d-inline-block">Driver: <%= @delivery['driver']['name'] %></span>
+          </div>
+          <div class="driver-contact">
+            <span class="d-inline-block">Contact: <%= @delivery['driver']['phone'] %></span>
+          </div>
+        <% end %>
+        <%= link_to 'x', cancel_delivery_url(@delivery["id"]), method: :post %>
+      </div>
+    </div>
+  </div>
+</div>

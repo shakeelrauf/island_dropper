@@ -12,5 +12,13 @@ module Getswift
     def self.all_bookings(query)
       @response = Request.where('api/v2/deliveries',query)
     end
+
+    def self.show_booking(delivery_id)
+      @response = Request.where("api/v2/deliveries/#{delivery_id}")
+    end
+
+    def self.cancel_booking(query={})
+      @response = Request.where("api/v2/deliveries/cancel",query, "post")
+    end
   end
 end
