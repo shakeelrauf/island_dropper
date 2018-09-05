@@ -4,17 +4,18 @@
       <div class="row">
         <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="border-box position-relative">
-            <h4 class="borderBox-heading m-0 font-weight-bold">Resend confirmation instructions</h4>
+            <h4 class="borderBox-heading m-0 font-weight-bold">Resend confirmation <br>Instructions</h4>
 
               <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-                <%= devise_error_messages! %>
 
                 <div class="form-group">
                   <%= f.label :email, class: "font-weight-bold form-label pl-md-3" %>
                   <%= f.email_field :email, autofocus: true, autocomplete: "email", value: session[:email],autocomplete: "email",class: "form-control form-field" %>
+                 <%= error_message_on(f.object, :email) %>
+
                 </div>
 
-                <div class="pl-3">
+                <div class="">
                   <%= f.submit "Resend confirmation instructions", class: "btn btn-white" %>
                 </div>
               <% end %>

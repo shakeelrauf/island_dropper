@@ -88,7 +88,7 @@
                         </p>
                       </div>
                       <div class="dl-block dl-block-6 d-flex align-items-center">
-                        <p class='dl-text dl-status dl-status-<%= ["Received","Accepted"].include?(response["currentStatus"]) ? "enroute" : response["currentStatus"] == "Completed" ? "complete" : response["currentStatus"]== "Cancelled" ? "cancel" : ""  %>'><%= ["Received","Accepted"].include?(response["currentStatus"]) ? "enroute" : response["currentStatus"] == "Completed" ? "completed" : response["currentStatus"]== "Cancelled" ? "cancel" : ""  %>
+                        <p class='dl-text dl-status dl-status-<%= ["Received","Accepted"].include?(response["currentStatus"]) ? "enroute" : response["currentStatus"] == "Completed" ? "complete" : response["currentStatus"]== "Cancelled" ? "cancel" : ""  %>'><%= ["Received","Accepted"].include?(response["currentStatus"]) ? "enroute" : response["currentStatus"] == "Completed" ? "completed" : response["currentStatus"]== "Cancelled" ? "cancelled" : ""  %>
                             
                         </p>
                       </div>

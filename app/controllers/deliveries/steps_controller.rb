@@ -16,7 +16,9 @@ class Deliveries::StepsController < ApplicationController
   def update
     return redirect_to root_path if @delivery.state == "active"
     if params[:commit] == "Save Draft"
-      @delivery.update(state: 'draft')
+      @delivery.attributes = delivery_params
+      @delivery.state = 'draft'
+      @delivery.save(validate: false)
       return redirect_to draft_deliveries_path
     end
     if @delivery.update_attributes(delivery_params)

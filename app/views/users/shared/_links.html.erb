@@ -23,11 +23,7 @@
   </p>
 <% end -%>
 
-<%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
-  <p class="mb-0">
-    <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name), class: "login-links" %>
-  </p>
-<% end -%>
+
 
 <%- if devise_mapping.omniauthable? %>
   <%- resource_class.omniauth_providers.each do |provider| %>

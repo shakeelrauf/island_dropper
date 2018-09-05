@@ -4,7 +4,7 @@
       <div class="d-flex mt-3 mt-md-4 mb-4 mb-sm-5">
         <a href="#" class="delivery-heading mb-3">Pick Up</a>
       </div>
-      <%= simple_form_for @delivery, url: wizard_path do |f| %>
+      <%= simple_form_for @delivery, url: wizard_path, html: {id: 'pickup-form'} do |f| %>
       <form class="delivery-form">
         <div class="deliveryAdd-fieldBlock">
           <%= f.fields_for :pickup do |ff| %>
@@ -81,4 +81,42 @@
     e.preventDefault();
     $("#calender_input").focus();
   })
+</script>
+
+
+<script type="text/javascript">
+
+  //form validation rules
+
+  $("#pickup-form").validate({
+      rules: {
+          "delivery[pickup_attributes][first_name]": {
+              required: true
+          },
+          "delivery[pickup_attributes][last_name]": {
+              required: true
+          },
+          "delivery[pickup_attributes][address]": {
+              required: true
+          },
+          "delivery[pickup_attributes][phone_number]": {
+              required: true,
+              number: true
+          }
+      },
+      messages: {
+          "delivery[pickup_attributes][first_name]": {
+              required: "Please provide First name."
+          },
+          "delivery[pickup_attributes][last_name]": {
+              required: "Please provide last name."
+          },
+          "delivery[pickup_attributes][address]": {
+              required: "Please provide address."
+          },
+          "delivery[pickup_attributes][phone_number]": {
+              required: "Please provide phone number."
+          }
+      }
+  });
 </script>

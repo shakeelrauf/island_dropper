@@ -1,11 +1,11 @@
 <ul class="navbar-nav navbar-menu ml-auto">
-  <li class="nav-item <%#= current_page?(controller: "deliveries", action: "active") ? 'active' : ''%>">
+  <li class="nav-item <%= current_page?(active_deliveries_url) ? 'active' : ''%>">
     <a class="nav-link" href="<%= active_deliveries_url %>">Active</a>
   </li>
-  <li class="nav-item <%#= current_page?(controller: "deliveries", action: "past") ? 'active' : ''%>">
+  <li class="nav-item <%= current_page?(past_deliveries_url) ? 'active' : ''%>">
     <a class="nav-link" href="<%= past_deliveries_url %>">Past</a>
   </li>
-  <li class="nav-item <%#= current_page?(controller: "deliveries", action: "draft") ? 'active' : ''%>">
+  <li class="nav-item <%= current_page?(draft_deliveries_url) ? 'active' : ''%>">
     <a class="nav-link" href="<%= draft_deliveries_url %>">Draft</a>
   </li>
 </ul>

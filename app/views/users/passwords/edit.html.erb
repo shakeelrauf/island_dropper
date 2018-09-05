@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="border-box position-relative">
-            <h4 class="borderBox-heading m-0 font-weight-bold">Change your password</h4>
+            <h4 class="borderBox-heading m-0 font-weight-bold">Change password</h4>
 
             <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
               <%= f.hidden_field :reset_password_token %>
@@ -21,9 +21,7 @@
                  <%= error_message_on(f.object, :password_confirmation) %>
               </div>
 
-              <div class="pl-3">
                 <%= f.submit "Change my password", class: "btn btn-white"  %>
-              </div>
             <% end %>
           </div>
 

@@ -14,3 +14,8 @@
  *= require bootstrap-datepicker
  *= require_self
  */
+
+label.error{
+  color: red;
+  padding: 3px;
+}

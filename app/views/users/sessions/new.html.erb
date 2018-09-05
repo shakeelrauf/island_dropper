@@ -5,7 +5,7 @@
         <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="border-box position-relative">
             <h4 class="borderBox-heading m-0 font-weight-bold">Log in</h4>
-            <%= form_for(resource, as: resource_name, url: session_path(resource_name), class: 'login-form') do |f| %>  
+            <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'login-form',id: 'login-form'}) do |f| %>  
               <div class="form-group">
                 <%= f.label :email, class: "font-weight-bold form-label pl-md-3" %>
                 <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control form-field" %>
@@ -33,14 +33,37 @@
           </div>
           <div class="px-5 mt-5 loginLinks-block">
             <%= render "users/shared/links" %>     
-            <p class="mb-0"><a href="#" class="login-links">Didn't receive confirmation instructions?</a></p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script type="text/javascript">
 
-    <script type="text/javascript">
-      $('.alert').fadeOut(10000);
-    </script>
+  //form validation rules
+
+  $("#login-form").validate({
+      rules: {
+          "user[email]": {
+              required: true,
+              email: true
+          },
+          "user[password]": {
+              required: true,
+              minlength: 6
+          }
+      },
+      messages: {
+          "user[password]": {
+              required: "Please provide a password",
+              minlength: "Your password must be at least 6 characters long"
+          },
+          "user[email]": "Please enter a valid email address"
+      }
+  });
+</script>
+
+<script type="text/javascript">
+  $('.alert').fadeOut(10000);
+</script>

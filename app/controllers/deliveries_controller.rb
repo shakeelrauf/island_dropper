@@ -11,15 +11,18 @@ class DeliveriesController < ApplicationController
   end
 
   def active
-    query = {"apiKey": ENV["GETSWIFT_API_KEY"]}
+    query = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": "Active"}
     @response = Getswift::Delivery.all_bookings(query)
   end
 
   def past
-    query = {"apiKey": ENV["GETSWIFT_API_KEY"]}
+    query = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": 'Successful'}
+    query2 = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": 'Cancelled'}
     query[:Reference] = params[:search][:Reference] if params[:search].present? and params[:search][:Reference].present? 
     query[:startDate] = params[:search][:startDate] if params[:search].present? and params[:search][:startDate].present? 
     @response = Getswift::Delivery.all_bookings(query)
+    @response2 = Getswift::Delivery.all_bookings(query2)
+    @response = @response.merge(@response2)
   end
 
   def show
