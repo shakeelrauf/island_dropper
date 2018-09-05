@@ -119,4 +119,12 @@
           }
       }
   });
+   $('.save_draft').click(function(e){
+    e.preventDefault()
+    var array =$('.dropOff-form').find("input");
+    array.toArray().forEach(function(ele){$(ele).rules('remove','required')});
+    $('.dropOff-form').find('input[name="commit"]').val("Save Draft")
+    $('.dropOff-form').submit()
+
+  })
 </script>
