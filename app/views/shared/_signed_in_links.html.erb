@@ -13,7 +13,7 @@
   <%= link_to "New Delivery", deliveries_path,method: :post, class: "btn btn-white active text-uppercase" %>
   <div class="dropdown dropdown-header p-0">
     <button class="btn btn-white ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <%= current_user.email.split("@")[0].upcase %>
+      <%= current_user.email.split("@")[0].first(8).upcase %>
     </button>
     <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
       <ul>
