@@ -11,14 +11,14 @@
 
               <div class="form-group">
                 <%= f.label :password, "New password", class: "font-weight-bold form-label pl-md-3" %>
-                <%= f.password_field :password, autofocus: true, autocomplete: "new-password",class: "form-control form-field"  %>
+                <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control form-field"  %>
                  <%= error_message_on(f.object, :password) %>
               </div>
 
               <div class="form-group">
                 <%= f.label :password_confirmation, "Confirm new password", class: "font-weight-bold form-label pl-md-3" %>
-                <%= f.password_field :password_confirmation, autocomplete: "off" %>
-                 <%= error_message_on(f.object, :password_confirmation), class: "form-control form-field"  %>
+                <%= f.password_field :password_confirmation, autocomplete: "off", class: "form-control form-field"  %>
+                 <%= error_message_on(f.object, :password_confirmation) %>
               </div>
 
               <div class="pl-3">
