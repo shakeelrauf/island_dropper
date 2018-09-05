@@ -9,28 +9,27 @@ class Deliveries::StepsController < ApplicationController
 
   def show
     return redirect_to root_path if @delivery.state == "active"
-    @delivery.build_pickup if (@delivery.pickup == nil) and (step.to_s == "pickup")
-    if step.to_s == "dropoff_items"
-      @delivery.dropoffs.build  if @delivery.dropoffs.count == 0
-      @items = @delivery.items.build if @delivery.items.count == 0
-    end
+    build_associations!
     render_wizard
   end
 
   def update
     return redirect_to root_path if @delivery.state == "active"
-    @delivery.update(state: 'draft') and return redirect_to root_path if params[:commit] == "Save Draft"
-    @delivery.update_attributes(delivery_params)
-    if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
-      if check_for_calling_getswift(@delivery)
-        query = build_query(@delivery)
-        response = Getswift::Delivery.add_booking(@delivery,query)
-        flash[:success] = "Succesfully sent"
-        return redirect_to root_path
-      else
-        flash[:error] = "Reuest failed!! Complete the form."
-        return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
+    @delivery.update(state: 'draft') and return redirect_to draft_deliveries_path if params[:commit] == "Save Draft"
+    if @delivery.update_attributes(delivery_params)
+      if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
+        if check_for_calling_getswift(@delivery)
+          query = build_query(@delivery)
+          response = Getswift::Delivery.add_booking(@delivery,query)
+          flash[:success] = "Succesfully sent"
+          return redirect_to root_path
+        else
+          flash[:error] = "Reuest failed!! Complete the form."
+          return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
+        end
       end
+    else
+      build_associations!
     end
     render_wizard @delivery
   end
