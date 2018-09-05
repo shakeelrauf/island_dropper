@@ -1,0 +1,63 @@
+<div class="mt-4 pt-sm-2">
+  <div class="card card-item">
+    <div class="card-header dropOff-heading d-flex align-items-center position-relative collapsed" id="headingThree" data-toggle="collapse" data-target="#collapseThree<%= f.object.id %>" aria-expanded="true" aria-controls="collapseThree">
+      <h4 class="item-h">
+        Item <%= index + 1 %>
+        <!-- <span class="ml-3">1</span>  -->
+      </h4>
+    </div>
+
+    <div id="collapseThree<%= f.object.id %>" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body pt-0 pb-4">
+        <div class="row item-size-main align-items-center">
+          <div class="col col-12 col-md-4 col-lg-5">
+            <div class="dropOff-heading">
+              <h5 class="item-heading-m mb-4 mb-md-3 pb-md-3">Item size</h5>
+            </div>
+          </div>
+          <div class="col col-12 col-md-8 col-lg-7">
+            <div class="item-size-box d-flex justify-content-between">
+              <div class="item-size d-flex align-items-center justify-content-center mr-2 mr-sm-4 active">
+                <%= f.label :size, :value => "s", class: "radiobtn-field float-left mr-5" do %>S
+                  <%= f.radio_button :size, "s" , checked: true %>
+              <% end %>
+              </div>
+              <div class="item-size d-flex align-items-center justify-content-center mr-2 mr-sm-4 ">
+                <%= f.label :size, :value => "m", class: "radiobtn-field float-left mr-5" do %>M
+                  <%= f.radio_button :size, "m"  %>
+              <% end %>
+              </div>
+              <div class="item-size d-flex align-items-center justify-content-center mr-2 mr-sm-4 ">
+                <%= f.label :size, :value => "l", class: "radiobtn-field float-left mr-5" do %>L
+                  <%= f.radio_button :size, "l"  %>
+              <% end %>
+              </div>
+              <div class="item-size d-flex align-items-center justify-content-center mr-2 mr-sm-4 ">
+                <%= f.label :size, :value => "f", class: "radiobtn-field float-left mr-5" do %>
+                  <%= f.radio_button :size, "f"  %>F
+              <% end %>
+              </div>
+            </div>
+            <div class="item-size-example">example: one large luggage</div>
+          </div>
+        </div>
+        <div class="row item-descrip align-items-center">
+          <div class="col col-12 col-md-4 col-lg-5">
+            <h5 class="deliveryItem-heading-m mb-4 mb-md-0">Item description</h5>
+          </div>
+          <div class="col col-12 col-md-8 col-lg-7">
+            <div class="form-group mb-0">
+              <%= f.text_field :description,class: "form-control form-field-rounded"%>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(".item-size").on("click", function(){
+    $(this).addClass("active").siblings().removeClass("active");
+  })
+</script>

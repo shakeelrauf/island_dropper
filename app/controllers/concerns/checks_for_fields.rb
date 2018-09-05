@@ -16,4 +16,12 @@ module ChecksForFields
     return false if (model.attributes.values.include?(nil) or model.attributes.values.include?(""))
     return true
   end
+
+  def build_associations!
+    @delivery.build_pickup if (@delivery.pickup == nil) and (step.to_s == "pickup")
+    if step.to_s == "dropoff_items"
+      @delivery.dropoffs.build  if @delivery.dropoffs.count == 0
+      @items = @delivery.items.build if @delivery.items.count == 0
+    end
+  end
 end
