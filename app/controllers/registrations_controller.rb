@@ -17,7 +17,7 @@ class RegistrationsController < Devise::RegistrationsController
         end
       else
         session[:email] = resource.email 
-        flash[:error] = "Confirm Account!"
+        flash[:error] = "Confirmation link has been sent to your email address."
         redirect_to new_user_confirmation_path
       end
     else
