@@ -15,7 +15,10 @@ class Deliveries::StepsController < ApplicationController
 
   def update
     return redirect_to root_path if @delivery.state == "active"
-    @delivery.update(state: 'draft') and return redirect_to draft_deliveries_path if params[:commit] == "Save Draft"
+    if params[:commit] == "Save Draft"
+      @delivery.update(state: 'draft')
+      return redirect_to draft_deliveries_path
+    end
     if @delivery.update_attributes(delivery_params)
       if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
         if check_for_calling_getswift(@delivery)
