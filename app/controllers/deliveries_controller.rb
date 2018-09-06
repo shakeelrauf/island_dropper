@@ -32,8 +32,15 @@ class DeliveriesController < ApplicationController
   def cancel
     query = build_cancel_query(params[:id],params[:note])
     @delivery = Getswift::Delivery.cancel_booking(query)
-    flash[:success] = @delivery["message"]
-    redirect_to active_deliveries_path
+    if @delivery["message"].present? 
+      flash[:success] = @delivery["message"]
+      redirect_to active_deliveries_path
+    else
+      delivery = Delivery.where(reference_no: params[:id]).first
+      delivery.update(status: "cancelled") if delivery.present?
+      flash[:success] = @delivery["message"]
+      redirect_to active_deliveries_path
+    end
   end
 
   def complete
