@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :webhooks do
     collection do 
       post 'job_accept'
+      post 'job_cancelled'
     end
   end
   devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'}
