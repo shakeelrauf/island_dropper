@@ -1,0 +1,138 @@
+<div class="off-canvas">
+  <div class="deliveryListing-canvas">
+    <div class="container">
+      <div class="d-flex justify-content-between content-search">
+        <div class="btn-group btn-group-delivery" role="group" aria-label="Basic example">
+          <button class="btn btn-new text-uppercase" type="button">New</button>
+          <button class="btn btn-trash" type="button">
+            <span>
+              <%= image_tag "garbage.png" , width: "20" %>
+            </span>
+          </button>
+        </div>
+        <%= simple_form_for :search , url: past_deliveries_path ,html: {class: "form-inline"} , method: :get do |f| %>
+          <div class="form-group search-group m-0">
+            <%= f.input :query ,input_html: {class: "form-control search-field text-uppercase"},placeholder: "Search", label: false %>
+          </div>
+          <div class="dropdown dropdown-header p-0">
+            <button class="btn btn-menu ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= image_tag 'menu-icon.png', alt: "menu-IMG", width: "24" %>
+            </button>
+            <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
+            </div>
+          </div>
+          <% f.submit %>
+        <% end %>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <div class="deliveryListing-content pt-3">
+        <div class="row">
+          <div class="col col-12 col-lg-8">
+            <div class="delivery-listing">
+              <div class="dl-overflow">
+                <div class="dl-head position-relative d-flex align-items-center justify-content-between">
+                  <div class="dl-block dl-block-1 d-flex align-items-center">
+                    <h5 class="dl-heading">
+                      Ref
+                      <span class="d-inline-block ml-2">
+                        <%= image_tag('sort.png',alt: 'sort-IMG') %>
+                      </span>
+                    </h5>
+                  </div>
+                  <div class="dl-block dl-block-2 d-flex align-items-center">
+                    <h5 class="dl-heading">
+                      Date
+                      <span class="d-inline-block ml-2">
+                        <%= image_tag('sort.png',alt: 'sort-IMG') %></span>
+                    </h5>
+                  </div>
+                  <div class="dl-block dl-block-3 d-flex align-items-center">
+                    <h5 class="dl-heading">From</h5>
+                  </div>
+                  <div class="dl-block dl-block-4 d-flex align-items-center">
+                    <h5 class="dl-heading">Destination</h5>
+                  </div>
+                  <div class="dl-block dl-block-5 d-flex align-items-center">
+                    <h5 class="dl-heading">Tracking</h5>
+                  </div>
+                  <div class="dl-block dl-block-6 d-flex align-items-center">
+                    <h5 class="dl-heading">
+                      Status
+                      <span class="d-inline-block ml-2">
+                        <%= image_tag('sort.png',alt: 'sort-IMG') %></span>
+                    </h5>
+                  </div>
+                </div>
+              </div>
+              <div class="dl-main">
+                <% @deliveries.each do |delivery| %>
+                <div class="dl-overflow">
+                  <div class="card card-dl d-flex align-items-center justify-content-between">
+                    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= delivery.id %>" aria-expanded="true" aria-controls="collapseTwo">
+                      <div class="dl-block-f dl-block-1 d-flex align-items-center">
+                        <p class="dl-text"><%= delivery.reference_no.present? ? delivery.reference_no.first(6) : ''%></p>
+                      </div>
+                      <div class="dl-block dl-block-2 d-flex align-items-center">
+                        <p class="dl-text"><%= delivery.created_at.strftime("%Y-%m-%d") %></p>
+                      </div>
+                      <div class="dl-block dl-block-3 d-flex align-items-center">
+                        <p class="dl-text"><%= delivery.pickup.present? ? delivery.pickup.address : '' %></p>
+                      </div>
+                      <div class="dl-block dl-block-4 d-flex align-items-center">
+                        <p class="dl-text"><%= delivery.dropoffs.first.present? ? delivery.dropoffs.first.address : '' %></p>
+                      </div>
+                      <div class="dl-block dl-block-5 d-flex align-items-center">
+                        <p class="dl-text">
+                          <a target="_blank" rel="noopene" href="<%= delivery.tracking_url %>" class= "track-badge d-inline-block">Track</a>
+                        </p>
+                      </div>
+                      <div class="dl-block dl-block-6 d-flex align-items-center">
+                        <p class='dl-text dl-status dl-status-<%= ["accepted","active","driveratpickup", "onway", "driveratdropoff"].include?(delivery.state) ? "enroute" : [ "completed"].include?(delivery.state) ? "complete" : delivery.state == "cancelled" ? "cancel" : ""  %>'><%= ["accepted","active","driveratpickup", "onway", "driveratdropoff"].include?(delivery.state) ? "enroute" : [ "completed"].include?(delivery.state) ? "complete" : delivery.state == "cancelled" ? "cancelled" : ""    %>
+                          
+                        </p>
+                      </div>
+                    </div>
+                    <div id="collapseTwo<%= delivery.id %>" class="collapse w-100" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                      <div class="card-body driver-detail d-flex align-items-center justify-content-around">
+                        <% if delivery.driver.present? %>
+                          <div class="driver-img">
+                            <span class="d-inline-block d-flex align-items-center justify-content-center">
+                              <img src="<%= delivery.driver.photo_url %>" alt="driver-IMG"></span>
+                          </div>
+                          <div class="driver-name">
+                            <span class="d-inline-block">Driver: <%= delivery.driver.driver_name %></span>
+                          </div>
+                          <div class="driver-contact">
+                            <span class="d-inline-block">Contact: <%= delivery.driver.phone_number %></span>
+                          </div>
+                      <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+          <div class="col col-12 col-lg-4">
+            <div class="deliveryListing-search mt-5 mt-lg-0">
+
+              <%= simple_form_for :search , url: past_deliveries_path, method: :get do |f| %>
+                <div class="form-group form-group-id">
+                  <label class="form-label pl-md-2">Reference</label>
+                  <%= f.input :Reference, input_html: {class: "form-control form-field"}, label: false %>
+                </div>
+                <div class="form-group form-group-id">
+                  <label class="form-label pl-md-2">Date Range</label>
+                  <%= f.input :startDate, input_html: {class: "form-control form-field"}, label: false %>
+                </div>
+                <%= f.submit "Search" , class: "btn btn-green text-uppercase w-100" %>
+              <% end %>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

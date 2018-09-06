@@ -18,4 +18,5 @@
 label.error{
   color: red;
   padding: 3px;
+  float: right;
 }

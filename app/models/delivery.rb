@@ -7,12 +7,14 @@ class Delivery < ApplicationRecord
   has_many :items,    dependent: :destroy
   has_many :dropoffs, dependent: :destroy
   has_one  :driver,   dependent: :destroy
+  has_many  :locations,   dependent: :destroy
 
   scoped_search in: :pickup ,on: [:first_name,:last_name, :created_at]
   
   scope :draft,  -> {where(state: "draft")}
   scope :active, -> {where(state: "active")}
   scope :past,   -> {where(state: "past")}
+  scope :search_with_reference_and_created_at, -> (start_date=nil,end_date=nil,reference_no=nil) {where("( created_at > ? OR created_at < ?) OR reference_no LIKE '%?%' ",start_date,end_date, reference_no)}
 
   accepts_nested_attributes_for :pickup,    reject_if: :all_blank,   allow_destroy: true
   accepts_nested_attributes_for :items,     reject_if: :all_blank,   allow_destroy: true
@@ -33,6 +35,13 @@ class Delivery < ApplicationRecord
       s.validates :pre_order_date, presence:  true
     end
   end
+
+
+  def self.created_at_search(search,date=nil, state)
+    wildcard_search = "%#{search}%"
+    where(" (created_at > ?  OR reference_no LIKE ?) AND state IN (?)", date,  wildcard_search,state)
+  end
+
 
   def self.pickup_first_name
     self.pickup.first_name

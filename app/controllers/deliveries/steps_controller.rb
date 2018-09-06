@@ -26,8 +26,13 @@ class Deliveries::StepsController < ApplicationController
         if check_for_calling_getswift(@delivery)
           query = build_query(@delivery)
           response = Getswift::Delivery.add_booking(@delivery,query)
-          flash[:success] = "Succesfully sent"
-          return redirect_to root_path
+          if response[:errors].present?
+            flash[:success] = response[:errors][:message]
+            return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
+          else
+            flash[:success] = "Successfully Requested!!"
+            return redirect_to root_path
+          end
         else
           flash[:error] = "Reuest failed!! Complete the form."
           return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)

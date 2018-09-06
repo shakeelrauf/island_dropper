@@ -17,6 +17,12 @@ Rails.application.routes.draw do
     collection do 
       post 'job_accept'
       post 'job_cancelled'
+      post 'job_cclosed'
+      post 'job_completed'
+      post 'job_driveratpickup'
+      post 'job_onway'
+      post 'job_driveratdropoff'
+      post 'job_abandoned'
     end
   end
   devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'}
