@@ -1,10 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
-
     resource.save
     yield resource if block_given?
     if resource.persisted?
+      resource.roles <<  Role.where(title: 'user').first
       if resource.confirmed?
         if resource.active_for_authentication?
           set_flash_message! :notice, :signed_up
@@ -25,5 +25,21 @@ class RegistrationsController < Devise::RegistrationsController
       set_minimum_password_length
       respond_with resource
     end
+  end
+
+  private
+  def sign_up_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+  end
+  def after_update_path_for(resource)
+    if resource.role == 'admin'
+      admin_dashboard_path
+    else 
+      user_path(resource)
+    end
+  end
+
+  def account_update_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :current_password)
   end
 end

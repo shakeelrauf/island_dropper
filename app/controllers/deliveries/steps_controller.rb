@@ -19,6 +19,7 @@ class Deliveries::StepsController < ApplicationController
       @delivery.attributes = delivery_params
       @delivery.state = 'draft'
       @delivery.save(validate: false)
+      flash[:success] = "Your information has been saved successfully to draft"
       return redirect_to draft_deliveries_path
     end
     if @delivery.update_attributes(delivery_params)

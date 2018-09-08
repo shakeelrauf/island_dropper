@@ -42,6 +42,11 @@ class Delivery < ApplicationRecord
     where(" (created_at > ?  OR reference_no LIKE ?) AND state IN (?)", date,  wildcard_search,state)
   end
 
+  def self.search_for_reference(search)
+    wildcard_search = "%#{search}%"
+    where("reference_no LIKE ? ", wildcard_search)
+  end
+
 
   def self.pickup_first_name
     self.pickup.first_name

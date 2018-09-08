@@ -12,7 +12,7 @@
         </div>
         <%= simple_form_for :search , url: past_deliveries_path ,html: {class: "form-inline"} , method: :get do |f| %>
           <div class="form-group search-group m-0">
-            <%= f.input :query ,input_html: {class: "form-control search-field text-uppercase"},placeholder: "Search", label: false %>
+            <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control search-field text-uppercase"},placeholder: "Search", label: false %>
           </div>
           <div class="dropdown dropdown-header p-0">
             <button class="btn btn-menu ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,7 +66,7 @@
                 </div>
               </div>
               <div class="dl-main">
-                <% @deliveries.each do |delivery| %>
+                <%  @deliveries.each do |delivery| %>
                 <div class="dl-overflow">
                   <div class="card card-dl d-flex align-items-center justify-content-between">
                     <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= delivery.id %>" aria-expanded="true" aria-controls="collapseTwo">
@@ -114,7 +114,9 @@
                 <% end %>
               </div>
             </div>
+             <%= will_paginate @deliveries, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
           </div>
+
           <div class="col col-12 col-lg-4">
             <div class="deliveryListing-search mt-5 mt-lg-0">
 
@@ -136,3 +138,9 @@
     </div>
   </div>
 </div>
+<style type="text/css">
+.page-item:active{
+
+  background: #70af44 !impotant;
+}
+</style>

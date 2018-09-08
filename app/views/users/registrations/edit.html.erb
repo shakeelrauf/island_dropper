@@ -17,6 +17,16 @@
                 <% end %>
               </div>
               <div class="form-group">
+                <%= f.label :first_name, class: "font-weight-bold form-label pl-md-3" %>
+                <%= f.text_field :first_name,class: "form-control form-field" %>
+                 <%= error_message_on(f.object, :first_name) %>
+              </div>
+              <div class="form-group">
+                <%= f.label :last_name, class: "font-weight-bold form-label pl-md-3" %>
+                <%= f.text_field :last_name, class: "form-control form-field" %>
+                 <%= error_message_on(f.object, :last_name) %>
+              </div>
+              <div class="form-group">
                 <%= f.label :password , class: "font-weight-bold form-label pl-md-3" %> <i>(leave blank if you don't want to change it)</i>
                 <%= f.password_field :password, autocomplete: "new-password", class: "form-control form-field" %>
                  <%= error_message_on(f.object, :password) %>

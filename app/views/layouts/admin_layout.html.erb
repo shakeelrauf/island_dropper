@@ -12,7 +12,7 @@
 
   <body>
     <div class="off-canvas-container">
-      <%= render partial:  'shared/header' %>
+      <%= render partial:  'admin/shared/header' %>
       <% flash.each do |key, value| %>
         <% if value.present? %>
           <div class="alert alert-<%= key %>" role="alert">
@@ -23,10 +23,19 @@
           </div>
         <% end %>
       <% end %>
-      <%= yield %>
-      <% if current_user && !current_user.role == 'admin' %>
-        <%= render partial:  'shared/footer' %>
-      <% end %>
+      <div class="off-canvas admin-off-canvas">
+        <div class="dashboard-canvas">
+          <div class="container">
+            <div class="dashboard-content">
+              <div class="row">
+                <%= render partial:  'admin/shared/side_bar' %>
+                <%= yield %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <%= render partial:  'shared/footer' %> -->
     </div>
     <script type="text/javascript">
       $('.alert').fadeOut(3000);

@@ -32,7 +32,7 @@ class DeliveriesController < ApplicationController
       params[:search][:startDate]=nil if !params[:search][:startDate].present? 
       @deliveries = Delivery.created_at_search(params[:search][:Reference],params[:search][:startDate],['completed','cancelled']).order(created_at: :desc)
     else
-      @deliveries = current_user.deliveries.includes([:driver,:pickup,:dropoffs]).where('state IN (?)', ['cancelled','completed']).order(created_at: :desc)
+      @deliveries = current_user.deliveries.includes([:driver,:pickup,:dropoffs]).where('state IN (?)', ['cancelled','completed']).paginate(:page => params[:page], :per_page => 1).order(created_at: :desc)
     end
     # @response2 = Getswift::Delivery.all_bookings(query2)
     # @response = @response.merge(@response2)

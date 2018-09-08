@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'dashboard/index'
+  end
+
   root 'deliveries#draft'
   resources :deliveries do
     collection do
@@ -24,6 +28,13 @@ Rails.application.routes.draw do
       post 'job_driveratdropoff'
       post 'job_abandoned'
     end
+  end
+  namespace :admin do
+    get 'dashboard'
+    get 'delivery_jobs'
+    get 'pricing'
+    get 'user_accounts'
+    get 'data_query'
   end
   devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

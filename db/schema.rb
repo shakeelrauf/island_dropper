@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180905084807) do
+ActiveRecord::Schema.define(version: 20180908224609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "deliveries", force: :cascade do |t|
     t.string "b_id"
-    t.string "status"
     t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -26,6 +25,7 @@ ActiveRecord::Schema.define(version: 20180905084807) do
     t.string "state", default: "new"
     t.string "make_priority_or_preorder"
     t.string "reference_no"
+    t.string "tracking_url"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
   end
 
@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(version: 20180905084807) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "reference_no"
+    t.string "phone_number"
+    t.string "email"
+    t.string "photo_url"
   end
 
   create_table "dropoffs", force: :cascade do |t|
@@ -47,6 +50,8 @@ ActiveRecord::Schema.define(version: 20180905084807) do
     t.bigint "delivery_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "latitude"
+    t.string "longitude"
     t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
   end
 
@@ -59,12 +64,29 @@ ActiveRecord::Schema.define(version: 20180905084807) do
     t.index ["delivery_id"], name: "index_items_on_delivery_id"
   end
 
+  create_table "locations", force: :cascade do |t|
+    t.string "longitude"
+    t.string "latitude"
+    t.integer "delivery_id"
+    t.string "when_state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "pickups", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "address"
     t.string "phone_number"
     t.integer "delivery_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "latitude"
+    t.string "longitude"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -81,9 +103,16 @@ ActiveRecord::Schema.define(version: 20180905084807) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.string "first_name"
+    t.string "last_name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   add_foreign_key "deliveries", "users"

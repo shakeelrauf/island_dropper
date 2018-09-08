@@ -1,6 +1,6 @@
 class Pickup < ApplicationRecord
+  include Geolocation
   belongs_to :delivery
-
   # include Form
   # include CheckField
   # validate do |pickup|
@@ -9,6 +9,7 @@ class Pickup < ApplicationRecord
   # cattr_accessor :form_steps do
   #   %w[pickup dropoff_items]
   # end
+
 
   # attr_accessor :form_step
 

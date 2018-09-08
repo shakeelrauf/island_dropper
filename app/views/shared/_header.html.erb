@@ -1,7 +1,7 @@
 <header class="header">
   <nav class="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-md-0">
     <div class="container">
-      <a class="navbar-brand p-0" href="<%= root_url %>">
+      <a class="navbar-brand p-0" href="<%= current_user.present? ? current_user.role=='admin' ? admin_dashboard_url : current_user.role=='user' ?  root_url : '' : root_url %>">
         <%= image_tag 'logo.png', width: "146", alt: "logo-IMG"%>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
