@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def check_for_role(user)
     if !user.roles.present?
-      user.role_ids = [Role.where(titile: 'user')]
+      user.role_ids = [Role.where(title: 'user')]
     end
   end  
 end
