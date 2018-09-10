@@ -3,9 +3,9 @@
 	<head>
 		<title>Island Dropper</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-		<link rel="stylesheet" href="css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<%= stylesheet_link_tag 'font-awesome.min.css' %>
+		<%= stylesheet_link_tag 'bootstrap.min.css' %>
+		<%= stylesheet_link_tag 'style.css' %>
 	</head>
 	<body>
 
@@ -17,13 +17,13 @@
 						<h1>500</h1>
 						<h2>Internal Server Error</h2>
 						<p>Sorry, Something went wrong</p>
-						<a href="#" class="back-home d-inline-block">Back to home page</a>
+						<a href="/" class="back-home d-inline-block">Back to home page</a>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="js/bootstrap.bundle.min.js"></script>
+		<%= javascript_tag "https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" %>
+		<%= javascript_tag "bootstrap.bundle.min.js" %>
 	</body>
 </html>
