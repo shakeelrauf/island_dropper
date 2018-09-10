@@ -1,6 +1,10 @@
 class Pickup < ApplicationRecord
   include Geolocation
   belongs_to :delivery
+
+  def full_name
+    "#{self.first_name}" + "#{self.last_name}"
+  end
   # include Form
   # include CheckField
   # validate do |pickup|

@@ -10,7 +10,7 @@ class Delivery < ApplicationRecord
   has_many  :locations,   dependent: :destroy
 
   scoped_search in: :pickup ,on: [:first_name,:last_name, :created_at]
-  
+  attr_accessor :card_token
   scope :draft,  -> {where(state: "draft")}
   scope :active, -> {where(state: "active")}
   scope :past,   -> {where(state: "past")}
@@ -21,7 +21,7 @@ class Delivery < ApplicationRecord
   accepts_nested_attributes_for :dropoffs,  reject_if: :all_blank,   allow_destroy: true
   
   cattr_accessor :form_steps do
-    %w[pickup dropoff_items]
+    %w[pickup dropoff_items checkout]
   end
 
   attr_accessor :form_step
@@ -30,8 +30,8 @@ class Delivery < ApplicationRecord
     # step.validate :pickup do |p|
     #   step.errors.add(:base, 'An pickup must have a first name.') unless p.pickup.first_name?
     # end 
-    step.validates_inclusion_of :make_priority_or_preorder, :in => ["make-priority", "pre-order"], :message => 'requires an answer'
-    with_options if: -> { make_priority_or_preorder == "pre-order" } do |s|
+    step.validates_inclusion_of :pre_order, :in => [true,false], :message => 'requires an answer'
+    with_options if: -> { pre_order == true } do |s|
       s.validates :pre_order_date, presence:  true
     end
   end

@@ -8,6 +8,6 @@ module FormError
    private
 
    def field_errors(object, method)
-     "#{method.to_s.capitalize} "+ object.errors[method].first
+     "#{method.to_s.split('_').map(&:capitalize).join(' ')} "+ object.errors[method].first
    end
 end

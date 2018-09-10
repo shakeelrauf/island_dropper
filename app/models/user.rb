@@ -5,7 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :deliveries , dependent: :destroy 
-
+  validates :first_name, presence: true
+  validates :last_name, presence: true
   scoped_search on: [:first_name,:last_name]
   has_and_belongs_to_many :roles, join_table: 'users_roles'
 
