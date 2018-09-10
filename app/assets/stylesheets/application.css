@@ -20,3 +20,8 @@ label.error{
   padding: 3px;
   float: right;
 }
+label.capitalize { text-transform: capitalize; }
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}

@@ -38,19 +38,21 @@
   font-weight: 300;
   font-style: normal;
 }
+@import url('https://fonts.googleapis.com/css?family=Satisfy');
+
 body {
   font-family: 'Myriad Pro';
   color: #201f1f;
 }
 ul {
-	padding: 0;
-	margin: 0;
+  padding: 0;
+  margin: 0;
 }
 ul li {
-	list-style: none;
+  list-style: none;
 }
 img {
-	max-width: 100%;
+  max-width: 100%;
 }
 button:focus,
 button.btn:hover,
@@ -96,6 +98,9 @@ header
 =======================================================
 */
 
+.header .navbar {
+  min-height: 125px;
+}
 .header .btn-white {
   color: #201f1f;
 }
@@ -1968,6 +1973,126 @@ user accounts
 
 
 
+
+
+/*
+=======================================================
+email confirmation
+=======================================================
+*/
+
+
+.emailConfirmation-canvas {
+  margin: 15px 0;
+}
+.emailConfirmation-content .admin-heading {
+  font-size: 1.125rem;
+}
+.emailConfirm-link {
+  color: #70af44;
+  font-weight: 600;
+}
+.emailConfirm-link:hover,
+.emailConfirm-link:focus {
+  color: #70af44;
+}
+
+
+
+/*
+=======================================================
+email confirmation
+=======================================================
+*/
+
+
+
+
+
+
+
+
+/*
+=======================================================
+404
+=======================================================
+*/
+
+
+
+
+.page-notFound {
+  min-height: calc(100vh - 35px);
+  margin: 1rem 0;
+}
+.notFound-detail h1{
+  font-family: 'Satisfy', cursive;
+  color: #70af44;
+  font-weight: 700;
+  font-size: 11rem;
+  margin: 10px 0px 30px 0px;
+  letter-spacing: 3px;
+  line-height: 170px;
+}
+.notFound-detail h2 {
+  font-family: 'Satisfy', cursive;
+  color: #70af44;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-size: 1.65rem;
+}
+.notFound-detail p {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.back-home {
+  color: #70af44;
+  font-weight: 500;
+  font-size: 1.15rem;
+  font-family: 'Satisfy', cursive;
+}
+.back-home:hover,
+.back-home:focus {
+  color: #70af44;
+}
+@media all and (-ms-high-contrast:none) {
+ .page-notFound,
+ .page-notFound::-ms-backdrop { 
+    margin-top: 100px;
+    min-height: 100px;
+  }
+}
+
+
+
+
+
+
+
+/*
+=======================================================
+404
+=======================================================
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (min-width: 992px) {
   .navbar-menu li a {
     border-left: 3px solid #70af44;
@@ -1996,6 +2121,23 @@ user accounts
   }
   .dashboard-main .row .col .dashboard-row:first-child {
     min-height: 240px;
+  }
+  .emailConfirmation-content .emailConfirmation-logo {
+    min-height: 245px;
+  }
+  .emailConfirmation-content .emailConfirmation-logo:after {
+    content: '';
+    background-color: #201f1f;
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .emailConfirmation-canvas {
+    margin: 30px 0px 50px 0px;
   }
 }
 @media (min-width: 576px) {
@@ -2114,6 +2256,10 @@ user accounts
   }
   .pricing-text {
     margin-bottom: 1px;
+  }
+  .notFound-detail h1 {
+    font-size: 9rem;
+    line-height: 140px;
   }
 }
 

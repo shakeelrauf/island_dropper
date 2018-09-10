@@ -16,3 +16,4 @@
 //= require cocoon
 //= require bootstrap-datepicker
 //= require jquery.validate
+//= require card.js
