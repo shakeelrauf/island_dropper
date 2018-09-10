@@ -1,0 +1,263 @@
+
+<div class="off-canvas">
+	<div class="checkOut-canvas">
+		<div class="container">
+			<div class="checkOut-content my-3">
+				<div class="row">
+					<div class="col col-12 col-lg-8">
+						<div class="checkOut-container delivery-checkOut">
+							<div class="checkOut-box">
+								<div id="carouselExampleControls" class="carousel carousel-checkout slide" data-ride="carousel" data-interval="false">
+								  <div class="carousel-inner">
+								    <% @delivery.dropoffs.each.with_index do |d,i| %>
+								    <div class="carousel-item <%= i==0 ? 'active' : '' %>">
+								      <div class="checkOut-delivery">
+												<div class="checkOut-heading checkOut-heading-f position-relative">
+													<h3>Delivery <%= i + 1 %></h3>
+												</div>
+												<div class="row px-md-3">
+													<div class="col col-12 col-sm-6">
+														<div class="checkOut-inner checkOut-pickUp">
+															<div class="checkOut-inner-head">
+																<h5>Pick up</h5>
+																<h5><span class="d-inline-block mr-1">
+																	<%= image_tag "calendar-black.png", alt: "calender-IMG", width: '14' %>
+																</span> Thu Aug 16</h5>
+															</div>
+															<div class="checkOut-inner-detail">
+																<div class="d-flex align-items-center">
+																	<h6 class="checkOut-inner-f mb-0">Name</h6>
+																	<h6 class="checkOut-inner-l mb-0"><%= @delivery.pickup.full_name %></h6>
+																</div>
+																<div class="d-flex align-items-center">
+																	<h6 class="checkOut-inner-f mb-0">Address</h6>
+																	<h6 class="checkOut-inner-l mb-0"><%= @delivery.pickup.address %></h6>
+																</div>
+																<div class="d-flex align-items-center">
+																	<h6 class="checkOut-inner-f mb-0">Contact</h6>
+																	<h6 class="checkOut-inner-l mb-0"><%= @delivery.pickup.phone_number %></h6>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col col-12 col-sm-6">
+														<div class="checkOut-inner checkOut-dropOff">
+															<div class="checkOut-inner-head">
+																<h5>Drop off</h5>
+															</div>
+															<div class="checkOut-inner-detail">
+																<div class="d-flex align-items-center">
+																	<h6 class="checkOut-inner-f mb-0">Name</h6>
+																	<h6 class="checkOut-inner-l mb-0"><%= d.full_name %></h6>
+																</div>
+																<div class="d-flex align-items-center">
+																	<h6 class="checkOut-inner-f mb-0">Address</h6>
+																	<h6 class="checkOut-inner-l mb-0"><%= d.address %></h6>
+																</div>
+																<div class="d-flex align-items-center">
+																	<h6 class="checkOut-inner-f mb-0">Contact</h6>
+																	<h6 class="checkOut-inner-l mb-0"><%= d.phone_number %></h6>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="delivery-information">
+												<div class="deliveryInfo-heading position-relative">
+													<h5>Delivery Information</h5>
+												</div>
+												<div class="row">
+													<div class="col col-12 col-sm-4">
+														<ul class="deliveryinfo-list">
+															<li>Delivery type</li>
+															<li>Delivery vehicle</li>
+														</ul>
+													</div>
+													<div class="col col-12 col-sm-3">
+														<div class="deliveryinfo-value text-md-center d-flex flex-row flex-sm-column align-items-center">
+															<h6 class="checkOut-inner-l mb-0">Same day</h6>
+															<div class="bordered-img-car">
+																<span class="d-flex align-items-center justify-content-center ml-3 ml-sm-0 mt-sm-4 mx-md-auto">
+																	<%= image_tag 'car.png', alt: 'car-IMG', width: '28' %>
+																</span>
+															</div>
+														</div>
+													</div>
+													<div class="col col-12 col-sm-5">
+														<div class="checkOut-radioBtns d-inline-block w-100 pl-md-5">
+															<div class="float-left w-100">
+																<label class="radiobtn-field radiobtn-checkOut float-left">Priority
+																  <input type="checkbox" checked="<%= @delivery.priority==true ? 'checked' : 'unchecked' %>" "name="radio" disabled>
+																  <span class="checkmark"></span>
+																</label>
+															</div>
+															<div class="float-left w-100">
+																<label class="radiobtn-field radiobtn-checkOut float-left mr-5">Pre-order
+																  <input type="checkbox" checked="<%= @delivery.pre_order==true ? 'checked' : 'unchecked' %>" name="radio" disabled>
+																  <span class="checkmark"></span>
+																</label>
+															</div>
+											    	</div>
+											    </div>
+												</div>
+											</div>
+								    </div>
+								    <% end %>
+								  </div>
+								  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true">
+								    	<%= image_tag "left-caret.png" %>
+								    </span>
+								    <span class="sr-only">Previous</span>
+								  </a>
+								  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true">
+								    	<%= image_tag "right-caret.png" %>
+								    </span>
+								    <span class="sr-only">Next</span>
+								  </a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col col-12 col-lg-4">
+						<div class="total-block">
+							<div class="delivery-calculation">
+								<% deliveries_prices = @calculate_price %>
+								<% total = deliveries_prices.values.inject(:+) %>
+								<% deliveries_prices.each do |k,v| %>
+								<div class="delivery-t-row d-flex align-items-center justify-content-between">
+									<h5>Delivery <%= k %></h5>
+									<h5> <%= number_to_currency(v) %></h5>
+								</div>
+								<% end %>
+								<div class="d-flex align-items-center justify-content-between">
+									<h5>Discount Code</h5>
+									<div class="form-group form-group-code mb-0">
+										<input type="text" class="form-control">
+									</div>
+								</div>
+								<div class="d-flex align-items-center justify-content-between">
+									<h5>Total Delivery Fare</h5>
+									<h5><%= number_to_currency(total)  %></h5>
+								</div>
+							</div>
+							<div class="delivery-total d-flex align-items-center justify-content-between">
+								<h5>Total (TTD)</h5>
+								<h5 class="total-amount"> <%= number_to_currency(total)  %></h5>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-12 col-lg-8">
+						<div class="payment-canvas">
+							<h4 class="paymentCheckOut-heading px-sm-3 text-right">Payment Methods</h4>
+							<div class="checkOut-container payment-checkOut">
+								<div class="checkOut-box">
+									<div class="checkOut-delivery">
+										<div class="checkOut-heading checkOut-heading-l position-relative">
+											<h3 class="mb-0">
+												<span>
+													<%= image_tag 'cart-img.png', alt: 'cart-IMG', width: '36' %>
+												</span> Card
+											</h3>
+										</div>
+										<%= javascript_include_tag "https://js.stripe.com/v2/" %>
+							      <script type="text/javascript">
+							        Stripe.setPublishableKey("<%= Rails.configuration.stripe[:publishable_key] %>");	
+							      </script>
+										<div class="payment-main">
+											<form class="delivery-form payment-form" id="paymentstripe" action="/deliveries/12/steps/checkout" method="PUT">
+												<div class="row">
+													<input name="_method" value="patch" type="hidden">
+													<div class="col col-12 col-md-6">
+														<div class="form-group paymentField-group">
+													    <label class="form-label pl-md-3">Credit card number</label>
+													    <input type="text" name="card_number" class="form-control form-field-rounded"  data-stripe="number" placeholder="1111 2222 555 888">
+													  </div>
+													  <div class="d-flex justify-content-between flex-column flex-sm-row">
+													  	<div class="form-group paymentField-group expiryDate-group mr-1">
+														    <label class="form-label pl-md-3">Expiry date</label>
+														    <div class="expiryDate-row d-flex align-items-center justify-content-between">
+															    <input type="text" name="exp_month" class="form-control form-field-rounded" placeholder="MM"  data-stripe="exp-month">
+															    <input type="text"  name="exp_year" class="form-control form-field-rounded" placeholder="YY" data-stripe="exp-year">
+															  </div>
+														  </div>
+														  <div class="form-group paymentField-group securityCode-group ml-1">
+													    	<label class="form-label pl-md-3">Security code</label>
+														    <input type="text" name="card_verification" class="form-control form-field-rounded"   data-stripe="cvv">
+														  </div>
+													  </div>
+													  <div class="form-group paymentField-group">
+												    	<label class="form-label pl-md-3">Cardholder's name</label>
+													    <input type="text" class="form-control form-field-rounded" placeholder="e.g.Oliver James Brown">
+													  </div>
+													</div>
+													<div class="col col-12 col-md-6">
+														<ul class="terms-list mt-4 pt-1">
+															<li>I accept terms and conditions of <a href="#">kiwi.com</a> and agree with kiwi.com's immediate performance of services. I also acknowledge that I cannot withdraw from kiwi.com's service agreement.</li>
+															<li>Please do not send me e-mails with special offers and deals. <a href="#">More info</a></li>
+														</ul>
+													</div>
+												</div>
+												<div class="paymentMethod-btns mt-3 d-flex align-items-center justify-content-between flex-column flex-sm-row">
+													<%= link_to "Review Booking", delivery_step_path(@delivery, id: @delivery.first_invalid_step), class: "btn btn-dark mb-3 mb-sm-0 mr-sm-3 w-100" %>
+													<button class="btn btn-green ml-sm-3 w-100" type="submit">Pay  <%= number_to_currency(total) %> </button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="d-flex">
+								<button class="btn btn-white btn-paypal w-100" type="button">Paypal</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+  var show_error, stripeResponseHandler;
+  $("#paymentstripe").submit(function (event) {
+    var $form;
+    $form = $(this);
+    $form.find("input[type=submit]").prop("disabled", true);
+    Stripe.card.createToken($form, stripeResponseHandler);
+    return false;
+  });
+
+  stripeResponseHandler = function (status, response) {
+    var $form, token;
+    $form = $("#paymentstripe");
+    if (response.error) {
+      show_error(response.error.message);
+      $form.find("input[type=submit]").prop("disabled", false);
+    } else {
+      token = response.id;
+      $form.append($("<input type=\"hidden\" name=\"card_token\" />").val(token));
+      $.ajax({
+		    url: "/deliveries/<%= params[:delivery_id] %>/steps/checkout", // your api url
+		    // jQuery >= 1.9.0 -> use method
+		    method: 'PUT', // method is any HTTP method
+		    data: {delivery: {card_token: token}}, // data as js object
+		    success: function() {
+		    	console.log("Done");
+		    }
+			});
+    }
+    return false;
+  };
+
+  show_error = function (message) {
+    $("#flash-messages").html('<div class="alert alert-warning"><a class="close" data-dismiss="alert">×</a><div id="flash_alert">' + message + '</div></div>');
+    // $('.alert').delay(5000).fadeOut(3000);
+    return false;
+  };
+
+
+</script>

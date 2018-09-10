@@ -9,6 +9,17 @@ class Getswift::Request
       status == 200 ? response : errors(response)
     end
 
+    def find_distance(query)
+      return get_json_for_google_api("maps/api/directions/json", query)
+    end
+
+    def get_json_for_google_api(root_path, query={})
+      query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
+      path = query.empty? ? root_path : "#{root_path}?#{query_string}"
+      response = goo_api.get(path)
+      [JSON.parse(response.body), response.status]
+    end
+
     def get(id)
       response, status = get_json(id)
       status == 200 ? response : errors(response)
@@ -21,7 +32,7 @@ class Getswift::Request
 
     def get_json(root_path, query = {})
       query_string = query.map{|k,v| "#{k}=#{v}"}.join("&")
-      path = query.empty?? root_path : "#{root_path}?#{query_string}"
+      path = query.empty? ? root_path : "#{root_path}?#{query_string}"
       response = api.get(path)
       [JSON.parse(response.body), response.status]
     end
@@ -37,6 +48,10 @@ class Getswift::Request
 
     def api
       Getswift::Connection.api
+    end
+
+    def goo_api
+      Getswift::DistanceMeasure.api
     end
   end
 end

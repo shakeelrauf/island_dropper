@@ -2,6 +2,7 @@ class Deliveries::StepsController < ApplicationController
   include Wicked::Wizard
   include ChecksForFields
   include QueryBuilder
+  include ApplicationHelper
 
   steps *Delivery.form_steps
   before_action :set_delivery
@@ -9,11 +10,43 @@ class Deliveries::StepsController < ApplicationController
 
   def show
     return redirect_to root_path if @delivery.state == "active"
+    if step.to_s == "checkout"
+      @calculate_price = calculate_price(@delivery)
+      if @calculate_price.nil?
+        return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
+      else
+        @delivery.update!(checkout_response: @calculate_price.to_s)
+      end
+    end
     build_associations!
     render_wizard
   end
 
   def update
+    if step.to_s == "checkout"
+      begin
+        token = params[:delivery][:card_token]
+        amount =  eval(@delivery.checkout_response).values.inject(:+)
+        customer = Stripe::Customer.create(
+          :email => current_user.email,
+          :source  => token
+        )
+        charge = Stripe::Charge.create({
+          amount: (amount * 100).to_i,
+          currency: 'usd',
+          customer: customer.id,
+          description: "Delivery ID: #{@delivery.reference_no}"
+        })
+        @delivery.stripe_transaction_id = charge.id 
+        @delivery.save
+        flash[:success] = "Payment paid!!"
+        query = build_query(@delivery)
+        response = Getswift::Delivery.add_booking(@delivery,query)
+        return response_after_request_to_getswift(response)
+      rescue => e
+        flash[:error] = e.message
+      end 
+    end
     return redirect_to root_path if @delivery.state == "active"
     if params[:commit] == "Save Draft"
       @delivery.attributes = delivery_params
@@ -26,14 +59,8 @@ class Deliveries::StepsController < ApplicationController
       if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
         if check_for_calling_getswift(@delivery)
           query = build_query(@delivery)
-          response = Getswift::Delivery.add_booking(@delivery,query)
-          if response[:errors].present?
-            flash[:success] = response[:errors][:message]
-            return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
-          else
-            flash[:success] = "Successfully Requested!!"
-            return redirect_to root_path
-          end
+          response = {} #Getswift::Delivery.add_booking(@delivery,query)
+          return response_after_request_to_getswift(response)
         else
           flash[:error] = "Reuest failed!! Complete the form."
           return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
@@ -56,10 +83,20 @@ class Deliveries::StepsController < ApplicationController
     delivery_params[:pre_order_date] = Date.strptime(delivery_params[:pre_order_date], "%m/%d/%y") if delivery_params[:pre_order_date].present?
   end
   def delivery_params
-    params.require(:delivery).permit(:id, :delivery_id,:make_priority_or_preorder,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
+    params.require(:delivery).permit(:id,:card_token, :delivery_id,:priority,:checkout_response,:pre_order,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
+  end
+
+  def response_after_request_to_getswift(response)
+    if response[:errors].present?
+      flash[:success] = response[:errors][:message]
+      return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
+    else
+      flash[:success] = "Checkout!!"
+      return render_wizard @delivery
+    end
   end
 
   def set_delivery
-    @delivery = Delivery.where(id: params[:delivery_id]).first
+    @delivery = Delivery.includes(:pickup,:dropoffs).where(id: params[:delivery_id]).first
   end
 end
