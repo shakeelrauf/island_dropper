@@ -19,3 +19,14 @@ if !User.where(email: 'admin@admin.com').first.present?
   u.skip_confirmation!
   u.roles << Role.where(tirle: 'admin').first
 end
+
+
+['s','m','l','f'].each do |title|
+  if !ItemType.find_by_title(title).present?
+    ItemType.create(title: title, base_rate: 4, per_km_rate: 1 )
+  end
+end
+
+if !Priority.first.present?
+  Priority.create(percentage: 20)
+end
