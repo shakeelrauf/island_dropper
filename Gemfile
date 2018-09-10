@@ -8,8 +8,6 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
-gem 'jquery-validation-rails'
-gem 'geokit-rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '>= 0.18', '< 2.0'
 # Use Puma as the app server
@@ -43,6 +41,10 @@ gem 'simple_form'
 gem "cocoon"
 gem "scoped_search"
 gem 'bootstrap-datepicker-rails'
+gem 'jquery-validation-rails'
+gem 'geokit-rails'
+gem 'geocoder'
+gem 'stripe'
 gem 'rack-cors', :require => 'rack/cors'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
