@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     get 'dashboard/index'
   end
 
-  root 'deliveries#draft'
+  root 'deliveries#active'
   resources :deliveries do
     collection do
       get 'draft'
@@ -36,6 +36,9 @@ Rails.application.routes.draw do
     get 'user_accounts'
     get 'data_query'
   end
-  devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'}
+  devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'} 
+  devise_scope :user do  
+    get 'registrations/email_confirmation', to: 'registrations#email_confirmation'
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

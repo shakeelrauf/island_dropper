@@ -48,16 +48,16 @@
     
           <div class="radiobtn-set d-inline-block w-100 mb-4 pb-sm-2">
             <div class="float-left w-100">
-               <%= f.label :make_priority_or_preorder, :value => "make-priority", class: "radiobtn-field float-left mr-5" do %>
+               <%= f.label :priority,  class: "radiobtn-field float-left mr-5" do %>
                 make-priority?
-                  <%= f.radio_button :make_priority_or_preorder, "make-priority",:checked => true  %>
+                  <%= f.check_box :priority,:checked => true  %>
                    <span class="checkmark"></span>
               <% end %>
             </div>
             <div class="float-left w-100">
-              <%= f.label :make_priority_or_preorder, :value => "pre-order", class: "radiobtn-field float-left mr-5" do %>
+              <%= f.label :pre_order,  class: "radiobtn-field float-left mr-5" do %>
                 Pre-order?
-                  <%= f.radio_button :make_priority_or_preorder, "pre-order" %>
+                  <%= f.check_box :pre_order %>
                    <span class="checkmark"></span>
               <% end %>
               <div class="calender-group float-left">

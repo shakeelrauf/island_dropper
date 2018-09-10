@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_action :current_user_not_present ,only: [:email_confirmation]
   def create
     build_resource(sign_up_params)
     resource.save
@@ -17,14 +18,17 @@ class RegistrationsController < Devise::RegistrationsController
         end
       else
         session[:email] = resource.email 
-        flash[:error] = "Confirmation link has been sent to your email address."
-        redirect_to new_user_confirmation_path
+        redirect_to registrations_email_confirmation_path
       end
     else
       clean_up_passwords resource
       set_minimum_password_length
       respond_with resource
     end
+  end
+
+  def email_confirmation
+    render 'users/registrations/email_confirmation'
   end
 
   private
@@ -36,6 +40,12 @@ class RegistrationsController < Devise::RegistrationsController
       admin_dashboard_path
     else 
       user_path(resource)
+    end
+  end
+
+  def current_user_not_present
+    if current_user.present?
+      redirect_to root_path
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180908224609) do
+ActiveRecord::Schema.define(version: 20180910210203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,12 @@ ActiveRecord::Schema.define(version: 20180908224609) do
     t.date "pre_order_date"
     t.bigint "user_id"
     t.string "state", default: "new"
-    t.string "make_priority_or_preorder"
     t.string "reference_no"
     t.string "tracking_url"
+    t.boolean "priority", default: false
+    t.boolean "pre_order", default: false
+    t.string "checkout_response"
+    t.string "stripe_transaction_id"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
   end
 
@@ -53,6 +56,14 @@ ActiveRecord::Schema.define(version: 20180908224609) do
     t.string "latitude"
     t.string "longitude"
     t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
+  end
+
+  create_table "item_types", force: :cascade do |t|
+    t.string "title"
+    t.string "base_rate"
+    t.string "per_km_rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "items", force: :cascade do |t|
@@ -83,6 +94,12 @@ ActiveRecord::Schema.define(version: 20180908224609) do
     t.datetime "updated_at", null: false
     t.string "latitude"
     t.string "longitude"
+  end
+
+  create_table "priorities", force: :cascade do |t|
+    t.float "percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "roles", force: :cascade do |t|
