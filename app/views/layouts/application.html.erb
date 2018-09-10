@@ -28,7 +28,7 @@
       <% end %>
       </div>
       <%= yield %>
-      <% if current_user && !current_user.role == 'admin' %>
+      <% if current_user && !(current_user.role == 'admin') %>
         <%= render partial:  'shared/footer' %>
       <% end %>
     </div>
