@@ -10,4 +10,11 @@ class ApplicationController < ActionController::Base
       active_deliveries_path
     end
   end
+
+  def check_for_role(user)
+    if !user.roles.present?
+      user.role_ids = [Role.where(titile: 'user')]
+    end
+  end  
 end
+
