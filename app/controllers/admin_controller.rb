@@ -17,10 +17,7 @@ class AdminController < ApplicationController
 
   def update_pricing
     items = ItemType.all
-    s = items.select{|i| i.title=='s'}
-    f = items.select{|i| i.title=='f'}
-    m = items.select{|i| i.title=='m'}
-    l = items.select{|i| i.title=='l'}
+    s,f,m,l = items.select{|i| i.title=='s'},items.select{|i| i.title=='f'},items.select{|i| i.title=='m'}, items.select{|i| i.title=='l'}
     filter_params(params[:delivery])
     s.first.update(base_rate: params[:delivery][:base_rate_van],per_km_rate: params[:delivery][:small_per_km_van])    
     f.first.update(base_rate: params[:delivery][:base_rate_van],per_km_rate: params[:delivery][:furniture_per_km_van])    

@@ -2,6 +2,7 @@ class Deliveries::StepsController < ApplicationController
   include Wicked::Wizard
   include ChecksForFields
   include QueryBuilder
+  include Payment
   include ApplicationHelper
 
   steps *Delivery.form_steps
@@ -24,28 +25,7 @@ class Deliveries::StepsController < ApplicationController
 
   def update
     if step.to_s == "checkout"
-      begin
-        token = params[:delivery][:card_token]
-        amount =  eval(@delivery.checkout_response).values.inject(:+)
-        customer = Stripe::Customer.create(
-          :email => current_user.email,
-          :source  => token
-        )
-        charge = Stripe::Charge.create({
-          amount: (amount * 100).to_i,
-          currency: 'usd',
-          customer: customer.id,
-          description: "Delivery ID: #{@delivery.reference_no}"
-        })
-        @delivery.stripe_transaction_id = charge.id 
-        @delivery.save
-        flash[:success] = "Payment paid!!"
-        query = build_query(@delivery)
-        response = Getswift::Delivery.add_booking(@delivery,query)
-        return response_after_request_to_getswift(response)
-      rescue => e
-        flash[:error] = e.message
-      end 
+      return go_for_payment(params[:delivery][:card_token],delivery, current_user)
     end
     return redirect_to root_path if @delivery.state == "active"
     if params[:commit] == "Save Draft"
