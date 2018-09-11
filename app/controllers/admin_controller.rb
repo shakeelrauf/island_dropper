@@ -4,9 +4,9 @@ class AdminController < ApplicationController
 
   def delivery_jobs
     if params[:search].present?
-      @deliveries = Delivery.includes([:pickup,:dropoffs, :user]).where.not(state: 'new').search_for_reference(params[:search][:query])
+      @deliveries = Delivery.includes([:pickup,:dropoffs, :user]).where.not('state IN (?)', ['new','draft']).search_for_reference(params[:search][:query])
     else
-      @deliveries = Delivery.includes([:pickup,:dropoffs, :user]).where.not(state: 'new')
+      @deliveries = Delivery.includes([:pickup,:dropoffs, :user]).where.not('state IN (?)', ['new','draft'])
     end
   end
 
