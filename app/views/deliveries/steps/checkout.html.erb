@@ -88,13 +88,21 @@
 														<div class="checkOut-radioBtns d-inline-block w-100 pl-md-5">
 															<div class="float-left w-100">
 																<label class="radiobtn-field radiobtn-checkOut float-left">Priority
-																  <input type="checkbox" checked="<%= @delivery.priority==true ? 'checked' : 'unchecked' %>" "name="radio" disabled>
+																	<% if @delivery.priority==true %> 
+																  <input type="checkbox" checked="checked" name="radio" disabled>
+																  <% else %>
+																  <input type="checkbox" name="radio" disabled>
+																  <% end %>
 																  <span class="checkmark"></span>
 																</label>
 															</div>
 															<div class="float-left w-100">
 																<label class="radiobtn-field radiobtn-checkOut float-left mr-5">Pre-order
-																  <input type="checkbox" checked="<%= @delivery.pre_order==true ? 'checked' : 'unchecked' %>" name="radio" disabled>
+																	<% if @delivery.pre_order==true %> 
+																  <input type="checkbox" checked="checked" name="radio" disabled>
+																  <% else %>
+																  <input type="checkbox" name="radio" disabled>
+																  <% end %>
 																  <span class="checkmark"></span>
 																</label>
 															</div>
