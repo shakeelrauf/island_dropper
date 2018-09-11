@@ -113,6 +113,7 @@
 								    </div>
 								    <% end %>
 								  </div>
+								  <% if @delivery.dropoffs.count > 1 %>
 								  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
 								    <span class="carousel-control-prev-icon" aria-hidden="true">
 								    	<%= image_tag "left-caret.png" %>
@@ -125,6 +126,7 @@
 								    </span>
 								    <span class="sr-only">Next</span>
 								  </a>
+								  <% end %>
 								</div>
 							</div>
 						</div>
