@@ -11,7 +11,7 @@ module DeliveryStepsHelper
           return nil
         end
         kms = res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f
-        item_price =  (item_type.base_rate.to_f + (item_type.per_km_rate.to_f * kms)) * Priority.first.percentage
+        item_price = (item_type.base_rate.to_f + (item_type.per_km_rate.to_f * kms)) + (((item_type.base_rate.to_f + (item_type.per_km_rate.to_f * kms)) * Priority.first.percentage)/100)
         price += item_price
       end
     else
