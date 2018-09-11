@@ -17,3 +17,7 @@
 //= require bootstrap-datepicker
 //= require jquery.validate
 //= require card.js
+//= require jquery.inputmask
+//= require jquery.inputmask.extensions
+//= require jquery.inputmask.numeric.extensions
+//= require jquery.inputmask.date.extensions

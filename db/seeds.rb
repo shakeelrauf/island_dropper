@@ -15,8 +15,8 @@ end
 #creating admin user
 if !User.where(email: 'admin@admin.com').first.present?
   u = User.new(email: 'admin@admin.com', password: 'password',password_confirmation: 'password')
-  u.save!
   u.skip_confirmation!
+  u.save!
   u.roles << Role.where(tirle: 'admin').first
 end
 

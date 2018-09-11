@@ -185,19 +185,19 @@
 													<div class="col col-12 col-md-6">
 														<div class="form-group paymentField-group">
 													    <label class="form-label pl-md-3">Credit card number</label>
-													    <input type="text" name="card_number" class="form-control form-field-rounded"  data-stripe="number" placeholder="1111 2222 555 888">
+													    <input type="text" name="card_number" data-inputmask="'mask': '9999 9999 9999 9999'" class="form-control form-field-rounded"  data-stripe="number" placeholder="1111 2222 555 888">
 													  </div>
 													  <div class="d-flex justify-content-between flex-column flex-sm-row">
 													  	<div class="form-group paymentField-group expiryDate-group mr-1">
 														    <label class="form-label pl-md-3">Expiry date</label>
 														    <div class="expiryDate-row d-flex align-items-center justify-content-between">
-															    <input type="text" name="exp_month" class="form-control form-field-rounded" placeholder="MM"  data-stripe="exp-month">
-															    <input type="text"  name="exp_year" class="form-control form-field-rounded" placeholder="YY" data-stripe="exp-year">
+															    <input type="text" name="exp_month" class="form-control form-field-rounded" placeholder="MM" data-inputmask="'mask': '99'"  data-stripe="exp-month">
+															    <input type="text"  name="exp_year" class="form-control form-field-rounded" placeholder="YYYY" data-inputmask="'mask': '9999'"  data-stripe="exp-year">
 															  </div>
 														  </div>
 														  <div class="form-group paymentField-group securityCode-group ml-1">
 													    	<label class="form-label pl-md-3">Security code</label>
-														    <input type="text" name="card_verification" class="form-control form-field-rounded"   data-stripe="cvv">
+														    <input type="text" data-inputmask="'mask': '999'" name="card_verification" class="form-control form-field-rounded"   data-stripe="cvv">
 														  </div>
 													  </div>
 													  <div class="form-group paymentField-group">
@@ -232,6 +232,8 @@
 	</div>
 </div>
 <script type="text/javascript">
+	$(":input").inputmask();
+
   var show_error, stripeResponseHandler;
   $("#paymentstripe").submit(function (event) {
     var $form;

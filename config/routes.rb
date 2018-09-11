@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get 'dashboard'
     get 'delivery_jobs'
     get 'pricing'
+    put 'update_pricing'
     get 'user_accounts'
     get 'data_query'
   end
