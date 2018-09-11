@@ -97,6 +97,17 @@ class Deliveries::StepsController < ApplicationController
   end
 
   def set_delivery
-    @delivery = Delivery.includes(:pickup,:dropoffs).where(id: params[:delivery_id]).first
+    @delivery = current_user.deliveries.includes(:pickup,:dropoffs).where(id: params[:delivery_id]).first
+    if @delivery.nil? 
+      render_404
+    end
+  end
+
+  def render_404
+    respond_to do |format|
+      format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+      format.xml  { head :not_found }
+      format.any  { head :not_found }
+    end
   end
 end

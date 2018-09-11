@@ -3,26 +3,26 @@
 	<head>
 		<title>Island Dropper</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="assets/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="assets/style.css">
+		<%= stylesheet_link_tag "bootstrap.min.css" %>
+		<%= stylesheet_link_tag "style.css" %>
 	</head>
 	<body>
 
 		<div class="off-canvas-container">
 			<div class="container">
-				<div class="page-notFound d-flex align-items-center justify-content-center my-3">
+				<div class="page-notFound d-flex align-items-center justify-content-center">
 					<div class="notFound-detail text-center">
 						<!-- <a href="#" class="notFound-logo d-inline-block"><img src="images/logo.png" alt="IMG" width="146"></a> -->
-						<h1>500</h1>
-						<h2>Internal Server Error</h2>
-						<p>Sorry, Something went wrong</p>
-						<a href="/" class="back-home d-inline-block">Back to home page</a>
+						<h1>404</h1>
+						<h2>Page Not Found</h2>
+						<p>The page you're looking for doesn't exist or either you do not have permission to access this</p>
+						<a href="#" class="back-home d-inline-block">Back to home page</a>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<script src="assets/bootstrap.bundle.min.js"></script>
+		<%= javascript_include_tag "bootstrap.bundle.min.js"%>
 	</body>
 </html>
