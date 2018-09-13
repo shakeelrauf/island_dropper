@@ -25,7 +25,7 @@ class Deliveries::StepsController < ApplicationController
 
   def update
     if step.to_s == "checkout"
-      return go_for_payment(params[:delivery][:card_token],delivery, current_user)
+      return go_for_payment(params[:delivery][:card_token],@delivery, current_user)
     end
     return redirect_to root_path if @delivery.state == "active"
     if params[:commit] == "Save Draft"
