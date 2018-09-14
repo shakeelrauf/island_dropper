@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       post 'job_onway'
       post 'job_driveratdropoff'
       post 'job_abandoned'
+      post 'job_edited'
     end
   end
   namespace :admin do
@@ -37,6 +38,8 @@ Rails.application.routes.draw do
     get 'user_accounts'
     get 'data_query'
   end
+
+
   devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'} 
   devise_scope :user do  
     get 'registrations/email_confirmation', to: 'registrations#email_confirmation'

@@ -6,7 +6,7 @@ module QueryBuilder
                 "apiKey": ENV["GETSWIFT_API_KEY"],
                 "booking":{
                     "pickupDetail": {
-                        "name": pickup.first_name.to_s + pickup.last_name.to_s,
+                        "name": "#{pickup.first_name.to_s }"+ "#{ pickup.last_name.to_s}",
                         "phone": pickup.phone_number,
                         "address": pickup.address
                     },

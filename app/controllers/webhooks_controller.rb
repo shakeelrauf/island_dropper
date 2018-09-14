@@ -13,6 +13,33 @@ class WebhooksController < ActionController::Base
       end
     end
   end
+  def job_edited
+    if params[:EventName] == "job/edited"
+      if params[:Data][:JobIdentifier].present?
+        @delivery = Delivery.where(reference_no: params[:Data][:JobIdentifier]).first
+        if @delivery.present?
+          @gd = Getswift::Delivery.show_booking(params[:Data][:JobIdentifier])
+          pickup = @gd["pickupLocation"]
+          dropoff = @gd["dropoffLocation"]
+          if pickup.present? && dropoff.present?
+            pickup_address = pickup["address"]
+            pickup_phone_no = pickup["phone"]
+            pic = pickup["name"].split(' ')
+            pickup_first_name = pic.first
+            pickup_last_name = pic.last
+            dropoff_address = dropoff["address"]
+            dropoff_phone_no = dropoff["phone"]
+            drop = dropoff["name"].split(' ')
+            dropoff_first_name = drop.first
+            dropoff_last_name = drop.last
+            @delivery.pickup.update(first_name: pickup_first_name, last_name: pickup_last_name, address: pickup_address, phone_number: pickup_phone_no)
+            @delivery.dropoffs.first.update(first_name: dropoff_first_name, last_name: dropoff_last_name, address: dropoff_address, phone_number: dropoff_phone_no)
+          end
+        end
+      end
+    end
+  end
+
   def job_cancelled
     if params[:EventName] == "job/cancelled"
       delivery = Delivery.where(reference_no: params[:Data][:JobIdentifier]).first
