@@ -88,7 +88,8 @@
                         </p>
                       </div>
                       <div class="dl-block dl-block-6 d-flex align-items-center">
-                        <p class='dl-text dl-status dl-status-<%= ["accepted","active","driveratpickup", "onway", "driveratdropoff"].include?(delivery.state) ? "enroute" : [ "completed"].include?(delivery.state) ? "complete" : delivery.state == "cancelled" ? "cancel" : ""  %>'><%= delivery,state  %>
+                        <p class='dl-text dl-status dl-status-<%= ["accepted","driveratdropoff"].include?(delivery.state) ? "enroute" : [ "completed"].include?(delivery.state) ? "complete" : delivery.state == "cancelled" ? "cancel" : delivery.state %>'>
+                          <%= delivery.state  %>
                           
                         </p>
                       </div>
