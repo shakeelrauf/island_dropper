@@ -32,10 +32,9 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     get 'dashboard'
-    get 'delivery_jobs'
-    get 'pricing'
-    put 'update_pricing'
-    get 'user_accounts'
+    resources :jobs, only: [:index]
+    resources :pricing, only: [:index, :update,:get]
+    resources :users, only: [:index]
     get 'data_query'
   end
 

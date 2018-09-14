@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180910210203) do
+ActiveRecord::Schema.define(version: 20180914164207) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,14 +58,6 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
   end
 
-  create_table "item_types", force: :cascade do |t|
-    t.string "title"
-    t.string "base_rate"
-    t.string "per_km_rate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "items", force: :cascade do |t|
     t.string "size", default: "small"
     t.string "description"
@@ -96,8 +88,21 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.string "longitude"
   end
 
-  create_table "priorities", force: :cascade do |t|
-    t.float "percentage"
+  create_table "pricings", force: :cascade do |t|
+    t.float "van_small_price"
+    t.float "car_medium_price"
+    t.float "car_large_price"
+    t.float "van_furniture_price"
+    t.float "car_base_price"
+    t.float "van_base_price"
+    t.float "priority_percentage"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "references", force: :cascade do |t|
+    t.string "reference_no"
+    t.integer "delivery_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

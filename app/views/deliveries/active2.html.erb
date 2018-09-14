@@ -111,7 +111,7 @@
 
                        <% if  delivery.state == "cancelled" or delivery.state == "completed" %>
                         <% else %>
-                          <%= link_to 'Cancel', cancel_delivery_url(delivery.reference_no), method: :post,class:  "btn btn-new bg-white",data: {confirm: "You want to cancel it?"} %>
+                          <%= link_to 'Cancel', cancel_delivery_url(delivery.id), method: :post,class:  "btn btn-new bg-white",data: {confirm: "You want to cancel it?"} %>
                         <% end %>
                       </div>
                     </div>

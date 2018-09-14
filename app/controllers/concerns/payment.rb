@@ -18,8 +18,10 @@ module Payment
       delivery.stripe_transaction_id = charge.id 
       delivery.save
       flash[:success] = "Payment paid!!"
-      query = build_query(delivery)
-      response = Getswift::Delivery.add_booking(delivery,query)
+      delivery.dropoffs.each do |dropoff|
+        query = build_query(dropoff,delivery.pickup,delivery.items)
+        response = Getswift::Delivery.add_booking(delivery,query)
+      end
       return response_after_request_to_getswift(response)
     rescue => e
       flash[:error] = e.message

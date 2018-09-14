@@ -8,6 +8,7 @@ class Delivery < ApplicationRecord
   has_many :dropoffs, dependent: :destroy
   has_one  :driver,   dependent: :destroy
   has_many  :locations,   dependent: :destroy
+  has_many  :references,   dependent: :destroy
 
   scoped_search in: :pickup ,on: [:first_name,:last_name, :created_at]
   attr_accessor :card_token

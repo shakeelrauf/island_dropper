@@ -86,11 +86,11 @@
     e.preventDefault();
     $("#calender_input").focus();
   })
-  function initialize() {
-    var input = document.getElementById('pickup_address');
-    new google.maps.places.Autocomplete(input);
-  }
+  // function initialize() {
+  //   var input = document.getElementById('pickup_address');
+  //   new google.maps.places.Autocomplete(input);
+  // }
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  // google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 <%= javascript_include_tag 'steps.js' %>

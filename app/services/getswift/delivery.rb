@@ -8,7 +8,8 @@ module Getswift
       if response[:errors].present?
         return response
       else
-        delivery.reference_no = response["delivery"]["id"]
+        ref = delivery.references.build(reference_no: response["delivery"]["id"])
+        ref.save
         delivery.response = response
         delivery.tracking_url = response["delivery"]["trackingUrls"]["www"]
         delivery.state ='active'
