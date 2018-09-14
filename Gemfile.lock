@@ -88,6 +88,8 @@ GEM
       rails (>= 3.0)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    gmaps-autocomplete-rails (0.3.1)
+      rails (>= 3.1.0)
     i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -228,6 +230,7 @@ DEPENDENCIES
   faraday
   geocoder
   geokit-rails
+  gmaps-autocomplete-rails
   jbuilder (~> 2.5)
   jquery-inputmask-rails
   jquery-validation-rails
