@@ -29,7 +29,7 @@
               <div class="col col-12 col-md-6">
                 <div class="form-group">
                   <%= ff.label :address, class: "form-label pl-md-3" %>
-                  <%= ff.text_field :address,class: "form-control form-field-rounded", placeholder: "Enter drop off address" %>
+                  <%= ff.text_field :address,class: "form-control form-field-rounded",id: 'pickup_address', placeholder: "Enter drop off address" %>
                  <%= error_message_on(ff.object, :address) %>
                 </div>
               </div>
@@ -80,11 +80,19 @@
     </div>
   </div>
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyAQUqcR77raDKIBe9K6OiQs-6afHgfUOi4"></script>
+  
 
 <script type="text/javascript">
   $(".btn-calender").click(function(e){
     e.preventDefault();
     $("#calender_input").focus();
   })
+  function initialize() {
+    var input = document.getElementById('pickup_address');
+    new google.maps.places.Autocomplete(input);
+  }
+
+  google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 <%= javascript_include_tag 'steps.js' %>
