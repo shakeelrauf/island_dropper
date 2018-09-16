@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180914164207) do
+ActiveRecord::Schema.define(version: 20180916055336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bills", force: :cascade do |t|
+    t.string "amount"
+    t.string "stripe_transaction_id"
+    t.integer "dropoff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "deliveries", force: :cascade do |t|
     t.string "b_id"
@@ -42,6 +50,7 @@ ActiveRecord::Schema.define(version: 20180914164207) do
     t.string "phone_number"
     t.string "email"
     t.string "photo_url"
+    t.integer "dropoff_id"
   end
 
   create_table "dropoffs", force: :cascade do |t|
@@ -55,6 +64,9 @@ ActiveRecord::Schema.define(version: 20180914164207) do
     t.datetime "updated_at", null: false
     t.string "latitude"
     t.string "longitude"
+    t.string "state"
+    t.string "reference_no"
+    t.string "tracking_url"
     t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
   end
 
@@ -96,13 +108,6 @@ ActiveRecord::Schema.define(version: 20180914164207) do
     t.float "car_base_price"
     t.float "van_base_price"
     t.float "priority_percentage"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "references", force: :cascade do |t|
-    t.string "reference_no"
-    t.integer "delivery_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

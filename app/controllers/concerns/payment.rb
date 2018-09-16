@@ -4,7 +4,7 @@ module Payment
  
   def go_for_payment(token,delivery,current_user )
     begin
-      amount =  eval(delivery.checkout_response).values.inject(:+)
+      amount =  eval(delivery.checkout_response).values.inject(:+).to_f
       customer = Stripe::Customer.create(
         :email => current_user.email,
         :source  => token
@@ -15,12 +15,16 @@ module Payment
         customer: customer.id,
         description: "Delivery ID: #{delivery.reference_no}"
       })
-      delivery.stripe_transaction_id = charge.id 
+      delivery.dropoffs.each do |d|
+        bil =  d.bill
+        bil.stripe_transaction_id = charge.id 
+        bil.save
+      end
       delivery.save
       flash[:success] = "Payment paid!!"
       delivery.dropoffs.each do |dropoff|
         query = build_query(dropoff,delivery.pickup,delivery.items)
-        response = Getswift::Delivery.add_booking(delivery,query)
+        response = Getswift::Delivery.add_booking(delivery,query,dropoff)
       end
       return response_after_request_to_getswift(response)
     rescue => e
