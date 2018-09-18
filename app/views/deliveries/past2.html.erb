@@ -52,10 +52,10 @@
                   </div>
                   <div class="dl-block dl-block-4 d-flex align-items-center">
                     <h5 class="dl-heading">Destination</h5>
-                  </div>
+                  </div><!-- 
                   <div class="dl-block dl-block-5 d-flex align-items-center">
                     <h5 class="dl-heading">Tracking</h5>
-                  </div>
+                  </div> -->
                   <div class="dl-block dl-block-6 d-flex align-items-center">
                     <h5 class="dl-heading">
                       Status
@@ -82,11 +82,11 @@
                       <div class="dl-block dl-block-4 d-flex align-items-center">
                         <p class="dl-text"><%= delivery.dropoffs.first.present? ? delivery.dropoffs.first.address : '' %></p>
                       </div>
-                      <div class="dl-block dl-block-5 d-flex align-items-center">
+                   <!--    <div class="dl-block dl-block-5 d-flex align-items-center">
                         <p class="dl-text">
                           <a target="_blank" rel="noopene" href="<%= delivery.tracking_url %>" class= "track-badge d-inline-block">Track</a>
                         </p>
-                      </div>
+                      </div> -->
                       <div class="dl-block dl-block-6 d-flex align-items-center">
                         <p class='dl-text dl-status dl-status-<%= delivery.dropoffs.pluck(:state).first %>'><%=  delivery.dropoffs.pluck(:state).first %>
                           
