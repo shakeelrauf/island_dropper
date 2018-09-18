@@ -71,7 +71,7 @@
                   <div class="card card-dl d-flex align-items-center justify-content-between">
                     <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= delivery.id %>" aria-expanded="true" aria-controls="collapseTwo">
                       <div class="dl-block-f dl-block-1 d-flex align-items-center">
-                        <p class="dl-text"><%= delivery.reference_no.present? ? delivery.reference_no.first(6) : ''%></p>
+                        <p class="dl-text"><%= delivery.dropoffs.pluck(:reference_no).first.first(6) %></p>
                       </div>
                       <div class="dl-block dl-block-2 d-flex align-items-center">
                         <p class="dl-text"><%= delivery.created_at.strftime("%Y-%m-%d") %></p>
@@ -88,9 +88,8 @@
                         </p>
                       </div>
                       <div class="dl-block dl-block-6 d-flex align-items-center">
-                        <p class='dl-text dl-status dl-status-<%= ["accepted","driveratdropoff"].include?(delivery.state) ? "enroute" : [ "completed"].include?(delivery.state) ? "complete" : delivery.state == "cancelled" ? "cancel" : delivery.state %>'>
-                          <%= delivery.state  %>
-                          
+                        <p class='dl-text dl-status dl-status-<%= delivery.dropoffs.pluck(:state).first %>'>
+                          <%= delivery.dropoffs.pluck(:state).first %>
                         </p>
                       </div>
                     </div>
@@ -111,7 +110,7 @@
 
                        <% if  delivery.state == "cancelled" or delivery.state == "completed" %>
                         <% else %>
-                          <%= link_to 'Cancel', cancel_delivery_url(delivery.reference_no), method: :post,class:  "btn btn-new bg-white",data: {confirm: "You want to cancel it?"} %>
+                          <%= link_to 'Cancel', cancel_delivery_url("#{delivery.dropoffs.pluck(:reference_no)}"), method: :post,class:  "btn btn-new bg-white",data: {confirm: "You want to cancel it?"} %>
                         <% end %>
                       </div>
                     </div>

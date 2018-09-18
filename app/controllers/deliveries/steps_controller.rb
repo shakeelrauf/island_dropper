@@ -38,9 +38,8 @@ class Deliveries::StepsController < ApplicationController
     if @delivery.update_attributes(delivery_params)
       if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
         if check_for_calling_getswift(@delivery)
-          query = build_query(@delivery)
-          response = {} #Getswift::Delivery.add_booking(@delivery,query)
-          return response_after_request_to_getswift(response)
+          flash[:success] = "Checkout!!"
+          return render_wizard @delivery
         else
           flash[:error] = "Reuest failed!! Complete the form."
           return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)

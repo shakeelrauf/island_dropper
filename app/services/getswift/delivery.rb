@@ -3,18 +3,19 @@ module Getswift
     attr_accessor :pickup_address,
                   :dropout_address
 
-    def self.add_booking(delivery,query = {})
+    def self.add_booking(delivery,query = {},dropoff)
       response = Request.where('api/v2/deliveries', query,"post")
       if response[:errors].present?
         return response
       else
-        delivery.reference_no = response["delivery"]["id"]
         delivery.response = response
         delivery.tracking_url = response["delivery"]["trackingUrls"]["www"]
         delivery.state ='active'
         delivery.pickup.address = response["quote"]["pickup"]["address"]
-        dropoff = delivery.dropoffs.first
         dropoff.address = response["quote"]["dropoff"]["address"]
+        dropoff.reference_no = response["delivery"]["id"]
+        dropoff.tracking_url = response["delivery"]["trackingUrls"]["www"]
+        dropoff.state ='active'
         dropoff.save
         delivery.save
         response

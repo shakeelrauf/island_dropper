@@ -16,13 +16,13 @@
   </div>
   <ul class="nav nav-tabs dashboard-tabs flex-column" id="myTab" role="tablist">
     <li class="nav-item">
-      <a class="nav-link <%= current_page?(admin_delivery_jobs_url) ? 'active' : '' %>" id="deliveryJob-tab"  href="<%= admin_delivery_jobs_url %>" role="tab"  aria-selected="true">Delivery Jobs</a>
+      <a class="nav-link <%= current_page?(admin_jobs_url) ? 'active' : '' %>" id="deliveryJob-tab"  href="<%= admin_jobs_url %>" role="tab"  aria-selected="true">Delivery Jobs</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link <%= current_page?(admin_user_accounts_url) ? 'active' : '' %>" id="userAccount-tab"" href="<%= admin_user_accounts_url %>" role="tab" aria-selected="false">User Accounts</a>
+      <a class="nav-link <%= current_page?(admin_users_url) ? 'active' : '' %>" id="userAccount-tab"" href="<%= admin_users_url %>" role="tab" aria-selected="false">User Accounts</a>
     </li>
-    <li class="nav-item  <%= current_page?(admin_pricing_url) ? 'active' : '' %>">
-      <a class="nav-link" id="pricing-tab"  href="<%= admin_pricing_url %>" role="tab"  aria-selected="false">Pricing</a>
+    <li class="nav-item  <%= current_page?(admin_pricing_index_url) ? 'active' : '' %>">
+      <a class="nav-link" id="pricing-tab"  href="<%= admin_pricing_index_url %>" role="tab"  aria-selected="false">Pricing</a>
     </li>
     <li class="nav-item  <%= current_page?(admin_data_query_url) ? 'active' : '' %>">
       <a class="nav-link" id="queryData-tab"  href="<%= admin_data_query_url %>" role="tab" aria-selected="false">Query Data</a>

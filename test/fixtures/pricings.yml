@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  small_price: 1.5
+  medium_price: 1.5
+  large_price: 1.5
+  fortnite_price: 1.5
+  car_base_price: 1.5
+  van_base_price: 1.5
+
+two:
+  small_price: 1.5
+  medium_price: 1.5
+  large_price: 1.5
+  fortnite_price: 1.5
+  car_base_price: 1.5
+  van_base_price: 1.5

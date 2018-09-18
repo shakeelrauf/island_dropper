@@ -1,6 +1,5 @@
 module QueryBuilder
-  def build_query(delivery)
-    pickup, dropoffs, items = delivery.pickup, delivery.dropoffs, delivery.items
+  def build_query(dropoff, pickup, items)
     
     query = {
                 "apiKey": ENV["GETSWIFT_API_KEY"],
@@ -11,9 +10,9 @@ module QueryBuilder
                         "address": pickup.address
                     },
                     "dropoffDetail": {
-                        "name": dropoffs.first.first_name.to_s + dropoffs.first.last_name.to_s,
-                        "phone": dropoffs.first.phone_number,
-                        "address": dropoffs.first.address
+                        "name": dropoff.first_name.to_s + dropoff.last_name.to_s,
+                        "phone": dropoff.phone_number,
+                        "address": dropoff.address
                     }
                 }
             }    
