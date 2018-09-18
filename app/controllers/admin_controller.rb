@@ -11,6 +11,10 @@ class AdminController < ApplicationController
     
   end
 
+  def profile
+    
+  end
+
   private
   def authorize_user!
     if current_user 

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+mount Sidekiq::Web => '/sidekiq'
   namespace :admin do
     get 'dashboard/index'
   end
@@ -32,6 +34,7 @@ Rails.application.routes.draw do
   end
   namespace :admin do
     get 'dashboard'
+    get 'profile'
     resources :jobs, only: [:index]
     resources :pricing, only: [:index, :update,:get]
     resources :users, only: [:index]

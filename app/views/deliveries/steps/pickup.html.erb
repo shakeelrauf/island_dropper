@@ -61,7 +61,7 @@
                    <span class="checkmark"></span>
               <% end %>
               <div class="calender-group float-left">
-                <%= f.input :pre_order_date, as: :string,label: false, input_html: { data: {provide: "datepicker"}, class: "form-control form-field", id: "calender_input"} %>
+                <%= f.input :pre_order_date, as: :string,label: false, input_html: {  class: "form-control form-field", id: "calender_input"} %>
                 <%= link_to '#' , class: "btn btn-calender" do %>
                   <%= image_tag "calender.png" , width: "13" %>
                 <% end %>
@@ -84,10 +84,15 @@
 <script type="text/javascript">
   $(".btn-calender").click(function(e){
     e.preventDefault();
-    $("#calender_input").focus();
+    $('#calender_input').datetimepicker({
+                    defaultDate: "11/1/2013"
+                });
   })
+     $('#calender_input').datetimepicker({
+                daysOfWeekDisabled: [0, 6]
+            });
   function initialize() {
-    var input = document.getElementById('pickup_address');
+    // var input = document.getElementById('pickup_address');
     new google.maps.places.Autocomplete(input);
   }
 
@@ -112,10 +117,10 @@
 
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
-        // location types.
-        autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
-            {types: ['geocode']});
+        // // location types.
+        // autocomplete = new google.maps.places.Autocomplete(
+        //     // /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+        //     {types: ['geocode']});
 
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
