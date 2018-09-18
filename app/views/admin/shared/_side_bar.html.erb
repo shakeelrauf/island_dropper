@@ -21,11 +21,11 @@
     <li class="nav-item">
       <a class="nav-link <%= current_page?(admin_users_url) ? 'active' : '' %>" id="userAccount-tab"" href="<%= admin_users_url %>" role="tab" aria-selected="false">User Accounts</a>
     </li>
-    <li class="nav-item  <%= current_page?(admin_pricing_index_url) ? 'active' : '' %>">
-      <a class="nav-link" id="pricing-tab"  href="<%= admin_pricing_index_url %>" role="tab"  aria-selected="false">Pricing</a>
+    <li class="nav-item  ">
+      <a class="nav-link <%= current_page?(admin_pricing_index_url) ? 'active' : '' %>" id="pricing-tab"  href="<%= admin_pricing_index_url %>" role="tab"  aria-selected="false">Pricing</a>
     </li>
-    <li class="nav-item  <%= current_page?(admin_data_query_url) ? 'active' : '' %>">
-      <a class="nav-link" id="queryData-tab"  href="<%= admin_data_query_url %>" role="tab" aria-selected="false">Query Data</a>
+    <li class="nav-item  ">
+      <a class="nav-link <%= current_page?(admin_data_query_url) ? 'active' : '' %>" id="queryData-tab"  href="<%= admin_data_query_url %>" role="tab" aria-selected="false">Query Data</a>
     </li>
   </ul>
 </div>

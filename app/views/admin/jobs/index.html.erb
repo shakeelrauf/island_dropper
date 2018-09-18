@@ -50,7 +50,7 @@
               <div class="overflow-x-auto">
                 <div class="deliveryJob-block deliveryJob-body d-flex align-items-center justify-content-between">
                   <div class="db-box db-box-1">
-                    <h6><%= delivery.reference_no.present? ? delivery.reference_no.first(6) : '' %></h6>
+                    <h6><%= delivery.dropoffs.pluck(:reference_no).present? ? delivery.dropoffs.pluck(:reference_no).first.first(6) : '' %></h6>
                   </div>
                   <div class="db-box db-box-2">
                     <h6><%= delivery.state.capitalize %></h6>

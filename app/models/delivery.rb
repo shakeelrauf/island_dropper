@@ -24,6 +24,35 @@ class Delivery < ApplicationRecord
     %w[pickup dropoff_items checkout]
   end
 
+
+  def time_diff(start_time, end_time)
+    seconds_diff = (start_time - end_time).to_i.abs
+    hours = seconds_diff / 3600
+    seconds_diff -= hours * 3600
+    minutes = seconds_diff / 60
+    seconds_diff -= minutes * 60
+    seconds = seconds_diff
+    hours.to_s.rjust(2, '0')
+  end
+
+  def run_at()
+    unless check_time_date(time)
+      DeliveryToGetswift.perform_at(time, delivery_id)
+    end
+  end
+
+  def self.check_time_date(date_time)
+    if date_time.on_weekday? || date_time.saturday?
+      if date_time.hour.between?(7,13) || (date_time.hour.to_s == '15' && date_time.minute.between?(1..30))
+        return true
+      else
+        return false
+      end
+    else
+      return false 
+    end
+  end
+
   attr_accessor :form_step
   
   with_options if: -> { required_for_step?(:pickup) } do |step|
@@ -37,15 +66,16 @@ class Delivery < ApplicationRecord
   end
 
 
-  def self.created_at_search(search,date=nil, state)
+  def self.created_at_search(search, state)
     wildcard_search = "%#{search}%"
-    where(" (created_at > ?  OR reference_no LIKE ?) AND state IN (?)", date,  wildcard_search,state)
+    wildcard_search = '%%' if search.gsub(/\s+/, "").empty?
+    includes(:dropoffs).references(:dropoffs).where(" ( dropoffs.reference_no LIKE ?) AND dropoffs.state IN (?)",wildcard_search,state)
   end
 
-  def self.search_for_reference(search)
-    wildcard_search = "%#{search}%"
-    where("reference_no LIKE ? ", wildcard_search)
-  end
+  # def self.search_for_reference(search, state)
+  #   wildcard_search = "#{search}%"
+  #   includes(:dropoffs).references(:dropoffs).where(" ( dropoffs.reference_no LIKE ?) AND dropoffs.state IN (?)", wildcard_search,state)
+  # end
 
 
   def self.pickup_first_name

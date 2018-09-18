@@ -15,7 +15,7 @@ class DeliveriesController < ApplicationController
     # @response = Getswift::Delivery.all_bookings(query)
     if params[:search].present?
       params[:search][:startDate]=nil if !params[:search][:startDate].present? 
-      @deliveries = Delivery.created_at_search(params[:search][:Reference],params[:search][:startDate]).order(created_at: :desc)
+      @deliveries = Delivery.created_at_search(params[:search][:query],['active']).order(created_at: :desc)
     else
       @deliveries = current_user.deliveries.includes([:driver,:pickup, :dropoffs]).references(:dropoffs).where('dropoffs.state IN (?)', ['active','accepted']).order(created_at: :desc)
     end
@@ -30,7 +30,8 @@ class DeliveriesController < ApplicationController
     # # @response = Getswift::Delivery.all_bookings(query)
     if params[:search].present?
       params[:search][:startDate]=nil if !params[:search][:startDate].present? 
-      @deliveries = Delivery.created_at_search(params[:search][:Reference],params[:search][:startDate],['completed','cancelled','accepted','onway']).order(created_at: :desc)
+      params[:search][:query]=params[:search][:Reference] if params[:search][:Reference].present?
+      @deliveries = Delivery.created_at_search(params[:search][:query],['completed','cancelled','accepted','onway']).order(created_at: :desc)
     else
       @deliveries = current_user.deliveries.includes([:driver,:pickup,:dropoffs]).references(:dropoffs).where('dropoffs.state IN (?)', ['cancelled','completed','accepted','onway','abandoned','closed']).order(created_at: :desc)
       #.paginate(:page => params[:page], :per_page => 1)
