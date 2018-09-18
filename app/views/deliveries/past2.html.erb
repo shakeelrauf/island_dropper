@@ -3,23 +3,16 @@
     <div class="container">
       <div class="d-flex justify-content-between content-search">
         <div class="btn-group btn-group-delivery" role="group" aria-label="Basic example">
-          <button class="btn btn-new text-uppercase" type="button">New</button>
+          <!-- <button class="btn btn-new text-uppercase" type="button">New</button>
           <button class="btn btn-trash" type="button">
             <span>
-              <%= image_tag "garbage.png" , width: "20" %>
+              <%#= image_tag "garbage.png" , width: "20" %>
             </span>
-          </button>
+          </button> -->
         </div>
         <%= simple_form_for :search , url: past_deliveries_path ,html: {class: "form-inline"} , method: :get do |f| %>
           <div class="form-group search-group m-0">
             <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control search-field text-uppercase"},placeholder: "Search", label: false %>
-          </div>
-          <div class="dropdown dropdown-header p-0">
-            <button class="btn btn-menu ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <%= image_tag 'menu-icon.png', alt: "menu-IMG", width: "24" %>
-            </button>
-            <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
-            </div>
           </div>
           <% f.submit %>
         <% end %>
@@ -84,11 +77,11 @@
                       </div>
                    <!--    <div class="dl-block dl-block-5 d-flex align-items-center">
                         <p class="dl-text">
-                          <a target="_blank" rel="noopene" href="<%= delivery.tracking_url %>" class= "track-badge d-inline-block">Track</a>
+                          <a target="_blank" rel="noopene" href="<%#= delivery.tracking_url %>" class= "track-badge d-inline-block">Track</a>
                         </p>
                       </div> -->
                       <div class="dl-block dl-block-6 d-flex align-items-center">
-                        <p class='dl-text dl-status dl-status-<%= delivery.dropoffs.pluck(:state).first %>'><%=  delivery.dropoffs.pluck(:state).first %>
+                        <p class='dl-text dl-status dl-status-<%= delivery.dropoffs.pluck(:state).first == "cancelled" ? 'cancel' : delivery.dropoffs.pluck(:state).first == "completed" ?  'complete' : 'enroute' %>'><%=  delivery.dropoffs.pluck(:state).first %>
                           
                         </p>
                       </div>

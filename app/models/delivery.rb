@@ -66,15 +66,16 @@ class Delivery < ApplicationRecord
   end
 
 
-  def self.created_at_search(search,date=nil, state)
+  def self.created_at_search(search, state)
     wildcard_search = "%#{search}%"
-    where(" (created_at > ?  OR reference_no LIKE ?) AND state IN (?)", date,  wildcard_search,state)
+    wildcard_search = '%%' if search.gsub(/\s+/, "").empty?
+    includes(:dropoffs).references(:dropoffs).where(" ( dropoffs.reference_no LIKE ?) AND dropoffs.state IN (?)",wildcard_search,state)
   end
 
-  def self.search_for_reference(search)
-    wildcard_search = "%#{search}%"
-    includes(:dropoffs).references(:dropoffs).where("dropoffs.reference_no LIKE ? ", wildcard_search)
-  end
+  # def self.search_for_reference(search, state)
+  #   wildcard_search = "#{search}%"
+  #   includes(:dropoffs).references(:dropoffs).where(" ( dropoffs.reference_no LIKE ?) AND dropoffs.state IN (?)", wildcard_search,state)
+  # end
 
 
   def self.pickup_first_name

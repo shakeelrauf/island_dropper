@@ -1,10 +1,12 @@
 $("#pickup-form").validate({
   rules: {
       "delivery[pickup_attributes][first_name]": {
-          required: true
+          required: true,
+            maxlength: 30
       },
       "delivery[pickup_attributes][last_name]": {
-          required: true
+          required: true,
+            maxlength: 30
       },
       "delivery[pickup_attributes][address]": {
           required: true
@@ -112,10 +114,12 @@ $("#dropOff-form").validate({
 
   rules: {
         "delivery[dropoffs_attributes][0][first_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][0][last_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][0][phone_number]": {
             required: true
@@ -128,10 +132,12 @@ $("#dropOff-form").validate({
         },
 
         "delivery[dropoffs_attributes][1][first_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][1][last_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][1][phone_number]": {
             required: true
@@ -143,10 +149,12 @@ $("#dropOff-form").validate({
             required: true
         },
         "delivery[dropoffs_attributes][1][first_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][1][last_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][1][phone_number]": {
             required: true
@@ -158,10 +166,12 @@ $("#dropOff-form").validate({
             required: true
         },
         "delivery[dropoffs_attributes][2][first_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][2][last_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][2][phone_number]": {
             required: true
@@ -174,10 +184,12 @@ $("#dropOff-form").validate({
         },
 
         "delivery[dropoffs_attributes][4][first_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][4][last_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][4][phone_number]": {
             required: true
@@ -189,10 +201,12 @@ $("#dropOff-form").validate({
             required: true
         },
         "delivery[dropoffs_attributes][5][first_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][5][last_name]": {
-            required: true
+            required: true,
+            maxlength: 30
         },
         "delivery[dropoffs_attributes][5][phone_number]": {
             required: true

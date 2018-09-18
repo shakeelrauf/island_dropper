@@ -23,7 +23,7 @@ module Payment
       if delivery.pre_order == true
         if Delivery.check_time_date(delivery.pre_order_date)
           delivery.processed =  true
-          flash[:success] = "Payment paid!!"
+          flash[:success] = "Your Delivery has been Placed successfully!"
           delivery.dropoffs.each do |dropoff|
             query = build_query(dropoff,delivery.pickup,delivery.items)
             response = Getswift::Delivery.add_booking(delivery,query,dropoff)
