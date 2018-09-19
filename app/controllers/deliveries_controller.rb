@@ -23,15 +23,22 @@ class DeliveriesController < ApplicationController
   end
 
   def past
-    # query = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": 'Successful'}
-    # query2 = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": 'Cancelled'}
-    # query[:Reference] = params[:search][:Reference] if params[:search].present? and params[:search][:Reference].present? 
-    # query[:startDate] = params[:search][:startDate] if params[:search].present? and params[:search][:startDate].present? 
-    # # @response = Getswift::Delivery.all_bookings(query)
     if params[:search].present?
-      params[:search][:startDate]=nil if !params[:search][:startDate].present? 
-      params[:search][:query]=params[:search][:Reference] if params[:search][:Reference].present?
-      @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:query],['completed','cancelled','accepted','onway']).order(created_at: :desc)
+      if params[:search][:startDate].present? and params[:search][:endDate].present?
+        if params[:search][:startDate].present?
+          start_date = Date.new(params[:search][:startDate].split('/').last.to_i,params[:search][:startDate].split('/').first.to_i,params[:search][:startDate].split('/').second.to_i) 
+        else
+          start_date = Date.today
+        end   
+        if params[:search][:endDate].present?
+          end_date = Date.new(params[:search][:endDate].split('/').last.to_i,params[:search][:endDate].split('/').first.to_i,params[:search][:endDate].split('/').second.to_i) 
+        else
+          end_date =  Date.today
+        end
+        @dropoffs =  Dropoff.search_between_range(start_date, end_date,['completed','cancelled','accepted','onway'],params[:search][:Reference])
+      else
+        @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:Reference],['completed','cancelled','accepted','onway']).order(created_at: :desc)
+      end
     else
       @dropoffs = current_user.dropoffs.includes(:delivery).where('state IN (?)', ['cancelled','completed','accepted','onway','abandoned','closed']).order(created_at: :desc)
       #.paginate(:page => params[:page], :per_page => 1)
@@ -53,6 +60,7 @@ class DeliveriesController < ApplicationController
       if @d["message"].present? 
         flash[:success] = @d["message"]
       else
+        refund_money(@dropoff)
         @dropoff.update(state: "cancelled")
         flash[:success] = @d["message"]
       end

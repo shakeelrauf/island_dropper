@@ -2,6 +2,7 @@ class Delivery < ApplicationRecord
   include Form
   include CheckFields
   before_create :generate_token
+  
   belongs_to :user
   has_one  :pickup,   dependent: :destroy
   has_many :items,    dependent: :destroy

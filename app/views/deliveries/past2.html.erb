@@ -99,11 +99,15 @@
               <%= simple_form_for :search , url: past_deliveries_path, method: :get do |f| %>
                 <div class="form-group form-group-id">
                   <label class="form-label pl-md-2">Reference</label>
-                  <%= f.input :Reference, input_html: {class: "form-control form-field"}, label: false %>
+                  <%= f.input :Reference, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:Reference] : ''}, label: false %>
                 </div>
                 <div class="form-group form-group-id">
-                  <label class="form-label pl-md-2">Date Range</label>
-                  <%= f.input :startDate, input_html: {class: "form-control form-field"}, label: false %>
+                  <label class="form-label pl-md-2">Start Date</label>
+                  <%= f.input :startDate, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:startDate] : '', id: 'datepicker'}, label: false %>
+                </div>
+                <div class="form-group form-group-id">
+                  <label class="form-label pl-md-2"> End Date</label>
+                  <%= f.input :endDate, input_html: {class: "form-control form-field", id: 'enddatepicker', value: params[:search].present? ? params[:search][:endDate] : ''}, label: false %>
                 </div>
                 <%= f.submit "Search" , class: "btn btn-green text-uppercase w-100" %>
               <% end %>  
@@ -120,3 +124,7 @@
   background: #70af44 !impotant;
 }
 </style>
+<script type="text/javascript">
+  $('#datepicker').datepicker({})
+  $('#enddatepicker').datepicker({})
+</script>

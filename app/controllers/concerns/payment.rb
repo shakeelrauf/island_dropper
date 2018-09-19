@@ -53,11 +53,43 @@ module Payment
     end 
   end
 
+
+  def refund_payment(dropoff)
+    bill = dropoff.bill
+    if bill.updated_at > 1.hour.from_now
+      refund = Stripe::Refund.create({
+          charge: bill.stripe_transaction_id,
+          amount: bill.amount,
+      })
+    else
+      rates = calculate_bill(dropoff.bill)
+      total_base_rate = rates.map(&:to_f).inject(:+)
+      refund_amount =  bill.amount.to_f - total_base_rate
+
+      refund = Stripe::Refund.create({
+          charge: bill.stripe_transaction_id,
+          amount: bill.amount,
+          description: "Amount detuct due to after 1 hour cancellation"
+      })
+    end
+  end
+
   def exact_time(time)
     if time.saturday?
       return 2.day.from_now.change(hour: 7)
     else
       return 1.day.from_now.change(hour: 7)
     end
+  end
+
+  def calculate_bill(bill)
+    res = bill.response
+    rate = []
+    if !res.nil?
+      res.each do |item|
+        rate.push(item[:base_rate])
+      end
+    end
+    return rate
   end
 end

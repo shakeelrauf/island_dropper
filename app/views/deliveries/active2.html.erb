@@ -60,7 +60,7 @@
                  <% @dropoffs.each do |dropoff| %>
                 <div class="dl-overflow">
                   <div class="card card-dl d-flex align-items-center justify-content-between">
-                    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= dropoff.id %>" aria-expanded="true" aria-controls="collapseTwo">
+                    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-trackingurl="<%= dropoff.tracking_url %>" data-target="#collapseTwo<%= dropoff.id %>" aria-expanded="true" aria-controls="collapseTwo">
                       <div class="dl-block-f dl-block-1 d-flex align-items-center">
                         <p class="dl-text"><%= dropoff.reference_no.first(6) %></p>
                       </div>
@@ -131,7 +131,9 @@
           <div class="col col-12 col-lg-4">
             <div class="deliveryListing-map mt-5 mt-lg-0 text-center">
               <div class="map-view">
-                <%= image_tag "map.png", alt: "map-IMG" %>
+                <iframe src="">
+                  
+                </iframe>
               </div>
             </div>
           </div>
@@ -139,3 +141,13 @@
       </div>
     </div>
   </div>
+<script>
+  $('#headingTwo').on('click', function(){
+    var $this =  $(this);
+    var trackingURL = $this.data('trackingurl');
+    $('iframe').css({width: '400px',
+    height: '300px'})
+    $('iframe').attr('src', trackingURL);
+  })
+</script>
+<style ></style>
