@@ -7,7 +7,7 @@ module DeliveryStepsHelper
       items.each do |item|
         size = item.size
         base_rate, per_km_rate = size_price(size, pricing)
-        res = Getswift::Request.find_distance({origin: delivery.pickup.address,destination: d.address,sensor: false })
+        res = Getswift::Request.find_distance({origin: delivery.pickup.address,destination: d.address,sensor: false, key: ENV['GEOCODE_API_KEY'] })
         if res[0]["error_messag"].present? or res[0]["routes"][0].nil?
           flash[:error] = "Dropoff or pickup locations are not correct"
           return nil
