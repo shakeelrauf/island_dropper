@@ -1,7 +1,7 @@
 class Delivery < ApplicationRecord
   include Form
   include CheckFields
-
+  before_create :generate_token
   belongs_to :user
   has_one  :pickup,   dependent: :destroy
   has_many :items,    dependent: :destroy
@@ -24,6 +24,9 @@ class Delivery < ApplicationRecord
     %w[pickup dropoff_items checkout]
   end
 
+  def to_param
+    token  
+  end
 
   def time_diff(start_time, end_time)
     seconds_diff = (start_time - end_time).to_i.abs
@@ -90,4 +93,11 @@ class Delivery < ApplicationRecord
     ["response"]
   end
 
+
+  def generate_token
+    self.token = loop do
+      random_token = SecureRandom.urlsafe_base64(nil, false)
+      break random_token unless Delivery.exists?(token: random_token)
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180918125445) do
+ActiveRecord::Schema.define(version: 20180919105729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20180918125445) do
     t.string "checkout_response"
     t.string "stripe_transaction_id"
     t.boolean "processed", default: false
+    t.string "token"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
   end
 
@@ -83,6 +84,7 @@ ActiveRecord::Schema.define(version: 20180918125445) do
     t.string "state"
     t.string "reference_no"
     t.string "tracking_url"
+    t.integer "user_id"
     t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
   end
 

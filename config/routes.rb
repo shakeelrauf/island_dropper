@@ -6,7 +6,7 @@ mount Sidekiq::Web => '/sidekiq'
   end
 
   root 'deliveries#active'
-  resources :deliveries do
+  resources :deliveries, param: :token do
     collection do
       get 'draft'
       get 'active'
