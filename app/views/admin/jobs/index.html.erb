@@ -65,9 +65,44 @@
                     <h6><%= dropoff.user.email.first(5).capitalize %></h6>
                   </div>
                   <div class="db-box db-box-6">
-                    <a href="#" class="edit-btn ml-3">
+                    <a href="#exampleModal<%= dropoff.id %>" data-toggle="modal" class="edit-btn ml-3" data-target="#exampleModal<%= dropoff.id %>">
                       Edit
                       <span class="db-arrow">
+
+                        <div class="modal fade" id="exampleModal<%= dropoff.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-body px-3 py-4">
+                                <p class="mb-0"><b>Pickup Details</b></p>
+                                <p><b>Pickup First name:</b><%= dropoff.delivery.pickup.first_name %></p>
+                                <p><b>Pickup last name:</b><%= dropoff.delivery.pickup.last_name %></p>
+                                <p><b>Pickup Address:</b><%= dropoff.delivery.pickup.address %></p>
+                                <p><b>Pickup Phone Number:</b><%= dropoff.delivery.pickup.phone_number %></p>
+                                <p><b>Pre Order:</b><%= dropoff.delivery.pre_order ==  true ? 'YES' : 'No' %></p>
+                                <% if dropoff.delivery.pre_order == true %>
+                                Pre Order Date: <%= dropoff.delivery.pre_order_date %>
+                                <% end %>
+                                <p><b>Dropoff Details: </b></p>
+                                <% dropoff.delivery.dropoffs.each do |d| %>
+                                  <p><b>First Name: <%= d.first_name %> </b></p>
+                                  <p><b>Last Name: <%= d.last_name %> </b></p>
+                                  <p><b>Address: <%= d.address %> </b></p>
+                                  <p><b>Phone number: <%= d.phone_number %> </b></p>
+                                  Item Details : 
+                                  <% dropoff.delivery.items.each do |item| %>
+                                    <p><b>Size: <%= item.size %></b></p>
+                                    <p><b>Description: <%= item.description %></b></p>
+                                  <% end %>
+                                <% end %>
+                              </div>
+
+                              <div class="modal-footer px-3 d-flex justify-content-end align-items-center">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                        
                         <%= image_tag "right-arrow.png" ,alt: "IMG",  width: "9"%>
                       </span>
                     </a>
