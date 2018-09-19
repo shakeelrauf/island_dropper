@@ -1,23 +1,6 @@
 <div class="off-canvas">
   <div class="deliveryListing-canvas">
-    <div class="container">
-      <div class="d-flex justify-content-between content-search">
-        <div class="btn-group btn-group-delivery" role="group" aria-label="Basic example">
-          <!-- <button class="btn btn-new text-uppercase" type="button">New</button>
-          <button class="btn btn-trash" type="button">
-            <span>
-              <%#= image_tag "garbage.png" , width: "20" %>
-            </span>
-          </button> -->
-        </div>
-        <%= simple_form_for :search , url: past_deliveries_path ,html: {class: "form-inline"} , method: :get do |f| %>
-          <div class="form-group search-group m-0">
-            <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control search-field text-uppercase"},placeholder: "Search", label: false %>
-          </div>
-          <% f.submit %>
-        <% end %>
-      </div>
-    </div>
+   
     <div class="container-fluid">
       <div class="deliveryListing-content pt-3">
         <div class="row">
