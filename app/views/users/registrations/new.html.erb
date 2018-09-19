@@ -1,4 +1,3 @@
-<div class="off-canvas">
   <div class="login-canvas">
     <div class="container">
       <div class="row">
@@ -32,7 +31,7 @@
                 <%= f.password_field :password_confirmation, autocomplete: "new-password" , class: "form-control form-field" %>
                  <%= error_message_on(f.object, :password_confirmation) %>
               </div>
-              <div class="pl-3">
+              <div class="pt-3">
                 <%= f.submit "Sign up", class: "btn btn-white" %>
               </div>
             <% end %>
@@ -44,5 +43,4 @@
       </div>
     </div>
   </div>
-</div>
 

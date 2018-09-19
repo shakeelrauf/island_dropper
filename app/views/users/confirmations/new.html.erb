@@ -1,10 +1,9 @@
-<div class="off-canvas">
   <div class="login-canvas">
     <div class="container">
       <div class="row">
         <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="border-box position-relative">
-            <h4 class="borderBox-heading m-0 font-weight-bold">Resend confirmation <br>Instructions</h4>
+            <h4 class="borderBox-heading m-0 font-weight-bold">Resend confirmation</h4>
               <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
 
                 <div class="form-group">
@@ -14,7 +13,7 @@
 
                 </div>
 
-                <div class="">
+                <div class="pt-3">
                   <%= f.submit "Resend confirmation instructions", class: "btn btn-white" %>
                 </div>
               <% end %>
@@ -27,7 +26,6 @@
       </div>
     </div>
   </div>
-</div>
 
 <script type="text/javascript">
   $('.alert').fadeOut(10000);

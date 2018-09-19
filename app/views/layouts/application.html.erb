@@ -18,6 +18,7 @@
   <body>
     <div class="off-canvas-container">
       <%= render partial:  'shared/header' %>
+    <div class="off-canvas">
       <div id="flash-messages">
 
       <% flash.each do |key, value| %>
@@ -34,10 +35,11 @@
       </div>
       <%= yield %>
     </div>
-    
       <% if current_user && !(current_user.role == 'admin') %>
         <%= render partial:  'shared/footer' %>
       <% end %>
+    </div>
+    
     <script type="text/javascript">
       $('.alert').delay(7000).fadeOut(3000);
     </script>
