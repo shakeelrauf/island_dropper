@@ -58,21 +58,21 @@
                 </div>
               </div>
               <div class="dl-main">
-                 <% @deliveries.each do |delivery| %>
+                 <% @dropoffs.each do |dropoff| %>
                 <div class="dl-overflow">
                   <div class="card card-dl d-flex align-items-center justify-content-between">
-                    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= delivery.id %>" aria-expanded="true" aria-controls="collapseTwo">
+                    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= dropoff.id %>" aria-expanded="true" aria-controls="collapseTwo">
                       <div class="dl-block-f dl-block-1 d-flex align-items-center">
-                        <p class="dl-text"><%= delivery.dropoffs.pluck(:reference_no).first.first(6) %></p>
+                        <p class="dl-text"><%= dropoff.reference_no.first(6) %></p>
                       </div>
                       <div class="dl-block dl-block-2 d-flex align-items-center">
-                        <p class="dl-text"><%= delivery.created_at.strftime("%Y-%m-%d") %></p>
+                        <p class="dl-text"><%= dropoff.created_at.strftime("%Y-%m-%d") %></p>
                       </div>
                       <div class="dl-block dl-block-3 d-flex align-items-center">
-                        <p class="dl-text"><%= delivery.pickup.present? ? delivery.pickup.address : '' %></p>
+                        <p class="dl-text"><%= dropoff.delivery.pickup.present? ? dropoff.delivery.pickup.address : '' %></p>
                       </div>
                       <div class="dl-block dl-block-4 d-flex align-items-center">
-                        <p class="dl-text"><%= delivery.dropoffs.first.present? ? delivery.dropoffs.first.address : '' %></p>
+                        <p class="dl-text"><%= dropoff.address  %></p>
                       </div>
                       <!-- <div class="dl-block dl-block-5 d-flex align-items-center">
                         <p class="dl-text">
@@ -80,29 +80,29 @@
                         </p>
                       </div> -->
                       <div class="dl-block dl-block-6 d-flex align-items-center">
-                        <p class='dl-text dl-status dl-status-<%= delivery.dropoffs.pluck(:state).first == "cancelled" ? 'cancel' : delivery.dropoffs.pluck(:state).first == "completed" ?  'complete' : 'enroute' %>'>
-                          <%= delivery.dropoffs.pluck(:state).first %>
+                        <p class='dl-text dl-status dl-status-<%= dropoff.state == "cancelled" ? 'cancel' : dropoff.state == "completed" ?  'complete' : 'active' %>'>
+                          <%= dropoff.state %>
                         </p>
                       </div>
                     </div>
-                    <div id="collapseTwo<%= delivery.id %>" class="collapse w-100" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div id="collapseTwo<%= dropoff.id %>" class="collapse w-100" aria-labelledby="headingTwo" data-parent="#accordionExample">
                       <div class="card-body driver-detail d-flex align-items-center justify-content-around">
-                        <% if delivery.driver.present? %>
+                        <% if dropoff.driver.present? %>
                           <div class="driver-img">
                             <span class="d-inline-block d-flex align-items-center justify-content-center">
-                              <img src="<%= delivery.driver.photo_url %>" alt="driver-IMG"></span>
+                              <img src="<%= dropoff.driver.photo_url %>" alt="driver-IMG"></span>
                           </div>
                           <div class="driver-name">
-                            <span class="d-inline-block">Driver: <%= delivery.driver.driver_name %></span>
+                            <span class="d-inline-block">Driver: <%= dropoff.driver.driver_name %></span>
                           </div>
                           <div class="driver-contact">
-                            <span class="d-inline-block">Contact: <%= delivery.driver.phone_number %></span>
+                            <span class="d-inline-block">Contact: <%= dropoff.driver.phone_number %></span>
                           </div>
                       <% end %>
 
-                       <% if  delivery.state == "cancelled" or delivery.state == "completed" %>
+                       <% if  dropoff.state == "cancelled" or dropoff.state == "completed" %>
                         <% else %>
-                          <%= link_to 'Cancel', cancel_delivery_url("#{delivery.dropoffs.pluck(:reference_no)}"), method: :post,class:  "btn btn-new bg-white",data: {confirm: "You want to cancel it?"} %>
+                          <%= link_to 'Cancel', cancel_delivery_url("#{dropoff.reference_no}"), method: :post,class:  "btn btn-new bg-white",data: {confirm: "You want to cancel it?"} %>
                         <% end %>
                       </div>
                     </div>

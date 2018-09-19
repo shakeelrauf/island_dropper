@@ -16,6 +16,8 @@
 //= require cocoon
 //= require bootstrap-datepicker
 //= require jquery.validate
+//= require moment
+//= require bootstrap-datetimepicker
 //= require card.js
 //= require jquery.inputmask
 //= require jquery.inputmask.extensions

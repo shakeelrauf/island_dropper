@@ -46,23 +46,23 @@
             </div>
           </div>
           <div class="deliveryJob-container">
-            <% @deliveries.each do |delivery| %>
+            <% @dropoffs.each do |dropoff| %>
               <div class="overflow-x-auto">
                 <div class="deliveryJob-block deliveryJob-body d-flex align-items-center justify-content-between">
                   <div class="db-box db-box-1">
-                    <h6><%= delivery.dropoffs.pluck(:reference_no).present? ? delivery.dropoffs.pluck(:reference_no).first.first(6) : '' %></h6>
+                    <h6><%= dropoff.reference_no.first(6) %></h6>
                   </div>
                   <div class="db-box db-box-2">
-                    <h6><%= delivery.state.capitalize %></h6>
+                    <h6><%= dropoff.state.capitalize %></h6>
                   </div>
                   <div class="db-box db-box-3"> 
-                    <h6><%= delivery.pickup.present? ? delivery.pickup.address.first(6) : '' %></h6>
+                    <h6><%= dropoff.delivery.pickup.present? ? dropoff.delivery.pickup.address.first(6) : '' %></h6>
                   </div>
                   <div class="db-box db-box-4">
-                    <h6><%= delivery.dropoffs.first.present? ? delivery.dropoffs.first.address.first(6) : ''%></h6>
+                    <h6><%= dropoff.address.first(6) %></h6>
                   </div>
                   <div class="db-box db-box-5">
-                    <h6><%= delivery.user.email.present? ? delivery.user.email.first(5).capitalize : '' %></h6>
+                    <h6><%= dropoff.user.email.first(5).capitalize %></h6>
                   </div>
                   <div class="db-box db-box-6">
                     <a href="#" class="edit-btn ml-3">

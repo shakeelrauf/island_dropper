@@ -1,10 +1,10 @@
 class Admin::JobsController < AdminController
    def index
     if params[:search].present?
-      @deliveries = Delivery.created_at_search(params[:search][:query],['active'])
+      @dropoffs = Dropoff.search_at_reference_no(params[:search][:query],['active'])
    
     else
-      @deliveries = Delivery.includes([:pickup,:dropoffs, :user]).where.not('state IN (?)', ['new','draft', 'cancelled'])
+      @dropoffs = Dropoff.includes([:delivery,:user]).where.not('state IN (?)', ['new','draft', 'cancelled'])
     end
   end
 end
