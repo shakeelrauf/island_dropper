@@ -22,7 +22,7 @@ module DeliveryStepsHelper
         base_rate, per_km_rate = size_price(size, pricing)
         res = Getswift::Request.find_distance({origin: delivery.pickup.address,destination: d.address,sensor: false })
         if res[0]["error_messag"].present? or res[0]["routes"][0].nil?
-          flash[:error] = res[0]["error_messag"]
+          flash[:error] = res
           return nil
         end
         kms = res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f
