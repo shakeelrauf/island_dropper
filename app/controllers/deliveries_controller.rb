@@ -31,7 +31,7 @@ class DeliveriesController < ApplicationController
     if params[:search].present?
       params[:search][:startDate]=nil if !params[:search][:startDate].present? 
       params[:search][:query]=params[:search][:Reference] if params[:search][:Reference].present?
-      @dropoffs = current_user.search_at_reference_no(params[:search][:query],['completed','cancelled','accepted','onway']).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:query],['completed','cancelled','accepted','onway']).order(created_at: :desc)
     else
       @dropoffs = current_user.dropoffs.includes(:delivery).where('state IN (?)', ['cancelled','completed','accepted','onway','abandoned','closed']).order(created_at: :desc)
       #.paginate(:page => params[:page], :per_page => 1)
