@@ -13,7 +13,7 @@ module ChecksForFields
   
   def check_for_existence(model)
     exception_keys = Delivery.exception_keys
-    return false if (model.attributes.except("latitude","longitude","reference_no","state","tracking_url").values.include?(nil) or model.attributes.values.include?(""))
+    return false if (model.attributes.except("latitude","user_id","tracking_url","longitude","reference_no","state","tracking_url").values.include?(nil) or model.attributes.values.include?(""))
     return true
   end
 

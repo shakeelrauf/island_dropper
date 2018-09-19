@@ -62,7 +62,7 @@ class Deliveries::StepsController < ApplicationController
     delivery_params[:pre_order_date] = Date.strptime(delivery_params[:pre_order_date], "%m/%d/%y") if delivery_params[:pre_order_date].present?
   end
   def delivery_params
-    params.require(:delivery).permit(:id,:card_token, :delivery_id,:priority,:checkout_response,:pre_order,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
+    params.require(:delivery).permit(:id,:card_token, :delivery_id,:priority,:checkout_response,:pre_order,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:user_id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
   end
 
   def response_after_request_to_getswift(response)
