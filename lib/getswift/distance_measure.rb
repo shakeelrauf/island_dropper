@@ -4,7 +4,7 @@ require 'faraday'
 require 'json'
 
 class Getswift::DistanceMeasure
-  BASE = 'http://maps.googleapis.com/'
+  BASE = 'https://maps.googleapis.com/'
 
   def self.api
     Faraday.new(url: BASE) do |faraday|
