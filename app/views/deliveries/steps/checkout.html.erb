@@ -78,7 +78,12 @@
 															<h6 class="checkOut-inner-l mb-0">Same day</h6>
 															<div class="bordered-img-car">
 																<span class="d-flex align-items-center justify-content-center ml-3 ml-sm-0 mt-sm-4 mx-md-auto">
+																	<% if @delivery.items.first.size == 'm' or @delivery.items.first.size == 'l' %>
 																	<%= image_tag 'car.png', alt: 'car-IMG', width: '28' %>
+
+																	<% else %>
+																	<%= image_tag 'van.png', alt: 'car-IMG', width: '28' %>
+																	<% end %>
 																</span>
 															</div>
 														</div>
@@ -251,7 +256,7 @@
       token = response.id;
       $form.append($("<input type=\"hidden\" name=\"card_token\" />").val(token));
       $.ajax({
-		    url: "/deliveries/<%= params[:delivery_id] %>/steps/checkout", // your api url
+		    url: "/deliveries/<%= params[:delivery_token] %>/steps/checkout", // your api url
 		    // jQuery >= 1.9.0 -> use method
 		    method: 'PUT', // method is any HTTP method
 		    data: {delivery: {card_token: token}}, // data as js object

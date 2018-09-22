@@ -44,6 +44,18 @@ body {
   font-family: 'Myriad Pro';
   color: #201f1f;
 }
+.page-link{
+  color: #70af44 !important;
+}
+.page-item.active .page-link{
+  background-color: #70af44 !important;
+  color: white !important;
+  border: 1px dotted green;
+}
+.pagination{
+  margin-top: 30px;
+  float: right;
+}
 ul {
   padding: 0;
   margin: 0;
@@ -895,13 +907,16 @@ a.btn-back-green:focus {
   position: absolute;
   right: 0;
   top: 0;
-  bottom: 0;
   background-color: #70af44;
   border: 0;
   border-radius: 0px 18px 18px 0px;
   min-width: 46px;
   padding: 5px;
   line-height: 29px;
+}
+.error {
+  color: red;
+  padding: 6px;
 }
 .accordion .card-item:first-of-type {
   border-bottom: 1px solid #70af44;

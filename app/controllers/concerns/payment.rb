@@ -18,19 +18,22 @@ module Payment
       delivery.dropoffs.each do |d|
         bil =  d.bill
         bil.stripe_transaction_id = charge.id 
-        bil.save
+        bil.save!
       end
       if delivery.pre_order == true
         if Delivery.check_time_date(delivery.pre_order_date)
           delivery.processed =  true
-          flash[:success] = "Your Delivery has been Placed successfully!"
+          flash[:success] = "Delivery will be perform at given time."
           delivery.dropoffs.each do |dropoff|
-            query = build_query(dropoff,delivery.pickup,delivery.items)
+            query = build_preorder_query(dropoff,delivery.pickup,delivery.items,delivery.pre_order_date)
             response = Getswift::Delivery.add_booking(delivery,query,dropoff)
           end
         else
           flash[:success] = "Delivery will be perform in working days."
-          DeliveryToGetswift.perform_at(exact_time(delivery.updated_at),delivery.id)
+          delivery.dropoffs.each do |dropoff|
+            query = build_preorder_query(dropoff,delivery.pickup,delivery.items,exact_time(delivery.pre_order_date))
+            response = Getswift::Delivery.add_booking(delivery,query,dropoff)
+          end
         end
       else
         if Delivery.check_time_date(delivery.updated_at)
@@ -42,24 +45,27 @@ module Payment
           end
         else
           flash[:success] = "Delivery will be perform in working days."
-          DeliveryToGetswift.perform_at(exact_time(delivery.updated_at),delivery.id)
+          delivery.dropoffs.each do |dropoff|
+            query = build_preorder_query(dropoff,delivery.pickup,delivery.items,exact_time(delivery.updated_at))
+            response = Getswift::Delivery.add_booking(delivery,query,dropoff)
+          end
         end
       end
       delivery.save
       return response_after_request_to_getswift(response)
     rescue => e
       flash[:error] = e.message
-      return redirect_to delivery_step_path(delivery, id: delivery.first_invalid_step)
-    end 
+      redirect_to root_path
+    end
   end
 
 
   def refund_payment(dropoff)
     bill = dropoff.bill
-    if bill.updated_at > 1.hour.from_now
+    if bill.updated_at < 1.hour.from_now
       refund = Stripe::Refund.create({
           charge: bill.stripe_transaction_id,
-          amount: bill.amount,
+          amount: (bill.amount.to_f * 100).to_i
       })
     else
       rates = calculate_bill(dropoff.bill)
@@ -68,8 +74,7 @@ module Payment
 
       refund = Stripe::Refund.create({
           charge: bill.stripe_transaction_id,
-          amount: bill.amount,
-          description: "Amount detuct due to after 1 hour cancellation"
+          amount: (refund_amount * 100).to_i
       })
     end
   end
@@ -86,8 +91,8 @@ module Payment
     res = bill.response
     rate = []
     if !res.nil?
-      res.each do |item|
-        rate.push(item[:base_rate])
+      res.each do |key,val|
+        rate.push(val[:base_rate])
       end
     end
     return rate

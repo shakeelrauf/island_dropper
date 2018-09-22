@@ -9,7 +9,7 @@ class Delivery < ApplicationRecord
   has_many :dropoffs, dependent: :destroy
   has_one  :driver,   dependent: :destroy
   has_many  :locations,   dependent: :destroy
-
+  validates :pre_order_date,presence: true, if: "pre_order"
   scoped_search in: :pickup ,on: [:first_name,:last_name, :created_at]
   attr_accessor :card_token
   scope :draft,  -> {where(state: "draft")}
@@ -59,17 +59,6 @@ class Delivery < ApplicationRecord
 
   attr_accessor :form_step
   
-  with_options if: -> { required_for_step?(:pickup) } do |step|
-    # step.validate :pickup do |p|
-    #   step.errors.add(:base, 'An pickup must have a first name.') unless p.pickup.first_name?
-    # end 
-    step.validates_inclusion_of :pre_order, :in => [true,false], :message => 'requires an answer'
-    with_options if: -> { pre_order == true } do |s|
-      s.validates :pre_order_date, presence:  true
-    end
-  end
-
-
   def self.created_at_search(search, state)
     wildcard_search = "%#{search}%"
     wildcard_search = '%%' if search.gsub(/\s+/, "").empty?

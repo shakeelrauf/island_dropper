@@ -35,6 +35,9 @@ class Deliveries::StepsController < ApplicationController
       flash[:success] = "Your information has been saved successfully to draft"
       return redirect_to draft_deliveries_path
     end
+    if params[:delivery][:pre_order_date].present?
+      params[:delivery][:pre_order_date] = DateTime.strptime(params[:delivery][:pre_order_date], '%m/%d/%Y')
+    end
     if @delivery.update_attributes(delivery_params)
       if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
         if check_for_calling_getswift(@delivery)

@@ -16,8 +16,8 @@ module Getswift
         dropoff.reference_no = response["delivery"]["id"]
         dropoff.tracking_url = response["delivery"]["trackingUrls"]["www"]
         dropoff.state ='active'
-        dropoff.save
-        delivery.save
+        dropoff.save!
+        delivery.save!
         response
       end
     end

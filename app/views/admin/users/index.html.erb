@@ -33,17 +33,50 @@
                 <span class="user-name">
                   <%= user.full_name.capitalize %>
                 </span>
-              </div>
-              <a href="#" class="edit-btn ml-3">
+              </div> 
+              <a href="#exampleModal<%= user.id %>" data-toggle="modal" class="edit-btn ml-3" data-target="#exampleModal<%= user.id %>">
                 Edit
                 <span class="db-arrow">
                   <%= image_tag 'right-arrow.png', alt: 'IMG', width: '9'%>
                 </span>
               </a>
             </div>
+            <div class="modal fade" id="exampleModal<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-body px-3 py-4">
+              
+                      <table class="pull-left col-md-12 ">
+                       <tbody>
+                           <tr>
+                               <td ><strong>First name</strong></td>
+                               <td ><%= user.first_name %></td>
+                           </tr>
+                           
+                           <tr>
+                               <td><strong>last name</strong></td>
+                               <td ><%= user.last_name %></td>
+                           </tr>
+                           
+                           <tr>
+                               <td><strong>Email Address</strong></td>
+                               <td ><%= user.email %></td>
+                           </tr>
+
+                       </tbody>
+                      </table>
+                    </div>
+
+                    <div class="modal-footer px-3 d-flex justify-content-end align-items-center">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
           <% end %>
         </div>
       </div>
+      <%= will_paginate @users %>
     </div>
   </div>
 </div>
