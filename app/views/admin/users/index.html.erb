@@ -50,12 +50,12 @@
                        <tbody>
                            <tr>
                                <td ><strong>First name</strong></td>
-                               <td ><%= user.first_name %></td>
+                               <td ><%= user.first_name.first(11) %></td>
                            </tr>
                            
                            <tr>
                                <td><strong>last name</strong></td>
-                               <td ><%= user.last_name %></td>
+                               <td ><%= user.last_name.first(11) %></td>
                            </tr>
                            
                            <tr>
