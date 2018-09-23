@@ -50,7 +50,7 @@
               <div class="overflow-x-auto">
                 <div class="deliveryJob-block deliveryJob-body d-flex align-items-center justify-content-between">
                   <div class="db-box db-box-1">
-                    <h6><%= dropoff.reference_no.first(6) %></h6>
+                    <h6><%= dropoff.reference_no.present? ? dropoff.reference_no.first(6) : '' %></h6>
                   </div>
                   <div class="db-box db-box-2">
                     <h6><%= dropoff.state.capitalize %></h6>
@@ -59,7 +59,7 @@
                     <h6><%= dropoff.delivery.pickup.present? ? dropoff.delivery.pickup.address.first(6) : '' %></h6>
                   </div>
                   <div class="db-box db-box-4">
-                    <h6><%= dropoff.address.first(6) %></h6>
+                    <h6><%= dropoff.address.present? ? dropoff.address.first(6) : ''%></h6>
                   </div>
                   <div class="db-box db-box-5">
                     <h6><%= dropoff.user.email.first(5).capitalize %></h6>
@@ -82,6 +82,10 @@
                         
                                 <table class="pull-left col-md-12 ">
                                  <tbody>
+                                     <tr>
+                                         <td ><strong>Ref number</strong></td>
+                                         <td ><%= dropoff.reference_no %></td>
+                                     </tr>
                                      <tr>
                                          <td ><strong>Pickup First name</strong></td>
                                          <td ><%= dropoff.delivery.pickup.first_name %></td>

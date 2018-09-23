@@ -84,21 +84,20 @@
  -->
 
 <script type="text/javascript">
+
+var date = new Date();
+date.setDate(date.getDate());
   $(".btn-calender").click(function(e){
     e.preventDefault();
-     $('#calender_input').datetimepicker(
-     {
-        format: 'MM/DD/YYYY',
-        daysOfWeekDisabled: [0]
-      });
+    $('#calender_input').focus()
   })
 
-     $('#calender_input').datetimepicker(
-     {
-        daysOfWeekDisabled: [0],
-        format: 'MM/DD/YYYY',
-        disabledHours: [0, 1, 2, 3, 4, 5, 6,  18, 19, 20, 21, 22, 23, 24]
-      });
+   $('#calender_input').datetimepicker(
+   {
+      daysOfWeekDisabled: [0],
+      format: 'MM/DD/YYYY',
+      disabledHours: [0, 1, 2, 3, 4, 5, 6,  18, 19, 20, 21, 22, 23, 24]
+    });
   function initialize() {
     // var input = document.getElementById('pickup_address');
     new google.maps.places.Autocomplete(input);
@@ -113,7 +112,7 @@
             };
 
         autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            /** @type {!HTMLInputElement} */(document.getElementById('autsocomplete')),
             options);
       }
       function geolocate() {

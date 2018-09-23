@@ -41,7 +41,6 @@ class Deliveries::StepsController < ApplicationController
     if @delivery.update_attributes(delivery_params)
       if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
         if check_for_calling_getswift(@delivery)
-          flash[:success] = "Checkout!!"
           return render_wizard @delivery
         else
           flash[:error] = "Reuest failed!! Complete the form."
@@ -73,7 +72,6 @@ class Deliveries::StepsController < ApplicationController
       flash[:success] = response[:errors][:message]
       return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
     else
-      flash[:success] = "Checkout!!"
       return render_wizard @delivery
     end
   end

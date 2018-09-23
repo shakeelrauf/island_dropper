@@ -42,7 +42,7 @@ mount Sidekiq::Web => '/sidekiq'
   end
 
 
-  devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'} 
+  devise_for :users, controllers: { confirmations: 'confirmations' ,passwords: 'passwords',  sessions: 'sessions', registrations: 'registrations'} 
   devise_scope :user do  
     get 'registrations/email_confirmation', to: 'registrations#email_confirmation'
   end

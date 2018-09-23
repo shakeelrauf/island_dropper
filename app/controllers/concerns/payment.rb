@@ -62,7 +62,7 @@ module Payment
 
   def refund_payment(dropoff)
     bill = dropoff.bill
-    if bill.updated_at < 1.hour.from_now
+    if bill.updated_at >= Time.now - 1*60*60
       refund = Stripe::Refund.create({
           charge: bill.stripe_transaction_id,
           amount: (bill.amount.to_f * 100).to_i
@@ -81,9 +81,9 @@ module Payment
 
   def exact_time(time)
     if time.saturday?
-      return 2.day.from_now.change(hour: 7)
+      return (time + 2.days).change(hour: 7)
     else
-      return 1.day.from_now.change(hour: 7)
+      return (time + 1.days).change(hour: 7)
     end
   end
 

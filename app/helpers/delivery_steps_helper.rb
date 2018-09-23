@@ -24,12 +24,12 @@ module DeliveryStepsHelper
       items.each.with_index do |item,i|
         size = item.size
         base_rate, per_km_rate = size_price(size, pricing)       
-        res = {}#Getswift::Request.find_distance({origin: delivery.pickup.address,destination: d.address,sensor: false, key: ENV['GEOCODE_API_KEY'] })
-        if false #res[0]["error_messag"].present? or res[0]["routes"][0].nil?
+        res = Getswift::Request.find_distance({origin: delivery.pickup.address,destination: d.address,sensor: false, key: ENV['GEOCODE_API_KEY'] })
+        if res[0]["error_messag"].present? or res[0]["routes"][0].nil?
           flash[:error] = res
           return nil
         end
-        kms = 13 #res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f
+        kms = res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f
         item_price = base_rate.to_f + (per_km_rate.to_f * kms)
         price += item_price
         hash[i] = {base_rate: base_rate,kms: kms,item_price: item_price,per_km_rate: per_km_rate, size: size, priority: false}
