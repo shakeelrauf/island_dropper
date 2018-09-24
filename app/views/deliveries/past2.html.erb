@@ -1,121 +1,126 @@
-  <div class="deliveryListing-canvas">
-   
-    <div class="container-fluid">
-      <div class="deliveryListing-content pt-3">
-        <div class="row flex-column-reverse flex-lg-row">
-          <div class="col col-12 col-lg-8">
-            <div class="delivery-listing">
-              <div class="dl-overflow">
-                <div class="dl-head position-relative d-flex align-items-center justify-content-between">
-                  <div class="dl-block dl-block-1 d-flex align-items-center">
-                    <h5 class="dl-heading">
-                      Ref
-                      <span class="d-inline-block ml-2">
-                        <%= image_tag('sort.png',alt: 'sort-IMG') %>
-                      </span>
-                    </h5>
-                  </div>
-                  <div class="dl-block dl-block-2 d-flex align-items-center">
-                    <h5 class="dl-heading">
-                      Date
-                      <span class="d-inline-block ml-2">
-                        <%= image_tag('sort.png',alt: 'sort-IMG') %></span>
-                    </h5>
-                  </div>
-                  <div class="dl-block dl-block-3 d-flex align-items-center">
-                    <h5 class="dl-heading">From</h5>
-                  </div>
-                  <div class="dl-block dl-block-4 d-flex align-items-center">
-                    <h5 class="dl-heading">Destination</h5>
-                  </div><!-- 
-                  <div class="dl-block dl-block-5 d-flex align-items-center">
-                    <h5 class="dl-heading">Tracking</h5>
-                  </div> -->
-                  <div class="dl-block dl-block-6 d-flex align-items-center">
-                    <h5 class="dl-heading">
-                      Status
-                      <span class="d-inline-block ml-2">
-                        <%= image_tag('sort.png',alt: 'sort-IMG') %></span>
-                    </h5>
-                  </div>
+<div class="deliveryListing-canvas">   
+  <div class="container-fluid">
+    <div class="deliveryListing-content pt-3">
+      <div class="row flex-column-reverse flex-lg-row">
+        <div class="col col-12 col-lg-8">
+          <div class="delivery-listing">
+            <div class="dl-overflow">
+              <div class="dl-head position-relative d-flex align-items-center justify-content-between">
+                <div class="dl-block dl-block-1 d-flex align-items-center">
+                  <h5 class="dl-heading">
+                    Ref
+                    <span class="d-inline-block ml-2">
+                      <%= image_tag('sort.png',alt: 'sort-IMG') %>
+                    </span>
+                  </h5>
+                </div>
+                <div class="dl-block dl-block-2 d-flex align-items-center">
+                  <h5 class="dl-heading">
+                    Date
+                    <span class="d-inline-block ml-2">
+                      <%= image_tag('sort.png',alt: 'sort-IMG') %></span>
+                  </h5>
+                </div>
+                <div class="dl-block dl-block-3 d-flex align-items-center">
+                  <h5 class="dl-heading">From</h5>
+                </div>
+                <div class="dl-block dl-block-4 d-flex align-items-center">
+                  <h5 class="dl-heading">Destination</h5>
+                </div><!-- 
+                <div class="dl-block dl-block-5 d-flex align-items-center">
+                  <h5 class="dl-heading">Tracking</h5>
+                </div> -->
+                <div class="dl-block dl-block-6 d-flex align-items-center">
+                  <h5 class="dl-heading">
+                    Status
+                    <span class="d-inline-block ml-2">
+                      <%= image_tag('sort.png',alt: 'sort-IMG') %></span>
+                  </h5>
                 </div>
               </div>
-              <div class="dl-main">
+            </div>
+            <div class="dl-main">
+              <% if @dropoffs.present? %>
                 <%  @dropoffs.each do |dropoff| %>
-                <div class="dl-overflow">
-                  <div class="card card-dl d-flex align-items-center justify-content-between">
-                    <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= dropoff.id %>" aria-expanded="true" aria-controls="collapseTwo">
-                      <div class="dl-block-f dl-block-1 d-flex align-items-center">
-                        <p class="dl-text"><%= dropoff.reference_no.first(6)%></p>
+                  <div class="dl-overflow">
+                    <div class="card card-dl d-flex align-items-center justify-content-between">
+                      <div class="card-header d-flex align-items-center justify-content-between w-100 collapsed" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo<%= dropoff.id %>" aria-expanded="true" aria-controls="collapseTwo">
+                        <div class="dl-block-f dl-block-1 d-flex align-items-center">
+                          <p class="dl-text"><%= dropoff.reference_no.first(6)%></p>
+                        </div>
+                        <div class="dl-block dl-block-2 d-flex align-items-center">
+                          <p class="dl-text"><%= dropoff.created_at.strftime("%Y-%m-%d") %></p>
+                        </div>
+                        <div class="dl-block dl-block-3 d-flex align-items-center">
+                          <p class="dl-text"><%= dropoff.delivery.pickup.present? ? dropoff.delivery.pickup.address : '' %></p>
+                        </div>
+                        <div class="dl-block dl-block-4 d-flex align-items-center">
+                          <p class="dl-text"><%= dropoff.address %></p>
+                        </div>
+                     <!--    <div class="dl-block dl-block-5 d-flex align-items-center">
+                          <p class="dl-text">
+                            <a target="_blank" rel="noopene" href="<%#= delivery.tracking_url %>" class= "track-badge d-inline-block">Track</a>
+                          </p>
+                        </div> -->
+                        <div class="dl-block dl-block-6 d-flex align-items-center">
+                          <p class='dl-text dl-status dl-status-<%= dropoff.state == "cancelled" ? 'cancel' : dropoff.state == "completed" ?  'complete' : 'enroute' %>'><%=  dropoff.state %>
+                            
+                          </p>
+                        </div>
                       </div>
-                      <div class="dl-block dl-block-2 d-flex align-items-center">
-                        <p class="dl-text"><%= dropoff.created_at.strftime("%Y-%m-%d") %></p>
-                      </div>
-                      <div class="dl-block dl-block-3 d-flex align-items-center">
-                        <p class="dl-text"><%= dropoff.delivery.pickup.present? ? dropoff.delivery.pickup.address : '' %></p>
-                      </div>
-                      <div class="dl-block dl-block-4 d-flex align-items-center">
-                        <p class="dl-text"><%= dropoff.address %></p>
-                      </div>
-                   <!--    <div class="dl-block dl-block-5 d-flex align-items-center">
-                        <p class="dl-text">
-                          <a target="_blank" rel="noopene" href="<%#= delivery.tracking_url %>" class= "track-badge d-inline-block">Track</a>
-                        </p>
-                      </div> -->
-                      <div class="dl-block dl-block-6 d-flex align-items-center">
-                        <p class='dl-text dl-status dl-status-<%= dropoff.state == "cancelled" ? 'cancel' : dropoff.state == "completed" ?  'complete' : 'enroute' %>'><%=  dropoff.state %>
-                          
-                        </p>
-                      </div>
-                    </div>
-                    <div id="collapseTwo<%= dropoff.id %>" class="collapse w-100" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                      <div class="card-body driver-detail d-flex align-items-center justify-content-around">
-                        <% if dropoff.driver.present? %>
-                          <div class="driver-img">
-                            <span class="d-inline-block d-flex align-items-center justify-content-center">
-                              <img src="<%= dropoff.driver.photo_url %>" alt="driver-IMG"></span>
-                          </div>
-                          <div class="driver-name">
-                            <span class="d-inline-block">Driver: <%= dropoff.driver.driver_name %></span>
-                          </div>
-                          <div class="driver-contact">
-                            <span class="d-inline-block">Contact: <%= dropoff.driver.phone_number %></span>
-                          </div>
-                      <% end %>
+                      <div id="collapseTwo<%= dropoff.id %>" class="collapse w-100" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body driver-detail d-flex align-items-center justify-content-around">
+                          <% if dropoff.driver.present? %>
+                            <div class="driver-img">
+                              <span class="d-inline-block d-flex align-items-center justify-content-center">
+                                <img src="<%= dropoff.driver.photo_url %>" alt="driver-IMG"></span>
+                            </div>
+                            <div class="driver-name">
+                              <span class="d-inline-block">Driver: <%= dropoff.driver.driver_name %></span>
+                            </div>
+                            <div class="driver-contact">
+                              <span class="d-inline-block">Contact: <%= dropoff.driver.phone_number %></span>
+                            </div>
+                        <% end %>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 <% end %>
-              </div>
+              <% else %>
+                <div class="no-data">
+                  <span>No Data Found</span>
+                </div>
+              <% end %>
             </div>
-             <%#= will_paginate @deliveries, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
           </div>
+           <%#= will_paginate @deliveries, renderer: WillPaginate::ActionView::BootstrapLinkRenderer %>
+        </div>
 
-          <div class="col col-12 col-lg-4">
-            <div class="deliveryListing-search mb-5 mb-lg-0">
+        <div class="col col-12 col-lg-4">
+          <div class="deliveryListing-search mb-5 mb-lg-0">
 
-              <%= simple_form_for :search , url: past_deliveries_path, method: :get do |f| %>
-                <div class="form-group form-group-id">
-                  <label class="form-label pl-md-2">Reference</label>
-                  <%= f.input :Reference, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:Reference] : ''}, label: false %>
-                </div>
-                <div class="form-group form-group-id">
-                  <label class="form-label pl-md-2">Start Date</label>
-                  <%= f.input :startDate, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:startDate] : '', id: 'datepicker'}, label: false %>
-                </div>
-                <div class="form-group form-group-id">
-                  <label class="form-label pl-md-2"> End Date</label>
-                  <%= f.input :endDate, input_html: {class: "form-control form-field", id: 'enddatepicker', value: params[:search].present? ? params[:search][:endDate] : ''}, label: false %>
-                </div>
-                <%= f.submit "Search" , class: "btn btn-green text-uppercase w-100" %>
-              <% end %>  
-            </div>
+            <%= simple_form_for :search , url: past_deliveries_path, method: :get do |f| %>
+              <div class="form-group form-group-id">
+                <label class="form-label pl-md-2">Reference</label>
+                <%= f.input :Reference, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:Reference] : ''}, label: false %>
+              </div>
+              <div class="form-group form-group-id">
+                <label class="form-label pl-md-2">Start Date</label>
+                <%= f.input :startDate, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:startDate] : '', id: 'datepicker'}, label: false %>
+              </div>
+              <div class="form-group form-group-id">
+                <label class="form-label pl-md-2"> End Date</label>
+                <%= f.input :endDate, input_html: {class: "form-control form-field", id: 'enddatepicker', value: params[:search].present? ? params[:search][:endDate] : ''}, label: false %>
+              </div>
+              <%= f.submit "Search" , class: "btn btn-green text-uppercase w-100" %>
+            <% end %>  
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 <style type="text/css">
 .page-item:active{
 
