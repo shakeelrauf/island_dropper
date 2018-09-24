@@ -10,7 +10,9 @@ class Getswift::Request
     end
 
     def find_distance(query)
-      return get_json_for_google_api("maps/api/distancematrix/json", query)
+      res = get_json_for_google_api("maps/api/distancematrix/json", query)
+      puts res
+      return res
     end
 
     def get_json_for_google_api(root_path, query={})
