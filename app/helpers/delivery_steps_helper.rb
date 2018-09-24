@@ -13,8 +13,8 @@ module DeliveryStepsHelper
           flash[:error] = res["error_messag"]
           return nil
         end
-        if res[0]["error_messag"].present? or res[0]["routes"][0].nil?
-          flash[:error] = res[0]["error_messag"]
+        if res[0]["error_message"].present? or res[0]["routes"][0].nil?
+          flash[:error] = res[0]["error_message"]
           return nil
         end
         kms = res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f        
@@ -33,7 +33,7 @@ module DeliveryStepsHelper
           flash[:error] = res
           return nil
         end
-        if res[0]["error_messag"].present? or res[0]["routes"][0].nil?
+        if res[0]["error_message"].present? or res[0]["routes"][0].nil?
           flash[:error] = res
           return nil
         end
