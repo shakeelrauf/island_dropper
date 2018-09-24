@@ -11,13 +11,13 @@
     </li>
   </ul>
 <% end %>
-<div class="header-btns ml-auto d-flex justify-content-between mt-3 mt-lg-0 position-relative">
+<div class="header-btns ml-auto d-flex justify-content-between flex-column-reverse flex-sm-row mt-3 mt-lg-0 position-relative">
   <% if current_user && (current_user.role == 'user') %>
   <%= link_to "New Delivery", deliveries_path,method: :post, class: "btn btn-white active text-uppercase" %>
   <% end %>
   <div class="dropdown dropdown-header p-0">
-    <button class="btn btn-white ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <%= current_user.full_name.upcase %>
+    <button class="btn btn-white ml-sm-3 mb-2 mb-sm-0 dropdown-toggle w-100-m" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= current_user.full_name.present? ? (current_user.full_name.capitalize).first(15) : '' %>
     </button>
     <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
       <ul>

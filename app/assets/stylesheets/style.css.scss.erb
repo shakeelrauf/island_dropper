@@ -44,18 +44,7 @@ body {
   font-family: 'Myriad Pro';
   color: #201f1f;
 }
-.page-link{
-  color: #70af44 !important;
-}
-.page-item.active .page-link{
-  background-color: #70af44 !important;
-  color: white !important;
-  border: 1px dotted green;
-}
-.pagination{
-  margin-top: 30px;
-  float: right;
-}
+
 ul {
   padding: 0;
   margin: 0;
@@ -189,7 +178,8 @@ header
   left: inherit;
   right: 0;
   border: none;
-  background-color: #fff;
+  background-color: transparent;
+  min-width: 264px;
 }
 .dropdown-menu-header .dropdown-menu-block{
   border: 1px solid #70af44;
@@ -197,12 +187,14 @@ header
   background-color: #fff;
 }
 .dropdown-menu-header li {
-  margin-bottom: 3px;
+  margin-bottom: 2px;
 }
 .dropdown-menu-header .dropdown-item {
   padding: 12px;
   color: #201f1f;
   font-weight: 700;
+  word-break: break-word;
+  white-space: normal;
 }
 .dropdown-menu-header .dropdown-item:hover,
 .dropdown-menu-header .dropdown-item:focus {
@@ -213,6 +205,18 @@ header
 }
 .dropdown-menu-header li:last-child .dropdown-menu-block {
   border-radius: 0px 0px 12px 12px;
+}
+.header-btns .btn-white.dropdown-toggle {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  padding-right: 32px;
+}
+.header-btns .btn-white.dropdown-toggle::after {
+  position: absolute;
+  right: 16px;
+  top: 16px;
 }
 
 
@@ -469,6 +473,10 @@ draft
   padding: 14px 25px;
   margin-bottom: 24px;
   background-color: #fff;
+    -webkit-transition: all .2s ease;
+  -moz-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
 }
 .draft-heading{
   font-weight: 700;
@@ -526,22 +534,22 @@ draft
   background-color: #fff;
   color: #70af44;
 }
-.draft-box:nth-of-type(even) {
+.draft-box:hover {
   background-color: #201f1f;
   border-color: #201f1f;
 }
-.draft-box:nth-of-type(even) h3,
-.draft-box:nth-of-type(even) h4,
-.draft-box:nth-of-type(even) p {
+.draft-box:hover h3,
+.draft-box:hover h4,
+.draft-box:hover p {
   color: #fff;
 }
-.draft-box:nth-of-type(even) .btn-delete {
+.draft-box:hover .btn-delete {
   background-color: #fff;
   border: 1px solid #fff;
   color: #201f1f;
 }
-.draft-box:nth-of-type(even) .btn-delete:hover,
-.draft-box:nth-of-type(even) .btn-delete:focus {
+.draft-box:hover .btn-delete:hover,
+.draft-box:hover .btn-delete:focus {
   color: #fff;
   background-color: transparent;
 }
@@ -628,6 +636,7 @@ a.delivery-heading.active {
 }
 .card-dropOff .card-header.collapsed h4{
   color: #fff;
+  margin-bottom: 0;
 }
 .dropOff-form .form-field-rounded {
   border-color: #70af44;
@@ -644,6 +653,7 @@ a.delivery-heading.active {
 .card-dropOff .card-header h4,
 .card-item .card-header h4 {
   color: #201f1f;
+  margin-bottom: 0;
 }
 .card-dropOff .card-header.collapsed:after,
 .card-item .card-header.collapsed:after {
@@ -1890,6 +1900,22 @@ delivery jobs
 .deliveryJob-searchBar .form-field:-moz-placeholder { /* Firefox 18- */
   color: #201f1f;
 }
+.deliveryJob-searchField {
+  position: relative;
+}
+.deliveryJob-searchField .form-field {
+  padding-right: 40px;
+}
+.deliveryJob-searchField span {
+  position: absolute;
+  right: 10px;
+  top: 6px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 10px;
+  line-height: 24px;
+}
 .deliveryJob-block {
   border: 1px solid #88c440;
   border-radius: 18px;
@@ -1984,6 +2010,10 @@ user accounts
 */
 
 
+.userAccount-innerContent,
+.deliveryJob-innerContent {
+  min-height: 244px;
+}
 .userAccount-block {
   border: 1px solid #201f1f;
   border-radius: 18px;
@@ -2142,9 +2172,63 @@ email confirmation
   color: #70af44;
   background-color: #fff;
 }
-
-
-
+.pagination {
+  margin-top: 30px;
+  justify-content: flex-end;
+}
+.pagination li .page-link {
+  color: #70af44;
+  font-weight: 600;
+}
+.pagination li.active .page-link {
+  background-color: #70af44;
+  color: #fff;
+  border: 1px solid #70af44;
+}
+.pagination li .page-link:focus {
+  box-shadow: none;
+}
+.modal-jobs table tr td {
+  border-bottom: 1px solid #e9ecef;
+  padding: 10px 15px;
+}
+.modal-jobs table tr:last-child td {
+  border-bottom: none;
+}
+#flash-messages {
+  position: absolute;
+  z-index: 555;
+  max-width: 1170px;
+  position: fixed;
+  width: 20%;
+  right: 60px;
+  top: 20px;
+  margin: 0 auto;
+}
+#flash-messages .alert {
+  box-shadow: 0px 1px 2px 0px #0000004a;
+}
+#flash-messages .alert-notice {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+#flash-messages .alert-alert {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+#flash-messages .alert-notice {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+#flash-messages .alert-error {
+  background-color: red;
+  color: white;
+  border-color: red;
+}
+#flash-messages .alert-success {
+  background-color: #70af44;
+  color: white;
+}
 
 
 
@@ -2214,6 +2298,7 @@ email confirmation
   .emailConfirmation-canvas {
     margin: 30px 0px 50px 0px;
   }
+
 }
 @media (min-width: 576px) {
   .checkOut-delivery .checkOut-inner-head {
@@ -2231,11 +2316,21 @@ email confirmation
     border-bottom-left-radius: 0;
     text-align: center;
   }
+  .draft-box .draft-item.mb-sm-0 p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 130px;
+    overflow: hidden;
+  }
+
 }
 @media (max-width: 991px) {
   .pricing-text {
     font-size: 0.8rem;
     padding: 9px 5px;
+  }
+  .navbar-light .navbar-menu .nav-link, .navbar-menu li a {
+    text-align: left;
   }
 }
 @media (max-width: 767px) {
@@ -2299,6 +2394,13 @@ email confirmation
   }
   .w-100-m {
     width: 100%;
+  }
+  #flash-messages {
+    z-index: 555;
+    max-width: 1170px;
+    position: fixed;
+    width: 100%;
+    right: 0px;
   }
   .draft-heading-m {
     font-size: 1.25rem;

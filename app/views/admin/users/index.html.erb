@@ -12,8 +12,9 @@
                 <h5 class="admin-heading mb-3 mb-lg-0">User Name</h5>
               </div>
               <div class="col col-12 col-sm-8 col-lg-6">
-                <div class="form-group mb-3 mb-sm-0">
-                  <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control form-field form-field-l"},placeholder: "User Name",label: false %>
+                <div class="form-group mb-3 mb-sm-0 deliveryJob-searchField">
+                  <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control form-field form-field-l", id: "empty"},placeholder: "User Name",label: false %>
+                  <span id="cross">x</span>
                 </div>
               </div>
               <div class="col col-12 col-sm-4 col-lg-3">                
@@ -76,7 +77,12 @@
           <% end %>
         </div>
       </div>
-      <%= will_paginate @users %>
     </div>
+      <%= will_paginate @users %>
   </div>
 </div>
+<script type="text/javascript">
+  $("#cross").on('click',function(){
+    $('#empty').val('');
+  })
+</script>

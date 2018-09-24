@@ -12,8 +12,9 @@
                 <h5 class="admin-heading mb-3 mb-lg-0">User Job</h5>
               </div>
               <div class="col col-12 col-sm-8 col-lg-6">
-                <div class="form-group mb-3 mb-sm-0">
-                  <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control form-field form-field-l"},placeholder: "job Reference",label: false %>
+                <div class="form-group mb-3 mb-sm-0 deliveryJob-searchField">
+                  <%= f.input :query ,input_html: {value: params[:search].present? ? params[:search][:query] : nil,class: "form-control form-field form-field-l", id: 'empty'},placeholder: "job Reference",label: false %>
+                  <span id="cross">x</span>
                 </div>
               </div>
               <div class="col col-12 col-sm-4 col-lg-3">                
@@ -53,7 +54,7 @@
                     <h6><%= dropoff.reference_no.present? ? dropoff.reference_no.first(6) : '' %></h6>
                   </div>
                   <div class="db-box db-box-2">
-                    <h6><%= dropoff.state.capitalize %></h6>
+                    <h6><%= dropoff.state.present? ? dropoff.state.capitalize : ''%></h6>
                   </div>
                   <div class="db-box db-box-3"> 
                     <h6><%= dropoff.delivery.pickup.present? ? dropoff.delivery.pickup.address.first(6) : '' %></h6>
@@ -75,7 +76,7 @@
                 </div>
               </div>
               <div>
-                <div class="modal fade" id="exampleModal<%= dropoff.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade modal-jobs" id="exampleModal<%= dropoff.id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-body px-3 py-4">
@@ -162,7 +163,7 @@
                                 </table>
                               </div>
                               <div class="modal-footer px-3 d-flex justify-content-end align-items-center">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
                               </div>
                             </div>
                           </div>
@@ -170,12 +171,18 @@
                </div>
             <% end %>
           </div>
-          <%= will_paginate @dropoffs %>
         </div>
       </div>
     </div>
    
     <div class="tab-pane fade" id="queryData" role="tabpanel" aria-labelledby="queryData-tab">...</div>
   </div>
+  <%= will_paginate @dropoffs %>
+
 </div>
 
+<script type="text/javascript">
+  $("#cross").on('click',function(){
+    $('#empty').val('');
+  })
+</script>

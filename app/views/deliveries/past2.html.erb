@@ -3,7 +3,7 @@
    
     <div class="container-fluid">
       <div class="deliveryListing-content pt-3">
-        <div class="row">
+        <div class="row flex-column-reverse flex-lg-row">
           <div class="col col-12 col-lg-8">
             <div class="delivery-listing">
               <div class="dl-overflow">
@@ -94,7 +94,7 @@
           </div>
 
           <div class="col col-12 col-lg-4">
-            <div class="deliveryListing-search mt-5 mt-lg-0">
+            <div class="deliveryListing-search mb-5 mb-lg-0">
 
               <%= simple_form_for :search , url: past_deliveries_path, method: :get do |f| %>
                 <div class="form-group form-group-id">
