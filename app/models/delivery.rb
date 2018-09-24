@@ -47,7 +47,7 @@ class Delivery < ApplicationRecord
 
   def self.check_time_date(date_time)
     if date_time.on_weekday? || date_time.saturday?
-      if date_time.hour.between?(7,13) || (date_time.hour.to_s == '15' && date_time.minute.between?(1..30))
+      if date_time.hour.between?(7,13) || (date_time.hour.to_s == '15' && date_time.min.between?(1..30))
         return true
       else
         return false
