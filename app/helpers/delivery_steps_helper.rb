@@ -17,7 +17,7 @@ module DeliveryStepsHelper
           flash[:error] = res[0]["error_message"]
           return nil
         end
-        kms = res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f        
+        kms = res[0]["rows"][0]["elements"][0]["distance"]["text"].to_f      
         item_price = (base_rate.to_f + (per_km_rate.to_f * kms)) + (((base_rate.to_f + (per_km_rate.to_f * kms)) * pricing.priority_percentage)/100)
         price += item_price
         hash[i] = {base_rate: base_rate,kms: kms,item_price: item_price,per_km_rate: per_km_rate, size: size, priority: true}
@@ -37,7 +37,7 @@ module DeliveryStepsHelper
           flash[:error] = res
           return nil
         end
-        kms = res[0]["routes"][0]["legs"][0]["distance"]["text"].to_f
+        kms = res[0]["rows"][0]["elements"][0]["distance"]["text"].to_f
         item_price = base_rate.to_f + (per_km_rate.to_f * kms)
         price += item_price
         hash[i] = {base_rate: base_rate,kms: kms,item_price: item_price,per_km_rate: per_km_rate, size: size, priority: false}
