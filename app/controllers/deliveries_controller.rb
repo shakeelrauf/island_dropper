@@ -16,9 +16,9 @@ class DeliveriesController < ApplicationController
     # @response = Getswift::Delivery.all_bookings(query)
     if params[:search].present?
       params[:search][:startDate]=nil if !params[:search][:startDate].present? 
-      @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:query],['active','accepted']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:query],['new','cancelled','completed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
     else
-      @dropoffs = current_user.dropoffs.includes(:delivery).where('state IN (?)', ['active','accepted']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.includes(:delivery).where.not('state IN (?)', ['new','cancelled','completed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
     end
     render 'active2'
   end
@@ -36,12 +36,12 @@ class DeliveriesController < ApplicationController
         else
           end_date =  Date.today
         end
-        @dropoffs =  current_user.dropoffs.search_between_range(start_date, end_date,['completed','cancelled','accepted','onway'],params[:search][:Reference]).paginate(:page => params[:page], :per_page => 10)
+        @dropoffs =  current_user.dropoffs.search_between_range(start_date, end_date,['completed','cancelled'],params[:search][:Reference]).paginate(:page => params[:page], :per_page => 10)
       else
-        @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:Reference],['completed','cancelled','accepted','onway']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
+        @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:Reference],['active','accepted','ownway','abandon']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
       end
     else
-      @dropoffs = current_user.dropoffs.includes(:delivery).where('state IN (?)', ['cancelled','completed','accepted','onway','abandoned','closed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.includes(:delivery).where('state IN (?)', ['cancelled','completed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
       #.paginate(:page => params[:page], :per_page => 1)
     end
     # @response2 = Getswift::Delivery.all_bookings(query2)

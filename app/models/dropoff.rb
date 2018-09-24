@@ -11,7 +11,7 @@ class Dropoff < ApplicationRecord
 
 
   def self.search_at_reference_no(ref,state)
-  	includes(:delivery).where('(reference_no LIKE ? ) AND state IN (?)',"%#{ref}%", state)
+  	includes(:delivery).where('(reference_no LIKE ? ) AND state NOT IN (?)',"%#{ref}%", state)
   end
 
   def self.search_between_range(start, end_date , state, ref=nil)
