@@ -15,7 +15,7 @@ class PasswordsController < Devise::PasswordsController
     self.resource = resource_class.send_reset_password_instructions(resource_params)
     yield resource if block_given?
     if successfully_sent?(resource)
-      resource.update(reset_password_token_created: true)
+      resource.update!(reset_password_token_created: true)
       respond_with({}, location: after_sending_reset_password_instructions_path_for(resource_name))
     else
       respond_with(resource)
@@ -24,13 +24,13 @@ class PasswordsController < Devise::PasswordsController
 
   # GET /resource/password/edit?reset_password_token=abcdef
   def edit
-    self.resource = resource_class.new
-    if resource.reset_password_token_created ==  false
-      flash[:notice] = "Password reset link is expired"
-      redirect_to new_user_session_path
-    else
+    if User.with_reset_password_token(params[:reset_password_token]).present?
+      self.resource = resource_class.new
       set_minimum_password_length
       resource.reset_password_token = params[:reset_password_token]
+    else
+      flash[:danger] = "Reset password link already expired"
+      redirect_to new_user_session_path
     end
   end
 
@@ -43,7 +43,7 @@ class PasswordsController < Devise::PasswordsController
       if Devise.sign_in_after_reset_password
         flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
         set_flash_message!(:notice, flash_message)
-        resource.update(reset_password_token_created: false)
+        resource.update!(reset_password_token: "done")
         sign_in(resource_name, resource)
       else
         set_flash_message!(:notice, :updated_not_active)
