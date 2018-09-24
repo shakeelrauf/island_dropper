@@ -4,7 +4,7 @@
         <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="border-box position-relative">
             <h4 class="borderBox-heading m-0 font-weight-bold">Resend confirmation</h4>
-              <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
+              <%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post , class: 'login-form'}) do |f| %>
 
                 <div class="form-group">
                   <%= f.label :email, class: "font-weight-bold form-label pl-md-3" %>
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="pt-3">
-                  <%= f.submit "Resend confirmation instructions", class: "btn btn-white" %>
+                  <%= f.submit "Resend", class: "btn btn-white" %>
                 </div>
               <% end %>
           </div>

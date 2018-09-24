@@ -13,16 +13,20 @@
   <body>
     <div class="off-canvas-container">
       <%= render partial:  'admin/shared/header' %>
+     <div id="flash-messages">
+
       <% flash.each do |key, value| %>
         <% if value.present? %>
-          <div class="alert alert-<%= key %>" role="alert">
-                  <%= value %>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+        <div class="alert alert-<%= key %>">
+          <a class="close" data-dismiss="alert">×</a>
+          <div id="flash_alert">
+            <%= value %>  
           </div>
+        </div>
+
         <% end %>
       <% end %>
+      </div>
       <div class="off-canvas admin-off-canvas">
         <div class="dashboard-canvas">
           <div class="container">
@@ -37,8 +41,9 @@
       </div>
       <!-- <%= render partial:  'shared/footer' %> -->
     </div>
+    
     <script type="text/javascript">
-      $('.alert').fadeOut(3000);
+      $('.alert').delay(7000).fadeOut(3000);
     </script>
   </body>
 </html>
