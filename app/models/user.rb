@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :deliveries , dependent: :destroy 
+  has_many :dropoffs , dependent: :destroy 
   validates :first_name, presence: true
   validates :last_name, presence: true
   scoped_search on: [:first_name,:last_name]
@@ -16,6 +17,6 @@ class User < ApplicationRecord
   end
 
   def full_name
-    "#{self.first_name } "+"#{ self.last_name}"
+    "#{self.first_name } " +" #{ self.last_name}"
   end
 end

@@ -16,17 +16,17 @@ end
 if !User.where(email: 'admin@admin.com').first.present?
   u = User.new(email: 'admin@admin.com', password: 'password',password_confirmation: 'password')
   u.skip_confirmation!
-  u.save!
-  u.roles << Role.where(tirle: 'admin').first
+  u.save(validate: false)
+  u.roles << Role.where(title: 'admin').first
 end
 
 
-['s','m','l','f'].each do |title|
-  if !ItemType.find_by_title(title).present?
-    ItemType.create(title: title, base_rate: 4, per_km_rate: 1 )
-  end
-end
+# ['s','m','l','f'].each do |title|
+#   if !ItemType.find_by_title(title).present?
+#     ItemType.create(title: title, base_rate: 4, per_km_rate: 1 )
+#   end
+# end
 
-if !Priority.first.present?
-  Priority.create(percentage: 20)
-end
+# if !Priority.first.present?
+#   Priority.create(percentage: 20)
+# end

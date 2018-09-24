@@ -1,12 +1,13 @@
 class DeliveriesController < ApplicationController
  
   include QueryBuilder
+  include Payment
 
   def draft
     if params[:search].present? and  params[:search][:query].present?
-      @deliveries =  current_user.deliveries.draft.search_for(params[:search][:query])
+      @deliveries =  current_user.deliveries.draft.search_for(params[:search][:query]).paginate(:page => params[:page], :per_page => 10)
     else
-      @deliveries = current_user.deliveries.includes([:pickup,:dropoffs,:items]).where(state: 'draft').order(created_at: :desc)
+      @deliveries = current_user.deliveries.includes([:pickup,:dropoffs,:items]).where(state: 'draft').order(created_at: :desc).paginate(:page => params[:page], :per_page => 10)
     end
   end
 
@@ -15,24 +16,32 @@ class DeliveriesController < ApplicationController
     # @response = Getswift::Delivery.all_bookings(query)
     if params[:search].present?
       params[:search][:startDate]=nil if !params[:search][:startDate].present? 
-      @deliveries = Delivery.created_at_search(params[:search][:Reference],params[:search][:startDate]).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:query],['new','cancelled','completed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
     else
-      @deliveries = current_user.deliveries.includes([:driver,:pickup, :dropoffs]).where('state IN (?)', ['onway','active','accepted']).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.includes(:delivery).where.not('state IN (?)', ['new','cancelled','completed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
     end
     render 'active2'
   end
 
   def past
-    # query = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": 'Successful'}
-    # query2 = {"apiKey": ENV["GETSWIFT_API_KEY"],"filter": 'Cancelled'}
-    # query[:Reference] = params[:search][:Reference] if params[:search].present? and params[:search][:Reference].present? 
-    # query[:startDate] = params[:search][:startDate] if params[:search].present? and params[:search][:startDate].present? 
-    # # @response = Getswift::Delivery.all_bookings(query)
     if params[:search].present?
-      params[:search][:startDate]=nil if !params[:search][:startDate].present? 
-      @deliveries = Delivery.created_at_search(params[:search][:Reference],params[:search][:startDate],['completed','cancelled']).order(created_at: :desc)
+      if params[:search][:startDate].present? and params[:search][:endDate].present?
+        if params[:search][:startDate].present?
+          start_date = Date.new(params[:search][:startDate].split('/').last.to_i,params[:search][:startDate].split('/').first.to_i,params[:search][:startDate].split('/').second.to_i) 
+        else
+          start_date = Date.today
+        end   
+        if params[:search][:endDate].present?
+          end_date = Date.new(params[:search][:endDate].split('/').last.to_i,params[:search][:endDate].split('/').first.to_i,params[:search][:endDate].split('/').second.to_i) 
+        else
+          end_date =  Date.today
+        end
+        @dropoffs =  current_user.dropoffs.search_between_range(start_date, end_date,['completed','cancelled'],params[:search][:Reference]).paginate(:page => params[:page], :per_page => 10)
+      else
+        @dropoffs = current_user.dropoffs.search_at_reference_no(params[:search][:Reference],['active','accepted','ownway','abandon']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
+      end
     else
-      @deliveries = current_user.deliveries.includes([:driver,:pickup,:dropoffs]).where('state IN (?)', ['cancelled','completed']).order(created_at: :desc)
+      @dropoffs = current_user.dropoffs.includes(:delivery).where('state IN (?)', ['cancelled','completed']).paginate(:page => params[:page], :per_page => 10).order(created_at: :desc)
       #.paginate(:page => params[:page], :per_page => 1)
     end
     # @response2 = Getswift::Delivery.all_bookings(query2)
@@ -45,23 +54,21 @@ class DeliveriesController < ApplicationController
   end
 
   def cancel
-    query = build_cancel_query(params[:id],params[:note])
-    @delivery = Getswift::Delivery.cancel_booking(query)
-    if @delivery["message"].present? 
-      flash[:success] = @delivery["message"]
-      redirect_to active_deliveries_path
-    else
-      delivery = Delivery.where(reference_no: params[:id]).first
-      delivery.update(state: "cancelled") if delivery.present?
-      flash[:success] = @delivery["message"]
-      redirect_to active_deliveries_path
+    @dropoff = Dropoff.where(reference_no: params[:token]).first
+    if @dropoff.present? 
+      query = build_cancel_query(@dropoff.reference_no,params[:note])
+      @d = Getswift::Delivery.cancel_booking(query)
+      if @d["message"].present? 
+        flash[:success] = @d["message"]
+      else
+        refund_payment(@dropoff)
+        @dropoff.update(state: "cancelled")
+        flash[:success] = @d["message"]
+      end
     end
+    redirect_to active_deliveries_path
   end
 
-  def complete
-    delivery = Delivery.where(reference_no: params[:id]).first
-    delivery.update(state: "completed") if delivery.present?
-  end
 
   def create
     @delivery = current_user.deliveries.build

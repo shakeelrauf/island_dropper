@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+mount Sidekiq::Web => '/sidekiq'
   namespace :admin do
     get 'dashboard/index'
   end
 
   root 'deliveries#active'
-  resources :deliveries do
+  resources :deliveries, param: :token do
     collection do
       get 'draft'
       get 'active'
@@ -27,17 +29,20 @@ Rails.application.routes.draw do
       post 'job_onway'
       post 'job_driveratdropoff'
       post 'job_abandoned'
+      post 'job_edited'
     end
   end
   namespace :admin do
     get 'dashboard'
-    get 'delivery_jobs'
-    get 'pricing'
-    put 'update_pricing'
-    get 'user_accounts'
+    get 'profile'
+    resources :jobs, only: [:index]
+    resources :pricing, only: [:index, :update,:get]
+    resources :users, only: [:index]
     get 'data_query'
   end
-  devise_for :users, controllers: { confirmations: 'confirmations' , sessions: 'sessions', registrations: 'registrations'} 
+
+
+  devise_for :users, controllers: { confirmations: 'confirmations' ,passwords: 'passwords',  sessions: 'sessions', registrations: 'registrations'} 
   devise_scope :user do  
     get 'registrations/email_confirmation', to: 'registrations#email_confirmation'
   end

@@ -7,12 +7,18 @@
     <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+     
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
     <div class="off-canvas-container">
       <%= render partial:  'shared/header' %>
+    <div class="off-canvas">
       <div id="flash-messages">
 
       <% flash.each do |key, value| %>
@@ -28,10 +34,12 @@
       <% end %>
       </div>
       <%= yield %>
+    </div>
       <% if current_user && !(current_user.role == 'admin') %>
         <%= render partial:  'shared/footer' %>
       <% end %>
     </div>
+    
     <script type="text/javascript">
       $('.alert').delay(7000).fadeOut(3000);
     </script>

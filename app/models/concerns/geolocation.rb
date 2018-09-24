@@ -3,7 +3,7 @@ module Geolocation
 
   included do
     include ActiveModel::Validations
-    validates_with Validators::GeoLocationValidator
+    # validates_with Validators::GeoLocationValidator
     acts_as_mappable :default_units => :kms,
                    :default_formula => :sphere,
                    :distance_field_name => :address,

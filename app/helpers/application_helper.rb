@@ -28,6 +28,9 @@ module ApplicationHelper
       if single_dropoff_price.nil? 
         return nil
       end
+      bill = d.bill
+      bill.amount = single_dropoff_price
+      bill.save
       total_price["#{i+1}"] = single_dropoff_price
     end
     return total_price

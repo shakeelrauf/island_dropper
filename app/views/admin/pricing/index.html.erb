@@ -1,7 +1,7 @@
 <div class="col col-12  col-md-8 col-lg-9">
   <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active " id="pricing" role="tabpanel" aria-labelledby="pricing-tab">
-      <%= simple_form_for :delivery,url: admin_update_pricing_path ,method: :put do |f| %>
+      <%= simple_form_for @pricing,url: admin_pricing_path(@pricing) ,method: 'put' do |f| %>
       <div class="tabContent-main pricing-main px-md-3">
         <h5 class="admin-heading px-md-2">Delivery Pricing</h5>
         <div class="pricing-inner px-md-3 px-xl-5">
@@ -9,36 +9,36 @@
             <div class="col col-12 col-xl-11 offset-xl-1">
               <div class="row pricing-detail align-items-center">
                 <div class="col col-12 col-lg-3">
-                  <h5 class="admin-heading mb-3 mb-lg-0">Van</h5>
+                  <h5 class="admin-heading mb-3 mb-lg-0">Car</h5>
                 </div>
                 <div class="col col-12 col-lg-9">
                   <div class="row">
                     <div class="col col-12 col-sm-4">
-                      <%= f.input :base_rate_van,label: false,input_html: {class: 'pricing-text decimal_only',  placeholder: 'Base Rate', float: true, value: @s.first.base_rate} %>
+                      <%= f.input :car_base_price,label: false,as: :string,input_html: {class: 'pricing-text decimal_only',  placeholder: 'Base Rate', float: true} %>
                     </div>
                     <div class="col col-12 col-sm-4">
-                      <%= f.input :small_per_km_van,label: false,input_html: {class: 'pricing-text decimal_only', placeholder: 'Small / Km', float: true, value: @s.first.per_km_rate} %>
+                      <%= f.input :car_small_price,label: false,as: :string,input_html: {class: 'pricing-text decimal_only', placeholder: 'Small / Km', float: true} %>
                     </div>
                     <div class="col col-12 col-sm-4">
-                      <%= f.input :furniture_per_km_van,label: false,input_html: {class: 'pricing-text decimal_only', placeholder: 'Furniture / Km' , float: true, value: @f.first.per_km_rate} %>
+                      <%= f.input :car_medium_price,label: false,as: :string,input_html: {class: 'pricing-text decimal_only', placeholder: 'Medium / Km' , float: true} %>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row pricing-detail align-items-center">
                 <div class="col col-12 col-lg-3">
-                  <h5 class="admin-heading mb-3 mb-lg-0">Car</h5>
+                  <h5 class="admin-heading mb-3 mb-lg-0">Van</h5>
                 </div>
                 <div class="col col-12 col-lg-9">
                   <div class="row">
                     <div class="col col-12 col-sm-4">
-                      <%= f.input :base_rate_car,label: false,input_html: {class: 'pricing-text decimal_only', placeholder: 'Base Rate',  float: true, value: @m.first.base_rate} %>
+                      <%= f.input :van_base_price,label: false,as: :string,input_html: {class: 'pricing-text decimal_only', placeholder: 'Base Rate',  float: true} %>
                     </div>
                     <div class="col col-12 col-sm-4">
-                      <%= f.input :medium_per_km_car,label: false,input_html: {class: 'pricing-text decimal_only', placeholder: 'Medium / Km', float: true,  value: @m.first.per_km_rate} %>
+                      <%= f.input :van_large_price,label: false,as: :string,input_html: {class: 'pricing-text decimal_only', placeholder: 'Large / Km', float: true} %>
                     </div>
                     <div class="col col-12 col-sm-4">
-                      <%= f.input :large_per_km_car,label: false,input_html: {class: 'pricing-text decimal_only', placeholder: 'Large / Km', float: true, value: @l.first.per_km_rate} %>
+                      <%= f.input :van_furniture_price,label: false,as: :string,input_html: {class: 'pricing-text decimal_only', placeholder: 'Furniture / Km', float: true} %>
                     </div>
                   </div>
                 </div>
@@ -50,7 +50,7 @@
                 <div class="col col-12 col-lg-9">
                   <div class="row">
                     <div class="col col-12 col-sm-4"> 
-                      <%= f.input :percentage,label: false,input_html: {class: 'pricing-text decimal_only', placeholder: 'Percentage', float: true, value: @p.percentage} %>
+                      <%= f.input :priority_percentage,label: false,as: :string,input_html: {class: 'pricing-text decimal_only', placeholder: 'Percentage', float: true} %>
                     </div>
                   </div>
                 </div>

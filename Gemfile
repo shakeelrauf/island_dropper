@@ -41,12 +41,18 @@ gem 'simple_form'
 gem "cocoon"
 gem "scoped_search"
 gem 'bootstrap-datepicker-rails'
+gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
+gem 'delayed_job_active_record'
+gem 'sidekiq'
+gem 'redis'
 gem 'jquery-validation-rails'
 gem 'geokit-rails'
 gem 'geocoder'
 gem 'stripe'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'jquery-inputmask-rails'
+gem 'gmaps-autocomplete-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'dotenv-rails'

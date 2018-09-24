@@ -11,13 +11,13 @@
     </li>
   </ul>
 <% end %>
-<div class="header-btns ml-auto d-flex justify-content-between mt-3 mt-lg-0 position-relative">
+<div class="header-btns ml-auto d-flex justify-content-between flex-column flex-sm-row mt-3 mt-lg-0 position-relative">
   <% if current_user && (current_user.role == 'user') %>
   <%= link_to "New Delivery", deliveries_path,method: :post, class: "btn btn-white active text-uppercase" %>
   <% end %>
   <div class="dropdown dropdown-header p-0">
-    <button class="btn btn-white ml-3 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <%= current_user.full_name.upcase %>
+    <button class="btn btn-white ml-sm-3 mt-2 mt-sm-0 dropdown-toggle w-100-m" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <%= current_user.full_name.present? ? (current_user.first_name.capitalize).first(15) : '' %>
     </button>
     <div class="dropdown-menu dropdown-menu-header p-0" aria-labelledby="dropdownMenuButton">
       <ul>
@@ -30,8 +30,7 @@
         </li>
         <li>
           <div class="dropdown-menu-block">
-            <%= link_to "New Delivery", deliveries_path,method: :post, class: "dropdown-item" %>
-            <%= link_to "View Deliveries", draft_deliveries_path, class: "dropdown-item" %>
+            <%= link_to "Active Deliveries", active_deliveries_path, class: "dropdown-item" %>
           </div>
         </li>
         <li>

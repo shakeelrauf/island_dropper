@@ -10,17 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180910210203) do
+ActiveRecord::Schema.define(version: 20180924140601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bills", force: :cascade do |t|
+    t.string "amount"
+    t.string "stripe_transaction_id"
+    t.integer "dropoff_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "response"
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
 
   create_table "deliveries", force: :cascade do |t|
     t.string "b_id"
     t.text "response"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "pre_order_date"
+    t.datetime "pre_order_date"
     t.bigint "user_id"
     t.string "state", default: "new"
     t.string "reference_no"
@@ -29,6 +53,8 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.boolean "pre_order", default: false
     t.string "checkout_response"
     t.string "stripe_transaction_id"
+    t.boolean "processed", default: false
+    t.string "token"
     t.index ["user_id"], name: "index_deliveries_on_user_id"
   end
 
@@ -42,6 +68,7 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.string "phone_number"
     t.string "email"
     t.string "photo_url"
+    t.integer "dropoff_id"
   end
 
   create_table "dropoffs", force: :cascade do |t|
@@ -55,15 +82,11 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.datetime "updated_at", null: false
     t.string "latitude"
     t.string "longitude"
+    t.string "state"
+    t.string "reference_no"
+    t.string "tracking_url"
+    t.integer "user_id"
     t.index ["delivery_id"], name: "index_dropoffs_on_delivery_id"
-  end
-
-  create_table "item_types", force: :cascade do |t|
-    t.string "title"
-    t.string "base_rate"
-    t.string "per_km_rate"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "items", force: :cascade do |t|
@@ -96,8 +119,14 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.string "longitude"
   end
 
-  create_table "priorities", force: :cascade do |t|
-    t.float "percentage"
+  create_table "pricings", force: :cascade do |t|
+    t.float "van_large_price"
+    t.float "car_medium_price"
+    t.float "car_small_price"
+    t.float "van_furniture_price"
+    t.float "car_base_price"
+    t.float "van_base_price"
+    t.float "priority_percentage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -122,6 +151,7 @@ ActiveRecord::Schema.define(version: 20180910210203) do
     t.string "unconfirmed_email"
     t.string "first_name"
     t.string "last_name"
+    t.boolean "reset_password_token_created", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

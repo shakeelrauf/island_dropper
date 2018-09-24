@@ -1,11 +1,10 @@
-<div class="off-canvas">
   <div class="login-canvas">
     <div class="container">
       <div class="row">
         <div class="col col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="border-box position-relative">
             <h4 class="borderBox-heading m-0 font-weight-bold">Sign Up</h4>
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'login-form'}) do |f| %>
               <div class="form-group required">
                 <%= f.label :first_name, class: "capitalize font-weight-bold form-label control-label pl-md-3" %>
                 <%= f.text_field :first_name,class: "form-control form-field" %>
@@ -15,7 +14,7 @@
                 <%= f.label :last_name, class: "capitalize font-weight-bold form-label control-label pl-md-3" %>
                 <%= f.text_field :last_name, class: "form-control form-field" %>
                  <%= error_message_on(f.object, :last_name) %>
-              </div>
+            </div>
               <div class="form-group required">
                 <%= f.label :email, class: "capitalize font-weight-bold form-label control-label pl-md-3" %>
                 <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control form-field" %>
@@ -32,7 +31,7 @@
                 <%= f.password_field :password_confirmation, autocomplete: "new-password" , class: "form-control form-field" %>
                  <%= error_message_on(f.object, :password_confirmation) %>
               </div>
-              <div class="pl-3">
+              <div class="pt-3">
                 <%= f.submit "Sign up", class: "btn btn-white" %>
               </div>
             <% end %>
@@ -44,5 +43,49 @@
       </div>
     </div>
   </div>
-</div>
 
+<script type="text/javascript">
+  $("#new_user").validate({
+  rules: {
+      "user[first_name]": {
+          required: true,
+            maxlength: 30
+      },
+      "user[last_name]": {
+          required: true,
+            maxlength: 30
+      },
+      "user[email]": {
+          required: true,
+          email: true
+      },
+      "user[password]": {
+          required: true
+      },
+      "user[password_confirmation]": {
+        require: true
+      }
+  },
+  messages: {
+       "user[first_name]": {
+          required: "Can't Blank",
+            maxlength: "Can only use 30 words"
+      },
+      "user[last_name]": {
+          required: "Can't Blank",
+            maxlength: "Can only use 30 words"
+      },
+      "user[email]": {
+          required: "Can't Blank",
+          email: "Email not valid"
+      },
+      "user[password]": {
+          required: "Can't Blank"
+      },
+      "user[password_confirmation]": {
+        require: "Can't Blank"
+      }
+  }
+});
+
+</script>

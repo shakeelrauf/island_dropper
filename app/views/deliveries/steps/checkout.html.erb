@@ -1,5 +1,4 @@
 
-<div class="off-canvas">
 	<div class="checkOut-canvas">
 		<div class="container">
 			<div class="checkOut-content my-3">
@@ -22,7 +21,7 @@
 																<h5>Pick up</h5>
 																<h5><span class="d-inline-block mr-1">
 																	<%= image_tag "calendar-black.png", alt: "calender-IMG", width: '14' %>
-																</span> Thu Aug 16</h5>
+																</span> <%=  DateTime.now.strftime("%a %b %y") %></h5>
 															</div>
 															<div class="checkOut-inner-detail">
 																<div class="d-flex align-items-center">
@@ -79,7 +78,12 @@
 															<h6 class="checkOut-inner-l mb-0">Same day</h6>
 															<div class="bordered-img-car">
 																<span class="d-flex align-items-center justify-content-center ml-3 ml-sm-0 mt-sm-4 mx-md-auto">
+																	<% if @delivery.items.first.size == 'm' or @delivery.items.first.size == 's' %>
 																	<%= image_tag 'car.png', alt: 'car-IMG', width: '28' %>
+
+																	<% else %>
+																	<%= image_tag 'van.png', alt: 'car-IMG', width: '28' %>
+																	<% end %>
 																</span>
 															</div>
 														</div>
@@ -230,7 +234,6 @@
 			</div>
 		</div>
 	</div>
-</div>
 <script type="text/javascript">
 	$(":input").inputmask();
 
@@ -253,7 +256,7 @@
       token = response.id;
       $form.append($("<input type=\"hidden\" name=\"card_token\" />").val(token));
       $.ajax({
-		    url: "/deliveries/<%= params[:delivery_id] %>/steps/checkout", // your api url
+		    url: "/deliveries/<%= params[:delivery_token] %>/steps/checkout", // your api url
 		    // jQuery >= 1.9.0 -> use method
 		    method: 'PUT', // method is any HTTP method
 		    data: {delivery: {card_token: token}}, // data as js object

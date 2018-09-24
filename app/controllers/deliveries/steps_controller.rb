@@ -35,12 +35,13 @@ class Deliveries::StepsController < ApplicationController
       flash[:success] = "Your information has been saved successfully to draft"
       return redirect_to draft_deliveries_path
     end
+    if params[:delivery][:pre_order_date].present?
+      params[:delivery][:pre_order_date] = DateTime.strptime(params[:delivery][:pre_order_date], '%m/%d/%Y')
+    end
     if @delivery.update_attributes(delivery_params)
       if step.to_s == "dropoff_items" and  params[:commit] != "Save Draft"
         if check_for_calling_getswift(@delivery)
-          query = build_query(@delivery)
-          response = {} #Getswift::Delivery.add_booking(@delivery,query)
-          return response_after_request_to_getswift(response)
+          return render_wizard @delivery
         else
           flash[:error] = "Reuest failed!! Complete the form."
           return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
@@ -63,7 +64,7 @@ class Deliveries::StepsController < ApplicationController
     delivery_params[:pre_order_date] = Date.strptime(delivery_params[:pre_order_date], "%m/%d/%y") if delivery_params[:pre_order_date].present?
   end
   def delivery_params
-    params.require(:delivery).permit(:id,:card_token, :delivery_id,:priority,:checkout_response,:pre_order,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
+    params.require(:delivery).permit(:id,:card_token, :delivery_id,:priority,:checkout_response,:pre_order,:token,:pre_order_date,{pickup_attributes: [:id, :_destroy,:first_name, :last_name, :address,:phone_number], dropoffs_attributes: [:id,:user_id,:_destroy,:first_name, :last_name,:address,:phone_number,:delivery_instructions], items_attributes: [:id,:size, :description]})
   end
 
   def response_after_request_to_getswift(response)
@@ -71,13 +72,12 @@ class Deliveries::StepsController < ApplicationController
       flash[:success] = response[:errors][:message]
       return redirect_to delivery_step_path(@delivery, id: @delivery.first_invalid_step)
     else
-      flash[:success] = "Checkout!!"
       return render_wizard @delivery
     end
   end
 
   def set_delivery
-    @delivery = current_user.deliveries.includes(:pickup,:dropoffs).where(id: params[:delivery_id]).first
+    @delivery = current_user.deliveries.includes(:pickup,:dropoffs).where(token: params[:delivery_token]).first
     if @delivery.nil? 
       render_404
     end

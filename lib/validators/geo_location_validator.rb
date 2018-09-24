@@ -6,27 +6,14 @@ module Validators
         puts address
         record.latitude = address.lat
         record.longitude = address.lng
+        if record.country != "Trinidad and Tobago"
+          record.errors.add(:address, "Location should be in Trinidad and Tobago")
+          return false
+        end
         return true
       rescue  => e
         record.errors.add(:address, "not valid")
       end
     end
-  # ruby geo coder
-    # def validate2(record)
-    #   begin
-    #     address = Geocoder.search record.address 
-    #     puts address
-    #     if address.empty? 
-    #       record.errors.add(:address, "not valid")
-    #     else
-    #       debugger
-    #       record.latitude = address.lat
-    #       record.longitude = address.lng
-    #       return true
-    #     end
-    #   rescue  => e
-    #     record.errors.add(:address, "not valid")
-    #   end
-    # end
   end
 end
