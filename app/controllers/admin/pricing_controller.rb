@@ -2,7 +2,7 @@ class Admin::PricingController < AdminController
 
   def update
     Pricing.update(pricing_params)
-    flash[:notice] = "Pice has been updated successfully."
+    flash[:notice] = "Price has been updated successfully."
     redirect_to admin_pricing_index_path
   end
 
