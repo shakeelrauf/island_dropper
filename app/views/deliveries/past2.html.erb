@@ -1,6 +1,6 @@
 <div class="deliveryListing-canvas">   
   <div class="container-fluid">
-    <div class="deliveryListing-content pt-3">
+    <div class="deliveryListing-content deliveryListing-past">
       <div class="row flex-column-reverse flex-lg-row">
         <div class="col col-12 col-lg-8">
           <div class="delivery-listing">
@@ -105,13 +105,15 @@
                 <label class="form-label pl-md-2">Reference</label>
                 <%= f.input :Reference, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:Reference] : ''}, label: false %>
               </div>
-              <div class="form-group form-group-id">
-                <label class="form-label pl-md-2">Start Date</label>
-                <%= f.input :startDate, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:startDate] : '', id: 'datepicker'}, label: false %>
-              </div>
-              <div class="form-group form-group-id">
-                <label class="form-label pl-md-2"> End Date</label>
-                <%= f.input :endDate, input_html: {class: "form-control form-field", id: 'enddatepicker', value: params[:search].present? ? params[:search][:endDate] : ''}, label: false %>
+              <div class="d-flex align-items-center deliveryListingSearch-combine">
+                <div class="form-group form-group-id mr-1 w-100">
+                  <label class="form-label pl-md-2">Start Date</label>
+                  <%= f.input :startDate, input_html: {class: "form-control form-field", value: params[:search].present? ? params[:search][:startDate] : '', id: 'datepicker'}, label: false %>
+                </div>
+                <div class="form-group form-group-id ml-1 w-100">
+                  <label class="form-label pl-md-2"> End Date</label>
+                  <%= f.input :endDate, input_html: {class: "form-control form-field", id: 'enddatepicker', value: params[:search].present? ? params[:search][:endDate] : ''}, label: false %>
+                </div>
               </div>
               <%= f.submit "Search" , class: "btn btn-green text-uppercase w-100" %>
             <% end %>  
