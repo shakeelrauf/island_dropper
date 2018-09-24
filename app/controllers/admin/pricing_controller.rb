@@ -13,6 +13,6 @@ class Admin::PricingController < AdminController
 
   private 
   def pricing_params
-    params.require(:pricing).permit(:van_small_price,:car_medium_price,:car_large_price,:van_furniture_price,:car_base_price,:van_base_price,:priority_percentage)
+    params.require(:pricing).permit(:car_small_price,:car_medium_price,:van_large_price,:van_furniture_price,:car_base_price,:van_base_price,:priority_percentage)
   end
 end

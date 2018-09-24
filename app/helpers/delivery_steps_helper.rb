@@ -50,8 +50,8 @@ module DeliveryStepsHelper
 
   def size_price(size, pricing)
     if size == 's'
-      base_rate = pricing.van_base_price
-      per_km_rate = pricing.van_small_price
+      base_rate = pricing.car_base_price
+      per_km_rate = pricing.car_small_price
     elsif size == 'f'
       base_rate = pricing.van_base_price
       per_km_rate = pricing.van_furniture_price
@@ -59,8 +59,8 @@ module DeliveryStepsHelper
       base_rate = pricing.car_base_price
       per_km_rate = pricing.car_medium_price
     elsif size == 'l'
-      base_rate = pricing.car_base_price
-      per_km_rate = pricing.car_large_price
+      base_rate = pricing.van_base_price
+      per_km_rate = pricing.van_large_price
     end
     return [base_rate, per_km_rate]
   end
