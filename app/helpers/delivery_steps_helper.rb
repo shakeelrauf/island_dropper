@@ -9,7 +9,7 @@ module DeliveryStepsHelper
         size = item.size
         base_rate, per_km_rate = size_price(size, pricing)
         res = Getswift::Request.find_distance({units: "metric",origin: delivery.pickup.address,destination: d.address,sensor: false, key: ENV['GEOCODE_API_KEY'] })
-        if res["error_message"].present? or res["routes"][0].nil?
+        if res[0]["error_message"].present? or res["routes"][0].nil?
           flash[:error] = res["error_messag"]
           return nil
         end
@@ -29,7 +29,7 @@ module DeliveryStepsHelper
         size = item.size
         base_rate, per_km_rate = size_price(size, pricing)       
         res = Getswift::Request.find_distance({units: "metric",origin: delivery.pickup.address,destination: d.address,sensor: false, key: ENV['GEOCODE_API_KEY'] })
-        if res["error_message"].present? or res["routes"][0].nil?
+        if res[0]["error_message"].present? or res[0]["routes"][0].nil?
           flash[:error] = res
           return nil
         end
