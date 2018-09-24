@@ -3,7 +3,7 @@ class Pickup < ApplicationRecord
   belongs_to :delivery
 
   def full_name
-    "#{self.first_name } " + " #{self.last_name}"
+    "#{self.first_name } #{self.last_name}"
   end
   # include Form
   # include CheckField
